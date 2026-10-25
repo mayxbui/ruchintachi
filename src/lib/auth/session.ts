@@ -5,7 +5,15 @@ import { redirect } from "next/navigation";
 import { cache } from "react";
 import { db } from "@/db";
 import { sessions, users } from "@/db/schema";
-import { generateSessionToken, hashToken } from "./tokens";
+import { createAccount } from "@/db/accounts";
+import { DEV_PASSWORD, DEV_USERNAME, isDevAutoSignIn } from "./dev-sign-in";
+import { hashSecret } from "./password";
+import {
+  generateRecoveryCode,
+  generateSessionToken,
+  hashToken,
+  normalizeRecoveryCode,
+} from "./tokens";
 
 const COOKIE = "ruchi_session";
 const SESSION_DAYS = 30;
@@ -47,25 +55,45 @@ export async function endSession(): Promise<void> {
 }
 
 /** The signed-in user, or null. Never returns password or recovery hashes. */
+const userFields = {
+  id: users.id,
+  username: users.username,
+  friendCode: users.friendCode,
+  timeZone: users.timeZone,
+  weekStart: users.weekStart,
+};
+
 export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
   const token = (await cookies()).get(COOKIE)?.value;
-  if (!token) return null;
-  const row = db
-    .select({
-      id: users.id,
-      username: users.username,
-      friendCode: users.friendCode,
-      timeZone: users.timeZone,
-      weekStart: users.weekStart,
-    })
-    .from(sessions)
-    .innerJoin(users, eq(users.id, sessions.userId))
-    .where(
-      and(eq(sessions.id, hashToken(token)), gt(sessions.expiresAt, new Date())),
-    )
-    .get();
-  return row ?? null;
+  const row = token
+    ? db
+        .select(userFields)
+        .from(sessions)
+        .innerJoin(users, eq(users.id, sessions.userId))
+        .where(
+          and(eq(sessions.id, hashToken(token)), gt(sessions.expiresAt, new Date())),
+        )
+        .get()
+    : undefined;
+  if (row) return row;
+  return isDevAutoSignIn() ? getOrCreateDevUser() : null;
 });
+
+/** The local "dev" account used by DEV_AUTO_SIGNIN; created on first use. */
+async function getOrCreateDevUser(): Promise<CurrentUser> {
+  const find = () =>
+    db.select(userFields).from(users).where(eq(users.username, DEV_USERNAME)).get();
+  const existing = find();
+  if (existing) return existing;
+  createAccount(db, {
+    username: DEV_USERNAME,
+    passwordHash: await hashSecret(DEV_PASSWORD),
+    recoveryCodeHash: await hashSecret(normalizeRecoveryCode(generateRecoveryCode())),
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone ?? "UTC",
+  });
+  // Two requests may race to create it; either way it exists now.
+  return find()!;
+}
 
 /** The signed-in user; redirects to sign-in when there is none. */
 export async function requireUser(): Promise<CurrentUser> {
