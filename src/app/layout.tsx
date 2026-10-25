@@ -40,7 +40,7 @@ export default function RootLayout({
               width={874}
               height={672}
               priority
-              className="h-14 w-auto md:h-16"
+              className="h-16 w-auto md:h-18"
             />
           </Link>
           <NavBar />
