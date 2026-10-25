@@ -25,7 +25,7 @@ export function isHabitIcon(icon: string): icon is HabitIcon {
   return Object.hasOwn(HABIT_ICONS, icon);
 }
 
-/** The emoji for a stored icon key; unknown keys fall back to the star. */
-export function iconEmoji(icon: string): string {
-  return isHabitIcon(icon) ? HABIT_ICONS[icon] : HABIT_ICONS.star;
+/** The emoji for a stored icon key, or null when the habit has none. */
+export function iconEmoji(icon: string | null): string | null {
+  return icon !== null && isHabitIcon(icon) ? HABIT_ICONS[icon] : null;
 }

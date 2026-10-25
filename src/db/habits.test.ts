@@ -18,6 +18,7 @@ function addUser(db: ReturnType<typeof createTestDb>, username: string) {
 const water: NewHabit = {
   name: "Drink water",
   icon: "water",
+  note: "After lunch",
   startDate: "2026-10-25",
   frequency: "weekly",
   weekdays: [1, 3],

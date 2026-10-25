@@ -6,6 +6,7 @@ const today = "2026-10-25";
 const form: HabitFormValues = {
   name: "Drink water",
   icon: "water",
+  note: "",
   startDate: today,
   frequency: "daily",
   weekdays: [],
@@ -49,6 +50,7 @@ describe("validateHabit", () => {
     expect(habitOf({ weekdays: ["1"], endDate: "2026-12-01", endCount: "5" })).toEqual({
       name: "Drink water",
       icon: "water",
+      note: null,
       startDate: today,
       frequency: "daily",
       weekdays: null,
@@ -64,8 +66,15 @@ describe("validateHabit", () => {
     expect(errorOf({ name: "x".repeat(41) })).toMatch(/40/);
   });
 
-  it("rejects an unknown icon", () => {
+  it("allows no icon but rejects an unknown one", () => {
+    expect(habitOf({ icon: "" }).icon).toBeNull();
     expect(errorOf({ icon: "skull" })).toMatch(/icon/);
+  });
+
+  it("trims the note, stores an empty one as null and limits its length", () => {
+    expect(habitOf({ note: "  after lunch " }).note).toBe("after lunch");
+    expect(habitOf({ note: "   " }).note).toBeNull();
+    expect(errorOf({ note: "x".repeat(301) })).toMatch(/300/);
   });
 
   it("allows today or later, never the past", () => {

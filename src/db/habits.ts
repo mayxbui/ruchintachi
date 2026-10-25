@@ -17,6 +17,7 @@ export function listHabits(db: Db, userId: string) {
       id: habits.id,
       name: habits.name,
       icon: habits.icon,
+      note: habits.note,
       startDate: habits.startDate,
       frequency: habits.frequency,
       weekdays: habits.weekdays,

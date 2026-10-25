@@ -7,6 +7,7 @@ import { expandOccurrences, type EndType, type Frequency } from "./repeat-rule";
 
 export const HABIT_NAME_MAX = 40;
 export const END_COUNT_MAX = 999;
+export const HABIT_NOTE_MAX = 300;
 
 const FREQUENCIES: Frequency[] = ["none", "daily", "weekly", "monthly", "annually"];
 const END_TYPES: EndType[] = ["never", "on_date", "after_count"];
@@ -15,6 +16,7 @@ const END_TYPES: EndType[] = ["never", "on_date", "after_count"];
 export interface HabitFormValues {
   name: string;
   icon: string;
+  note: string;
   startDate: string;
   frequency: string;
   weekdays: string[];
@@ -26,7 +28,8 @@ export interface HabitFormValues {
 /** A valid habit, ready to insert. Fields that don't apply are null. */
 export interface NewHabit {
   name: string;
-  icon: HabitIcon;
+  icon: HabitIcon | null;
+  note: string | null;
   startDate: string;
   frequency: Frequency;
   weekdays: number[] | null;
@@ -40,6 +43,7 @@ export function readHabitForm(formData: FormData): HabitFormValues {
   return {
     name: text("name"),
     icon: text("icon"),
+    note: text("note"),
     startDate: text("startDate"),
     frequency: text("frequency"),
     weekdays: formData.getAll("weekdays").map(String),
@@ -71,7 +75,14 @@ export function validateHabit(
     return { error: `Keep the name to ${HABIT_NAME_MAX} characters or fewer.` };
   }
 
-  if (!isHabitIcon(values.icon)) return { error: "Pick an icon." };
+  // No icon is fine; an unknown one is not.
+  const icon = values.icon === "" ? null : values.icon;
+  if (icon !== null && !isHabitIcon(icon)) return { error: "Pick an icon from the list." };
+
+  const note = values.note.trim();
+  if (note.length > HABIT_NOTE_MAX) {
+    return { error: `Keep the note to ${HABIT_NOTE_MAX} characters or fewer.` };
+  }
 
   if (!isIsoDate(values.startDate)) return { error: "Pick a start date." };
   if (values.startDate < today) return { error: "The start date can't be in the past." };
@@ -108,7 +119,8 @@ export function validateHabit(
 
   const habit: NewHabit = {
     name,
-    icon: values.icon,
+    icon,
+    note: note || null,
     startDate: values.startDate,
     frequency,
     weekdays,

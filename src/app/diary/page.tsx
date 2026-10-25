@@ -18,7 +18,7 @@ export default async function DiaryPage() {
           href="/diary/new"
           className="rounded-full bg-tangerine px-5 py-2 font-bold text-white shadow-pop transition hover:brightness-105"
         >
-          + New habit
+          + Create a task
         </Link>
       </div>
 
@@ -29,16 +29,21 @@ export default async function DiaryPage() {
           {habits.map((habit) => (
             <li
               key={habit.id}
-              className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-pop"
+              className="flex items-start gap-3 rounded-2xl bg-white px-4 py-3 shadow-pop"
             >
-              <span className="text-2xl" aria-hidden>
-                {iconEmoji(habit.icon)}
+              <span className="w-8 shrink-0 text-center text-2xl" aria-hidden>
+                {iconEmoji(habit.icon) ?? "•"}
               </span>
               <span className="min-w-0">
                 <span className="block font-bold break-words">{habit.name}</span>
                 <span className="block text-caption">
                   {describeRule(habit, user.weekStart)}
                 </span>
+                {habit.note && (
+                  <span className="mt-1 py-[1.5] block text-gray-700 break-words whitespace-pre-line">
+                    {habit.note}
+                  </span>
+                )}
               </span>
             </li>
           ))}

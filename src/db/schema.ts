@@ -85,7 +85,8 @@ export const habits = sqliteTable(
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
     name: text("name").notNull(),
-    icon: text("icon").notNull().default("star"),
+    icon: text("icon"), // null = no icon
+    note: text("note"),
     startDate: text("start_date").notNull(),
     frequency: text("frequency", {
       enum: ["none", "daily", "weekly", "monthly", "annually"],
