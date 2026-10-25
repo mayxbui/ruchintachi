@@ -60,12 +60,19 @@ export function TodayList({ items, today }: { items: DayItem[]; today: string })
                 <span className="w-8 shrink-0 text-center text-2xl" aria-hidden>
                   {iconEmoji(item.icon) ?? "•"}
                 </span>
-                <span
-                  className={`min-w-0 font-bold break-words transition ${
-                    item.done ? "text-caption line-through" : ""
-                  }`}
-                >
-                  {item.name}
+                <span className="min-w-0">
+                  <span
+                    className={`block font-bold break-words transition ${
+                      item.done ? "text-caption line-through" : ""
+                    }`}
+                  >
+                    {item.name}
+                  </span>
+                  {item.note && (
+                    <span className="mt-1 block text-gray-700 break-words whitespace-pre-line">
+                      {item.note}
+                    </span>
+                  )}
                 </span>
               </label>
               <TimerButton
