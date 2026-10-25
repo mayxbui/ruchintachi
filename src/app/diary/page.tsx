@@ -36,7 +36,7 @@ export default async function DiaryPage() {
               </span>
               <span className="min-w-0">
                 <span className="block font-bold break-words">{habit.name}</span>
-                <span className="block text-caption text-sm">
+                <span className="block text-caption">
                   {describeRule(habit, user.weekStart)}
                 </span>
                 {habit.note && (
