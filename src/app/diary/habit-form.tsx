@@ -14,11 +14,11 @@ import { Dropdown } from "@/components/dropdown";
 import { FormMessage, SubmitButton } from "@/components/form";
 import { useDismiss } from "@/components/use-dismiss";
 import type { WeekStart } from "@/lib/dates";
-import { describeRule } from "@/lib/describe-rule";
+import { describeRule, formatDate } from "@/lib/describe-rule";
 import { END_COUNT_MAX, HABIT_NAME_MAX, HABIT_NOTE_MAX } from "@/lib/habit-form";
 import { HABIT_ICONS, type HabitIcon } from "@/lib/habit-icons";
 import type { EndType, Frequency } from "@/lib/repeat-rule";
-import { createHabitAction } from "../actions";
+import type { HabitFormState } from "./actions";
 
 const FREQUENCIES: { value: Frequency; label: string }[] = [
   { value: "none", label: "Just once" },
@@ -119,18 +119,51 @@ function IconPicker({
   );
 }
 
-export function NewHabitForm({ today, weekStart }: { today: string; weekStart: WeekStart }) {
-  const [state, formAction] = useActionState(createHabitAction, {});
+/** Starting values when editing an existing habit. */
+export interface HabitFormInitial {
+  name: string;
+  icon: HabitIcon | null;
+  note: string | null;
+  startDate: string;
+  frequency: Frequency;
+  weekdays: number[] | null;
+  endType: EndType;
+  endDate: string | null;
+  endCount: number | null;
+}
+
+/**
+ * The create/edit task form. `lockStartDate` keeps the start date fixed
+ * (a "this day and future" edit starts on the chosen day).
+ */
+export function HabitForm({
+  today,
+  weekStart,
+  action,
+  initial,
+  lockStartDate = false,
+  submitLabel,
+  pendingLabel,
+}: {
+  today: string;
+  weekStart: WeekStart;
+  action: (prev: HabitFormState, formData: FormData) => Promise<HabitFormState>;
+  initial?: HabitFormInitial;
+  lockStartDate?: boolean;
+  submitLabel: string;
+  pendingLabel: string;
+}) {
+  const [state, formAction] = useActionState(action, {});
   // Controlled fields, so nothing is lost when the server sends back an error.
-  const [name, setName] = useState("");
-  const [icon, setIcon] = useState<HabitIcon | null>(null);
-  const [startDate, setStartDate] = useState(today);
-  const [frequency, setFrequency] = useState<Frequency>("daily");
-  const [weekdays, setWeekdays] = useState<number[]>([]);
-  const [endType, setEndType] = useState<EndType>("never");
-  const [endDate, setEndDate] = useState("");
-  const [endCount, setEndCount] = useState("10");
-  const [note, setNote] = useState("");
+  const [name, setName] = useState(initial?.name ?? "");
+  const [icon, setIcon] = useState<HabitIcon | null>(initial?.icon ?? null);
+  const [startDate, setStartDate] = useState(initial?.startDate ?? today);
+  const [frequency, setFrequency] = useState<Frequency>(initial?.frequency ?? "daily");
+  const [weekdays, setWeekdays] = useState<number[]>(initial?.weekdays ?? []);
+  const [endType, setEndType] = useState<EndType>(initial?.endType ?? "never");
+  const [endDate, setEndDate] = useState(initial?.endDate ?? "");
+  const [endCount, setEndCount] = useState(String(initial?.endCount ?? 10));
+  const [note, setNote] = useState(initial?.note ?? "");
 
   const weekOrder = weekStart === "monday" ? [1, 2, 3, 4, 5, 6, 0] : [0, 1, 2, 3, 4, 5, 6];
   const startWeekday = new Date(`${startDate || today}T00:00:00Z`).getUTCDay();
@@ -182,15 +215,23 @@ export function NewHabitForm({ today, weekStart }: { today: string; weekStart: W
       </div>
 
       <div className="grid grid-cols-2 gap-2 sm:gap-3">
-        <DatePicker
-          label="Start date"
-          name="startDate"
-          value={startDate}
-          onChange={setStartDate}
-          min={today}
-          today={today}
-          weekStart={weekStart}
-        />
+        {lockStartDate ? (
+          <div className="min-w-0">
+            <span className="mb-1 block font-bold">Starts</span>
+            <input type="hidden" name="startDate" value={startDate} />
+            <p className={`${pairedClass} truncate`}>{formatDate(startDate)}</p>
+          </div>
+        ) : (
+          <DatePicker
+            label="Start date"
+            name="startDate"
+            value={startDate}
+            onChange={setStartDate}
+            min={today}
+            today={today}
+            weekStart={weekStart}
+          />
+        )}
         <Dropdown
           label="Repeats"
           name="frequency"
@@ -285,7 +326,7 @@ export function NewHabitForm({ today, weekStart }: { today: string; weekStart: W
 
       <FormMessage error={state.error} />
       <div className="flex flex-wrap items-center gap-4">
-        <SubmitButton pendingLabel="Creating…">Create task</SubmitButton>
+        <SubmitButton pendingLabel={pendingLabel}>{submitLabel}</SubmitButton>
         <Link href="/diary" className="font-bold text-caption hover:brightness-75">
           Cancel
         </Link>
