@@ -27,15 +27,20 @@ export default function RootLayout({
   return (
     <html lang="en" className={quicksand.variable}>
       <body className="flex min-h-dvh flex-col font-sans font-medium antialiased">
-        <header className="mx-auto flex max-w-5xl flex-col items-center gap-3 px-4 pt-4">
-          <Link href="/diary" aria-label="Ruchintachi home">
+        {/* Logo left, nav centred on one line; on phones the nav drops below. */}
+        <header className="mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-3 px-4 pt-4 md:grid-cols-[1fr_auto_1fr]">
+          <Link
+            href="/diary"
+            aria-label="Ruchintachi home"
+            className="justify-self-start"
+          >
             <Image
               src="/ruchintachi-logo.png"
               alt="Ruchintachi — Habit Planner & Tracker"
               width={874}
               height={672}
               priority
-              className="h-16 w-auto md:h-20"
+              className="h-14 w-auto md:h-16"
             />
           </Link>
           <NavBar />
