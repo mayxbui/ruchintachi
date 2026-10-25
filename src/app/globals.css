@@ -8,6 +8,7 @@
   --color-sunny-deep: #f8a800; /* logo blob edge */
   --color-ink: #1b1b1b; /* wordmark */
   --color-cream: #fffbe8;
+  --color-sky-bg: #8fd3fa; /* page background */
   --color-sky: #2f6fd6; /* "Habit" / "Tracker" */
   --color-leaf: #34a853; /* "Planner" */
   --color-cherry: #e8402a; /* "&" */
@@ -24,9 +25,9 @@
 }
 
 body {
-  background-color: var(--color-cream);
+  background-color: var(--color-sky-bg);
   background-image: radial-gradient(
-    rgb(248 168 0 / 0.18) 1.5px,
+    rgb(255 255 255 / 0.35) 1.5px,
     transparent 1.5px
   );
   background-size: 22px 22px;

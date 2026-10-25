@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffe500",
+  themeColor: "#8fd3fa",
 };
 
 export default function RootLayout({
@@ -43,7 +43,7 @@ export default function RootLayout({
 
         <main className="mx-auto max-w-5xl px-4 pt-6 pb-12">{children}</main>
 
-        <footer className="mx-auto max-w-5xl px-4 pb-8 text-center text-xs text-ink/60">
+        <footer className="mx-auto max-w-5xl px-4 pb-8 text-center text-xs text-ink/75">
           Ruchintachi is an unofficial, non-commercial fan project, not
           affiliated with or endorsed by Nintendo. Tomodachi Life and its
           assets are © Nintendo. Sprite rips courtesy of The Spriters
