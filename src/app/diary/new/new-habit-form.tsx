@@ -223,7 +223,7 @@ export function NewHabitForm({ today, weekStart }: { today: string; weekStart: W
         <p className="rounded-2xl bg-sunny/30 px-4 py-3">
           <span className="mr-2 text-xl">{HABIT_ICONS[icon]}</span>
           <span className="font-bold">{name.trim() || "New habit"}</span>
-          <span className="block text-sm text-ink/70">{summary}</span>
+          <span className="block text-caption">{summary}</span>
         </p>
       )}
 

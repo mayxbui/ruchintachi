@@ -68,14 +68,23 @@ export default async function SettingsPage() {
       </PageCard>
 
       <PageCard title="FAQ">
-        <dl className="space-y-4">
+        {/* Native <details>: each question toggles its answer, no JS needed. */}
+        <div className="space-y-3">
           {faq.map(({ q, a }) => (
-            <div key={q}>
-              <dt className="font-bold">{q}</dt>
-              <dd className="text-ink/70">{a}</dd>
-            </div>
+            <details key={q} className="group rounded-2xl bg-white px-4 py-3 shadow-pop">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 font-bold [&::-webkit-details-marker]:hidden">
+                {q}
+                <span
+                  aria-hidden
+                  className="text-2xl leading-none text-tangerine transition-transform duration-300 group-open:rotate-45"
+                >
+                  +
+                </span>
+              </summary>
+              <p className="mt-2 text-caption">{a}</p>
+            </details>
           ))}
-        </dl>
+        </div>
       </PageCard>
     </div>
   );

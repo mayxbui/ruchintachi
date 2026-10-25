@@ -16,16 +16,16 @@ export function MoodBubble({ mood }: { mood: MoodId }) {
     <figure className="flex flex-col items-center gap-1">
       <div className="relative">
         <div
-          className={`flex size-16 items-center justify-center rounded-full border-4 border-white shadow-pop ${className}`}
+          className={`flex size-16 items-center justify-center rounded-full border-5 border-white shadow-pop ${className}`}
         />
         <span
-          className={`absolute -bottom-1 -left-1 size-4 rounded-full border-2 border-white ${className}`}
+          className={`absolute -bottom-1 -left-1 size-4 rounded-full border-3 border-white ${className}`}
         />
         <span
           className={`absolute -bottom-3 -left-3 size-2 rounded-full ${className}`}
         />
       </div>
-      <figcaption className="mt-2 text-sm font-bold">{label}</figcaption>
+      <figcaption className="mt-2 text-base font-bold">{label}</figcaption>
     </figure>
   );
 }

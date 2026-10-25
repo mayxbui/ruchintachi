@@ -23,7 +23,7 @@ export default async function DiaryPage() {
       </div>
 
       {habits.length === 0 ? (
-        <p className="text-ink/70">No habits yet. Add one to start filling your calendar!</p>
+        <p className="text-caption">No habits yet. Add one to start filling your calendar!</p>
       ) : (
         <ul className="space-y-3">
           {habits.map((habit) => (
@@ -36,7 +36,7 @@ export default async function DiaryPage() {
               </span>
               <span className="min-w-0">
                 <span className="block font-bold break-words">{habit.name}</span>
-                <span className="block text-sm text-ink/60">
+                <span className="block text-caption">
                   {describeRule(habit, user.weekStart)}
                 </span>
               </span>

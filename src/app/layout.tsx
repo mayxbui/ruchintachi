@@ -1,14 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Quicksand } from "next/font/google";
+import { Nunito } from "next/font/google";
 import { NavBar } from "@/components/nav-bar";
 import { getCurrentUser } from "@/lib/auth/session";
 import "./globals.css";
 
 // Self-hosted by next/font, so no request to Google from visitors.
-// No `weight` list = the variable font, so weights like 630 work.
-const quicksand = Quicksand({
+// No `weight` list = the variable font (200–1000), so any weight works.
+const nunito = Nunito({
   subsets: ["latin"],
   variable: "--font-rounded",
 });
@@ -27,8 +27,8 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const user = await getCurrentUser();
   return (
-    <html lang="en" className={quicksand.variable}>
-      <body className="flex min-h-dvh flex-col font-sans font-medium antialiased">
+    <html lang="en" className={nunito.variable}>
+      <body className="flex min-h-dvh flex-col font-sans antialiased">
         {/* Logo left, nav centred on one line; on phones the nav drops below. */}
         <header className="mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-3 px-4 pt-4 md:grid-cols-[1fr_auto_1fr]">
           <Link
@@ -42,7 +42,7 @@ export default async function RootLayout({
               width={874}
               height={672}
               priority
-              className="h-16 w-auto md:h-18"
+              className="h-18 w-auto md:h-28"
             />
           </Link>
           {user && <NavBar />}
@@ -77,12 +77,10 @@ function WaveFooter() {
           d="M0 60 C 200 30, 380 30, 600 55 S 960 85, 1180 55 S 1380 35, 1440 50 V80 H0 Z"
         />
       </svg>
-      <div className="bg-tangerine px-4 pt-2 pb-8">
-        <p className="mx-auto max-w-5xl text-center text-xs text-white">
-          Ruchintachi is an unofficial, non-commercial fan project, not
-          affiliated with or endorsed by Nintendo. Tomodachi Life and its
-          assets are © Nintendo. Sprite rips courtesy of The Spriters
-          Resource contributors.
+      <div className="bg-tangerine px-4 pt-6 pb-6">
+        <p className="mx-auto max-w-5xl text-center text-white">
+          Crafted by <span className="text-lg font-black text-sunny">mayxbui</span>. <br></br>
+          <span className="text-sm">Tomodachi Life and its assets are registered trademarks of © Nintendo Co., Ltd. Sprite rips courtesy of The Spriters Resource contributors.</span>
         </p>
       </div>
     </footer>

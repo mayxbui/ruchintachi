@@ -5,7 +5,7 @@ export default async function CalendarPage() {
   await requireUser();
   return (
     <PageCard title="Calendar">
-      <p className="text-ink/70">
+      <p className="text-caption">
         Your month fills up with gifts as you keep your habits.
       </p>
     </PageCard>
