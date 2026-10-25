@@ -1,17 +1,35 @@
 import Link from "next/link";
 import { PageCard } from "@/components/page-card";
 import { db } from "@/db";
+import { completedHabitIds, listExceptions } from "@/db/completions";
 import { listHabits } from "@/db/habits";
 import { requireUser } from "@/lib/auth/session";
-import { describeRule } from "@/lib/describe-rule";
+import { todayIn } from "@/lib/dates";
+import { describeRule, formatDate } from "@/lib/describe-rule";
 import { iconEmoji } from "@/lib/habit-icons";
+import { itemsOn } from "@/lib/today";
+import { TodayList } from "./today-list";
 
 export default async function DiaryPage() {
   const user = await requireUser();
   const habits = listHabits(db, user.id);
+  // "Today" follows the user's time zone setting.
+  const today = todayIn(user.timeZone);
+  const todayItems = itemsOn(
+    habits,
+    listExceptions(db, user.id),
+    completedHabitIds(db, user.id, today),
+    today,
+  );
 
   return (
     <PageCard title="My Diary">
+      <section className="mb-8">
+        <h2 className="mb-1 text-xl">Today</h2>
+        <p className="mb-3 text-caption">{formatDate(today)}</p>
+        <TodayList items={todayItems} />
+      </section>
+
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <h2 className="text-xl">My habits</h2>
         <Link
