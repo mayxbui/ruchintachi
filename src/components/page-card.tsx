@@ -9,7 +9,7 @@ export function PageCard({
   children: ReactNode;
 }) {
   return (
-    <section className="rounded-blob border-4 border-sunny bg-white/90 p-6 shadow-pop">
+    <section className="rounded-blob border-4 border-sunny bg-white/60 p-6 shadow-pop">
       <h1 className="mb-4 text-2xl">{title}</h1>
       {children}
     </section>
