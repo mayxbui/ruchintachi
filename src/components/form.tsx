@@ -16,7 +16,7 @@ export function TextField({
         className="w-full bg-white px-4 py-3 shadow-pop outline-none focus:ring-4 focus:ring-sunny"
         {...input}
       />
-      {hint && <span className="mt-1 block text-sm text-caption">{hint}</span>}
+      {hint && <span className="mt-1 block text-caption">{hint}</span>}
     </label>
   );
 }

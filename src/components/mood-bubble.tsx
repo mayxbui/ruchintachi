@@ -25,7 +25,7 @@ export function MoodBubble({ mood }: { mood: MoodId }) {
           className={`absolute -bottom-3 -left-3 size-2 rounded-full ${className}`}
         />
       </div>
-      <figcaption className="mt-2 text-sm font-bold">{label}</figcaption>
+      <figcaption className="mt-2 text-base font-bold">{label}</figcaption>
     </figure>
   );
 }

@@ -8,7 +8,7 @@ export default function SignUpPage() {
   return (
     <PageCard title="Sign up">
       <p className="mb-6 text-caption">
-        Just a username and password. No email, no real name.
+        Save your tasks.
       </p>
       <SignUpForm />
     </PageCard>

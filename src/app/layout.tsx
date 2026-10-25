@@ -42,7 +42,7 @@ export default async function RootLayout({
               width={874}
               height={672}
               priority
-              className="h-16 w-auto md:h-18"
+              className="h-18 w-auto md:h-28"
             />
           </Link>
           {user && <NavBar />}
@@ -78,9 +78,9 @@ function WaveFooter() {
         />
       </svg>
       <div className="bg-tangerine px-4 pt-6 pb-6">
-        <p className="mx-auto max-w-5xl text-left text-sm text-white">
-          Tomodachi Life and its assets are registered trademarks of © Nintendo Co., Ltd. <br></br>
-          Sprite rips courtesy of The Spriters Resource contributors.
+        <p className="mx-auto max-w-5xl text-center text-white">
+          Crafted by <span className="text-lg font-black text-sunny">mayxbui</span>. <br></br>
+          <span className="text-sm">Tomodachi Life and its assets are registered trademarks of © Nintendo Co., Ltd. Sprite rips courtesy of The Spriters Resource contributors.</span>
         </p>
       </div>
     </footer>

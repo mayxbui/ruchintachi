@@ -28,7 +28,7 @@ export function PreferencesForm({
         <label htmlFor="timeZone" className="mb-1 block font-bold">
           Time zone
         </label>
-        <p className="mb-2 text-sm text-caption">
+        <p className="mb-2 text-caption">
           &ldquo;Today&rdquo; follows this, so your tasks reset at your midnight.
         </p>
         <div className="flex flex-wrap gap-3">
