@@ -1,0 +1,10 @@
+# Nightly SQLite backup (issue #23). Triggered by ruchintachi-backup.timer.
+[Unit]
+Description=Back up the Ruchintachi SQLite database
+
+[Service]
+Type=oneshot
+User=ruchintachi
+Group=ruchintachi
+EnvironmentFile=/etc/ruchintachi.env
+ExecStart=/usr/local/bin/ruchintachi-backup
