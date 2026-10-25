@@ -36,8 +36,8 @@ body {
   color: var(--color-ink);
 }
 
-/* Surfaces (cards, bars, buttons) use 80–90% opaque backgrounds,
-   e.g. bg-white/85, so the sand shows through slightly. */
+/* Cards use an 80–90% opaque background (bg-white/85) so the sand shows
+   through slightly. Everything else (nav, buttons, footer) stays solid. */
 @layer base {
   /* Quicksand is a variable font, so in-between weights render exactly. */
   h1 {

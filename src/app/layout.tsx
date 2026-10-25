@@ -64,7 +64,7 @@ function WaveFooter() {
         aria-hidden
         viewBox="0 0 1440 80"
         preserveAspectRatio="none"
-        className="block h-10 w-full opacity-90 md:h-16"
+        className="block h-10 w-full md:h-16"
       >
         <path
           className="fill-tangerine-light"
@@ -75,7 +75,7 @@ function WaveFooter() {
           d="M0 60 C 200 30, 380 30, 600 55 S 960 85, 1180 55 S 1380 35, 1440 50 V80 H0 Z"
         />
       </svg>
-      <div className="bg-tangerine/90 px-4 pt-2 pb-8">
+      <div className="bg-tangerine px-4 pt-2 pb-8">
         <p className="mx-auto max-w-5xl text-center text-xs text-white">
           Ruchintachi is an unofficial, non-commercial fan project, not
           affiliated with or endorsed by Nintendo. Tomodachi Life and its
