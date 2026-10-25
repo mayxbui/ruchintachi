@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+/* Palette from ruchintachi-logo.png, the beach, and the five mood bubbles. */
+@theme {
+  --font-sans: var(--font-rounded), ui-rounded, system-ui, sans-serif;
+
+  --color-sunny: #ffe500; /* logo blob */
+  --color-sunny-deep: #f8a800; /* logo blob edge */
+  --color-ink: #1b1b1b; /* wordmark */
+  --color-sand: #fcefc7; /* page background */
+  --color-sand-deep: #f3dc9c;
+  --color-sky: #2f6fd6; /* "Habit" / "Tracker" */
+  --color-leaf: #34a853; /* "Planner" */
+  --color-cherry: #e8402a; /* "&" */
+  --color-tangerine: #f07a1e; /* active nav pill, footer */
+  --color-tangerine-light: #f8a14a; /* footer wave crest */
+
+  --color-mood-lovestruck: #ff8fc8;
+  --color-mood-overjoyed: #ff9f1c;
+  --color-mood-content: #ffe500;
+  --color-mood-gloomy: #5aa9f0;
+  --color-mood-fuming: #ef3b2d;
+
+  --radius-blob: 2rem;
+  --shadow-pop: 0 4px 0 0 rgb(0 0 0 / 0.12);
+}
+
+body {
+  background-color: var(--color-sand);
+  /* Faint sand grains. */
+  background-image: radial-gradient(
+    rgb(214 176 96 / 0.22) 1.2px,
+    transparent 1.2px
+  );
+  background-size: 18px 18px;
+  color: var(--color-ink);
+}
+
+/* Cards use a 60% opaque background (bg-white/60) so the sand shows
+   through slightly. Everything else (nav, buttons, footer) stays solid. */
+@layer base {
+  /* Quicksand is a variable font, so in-between weights render exactly. */
+  h1 {
+    font-weight: 700;
+  }
+  h2 {
+    font-weight: 630;
+  }
+  h3 {
+    font-weight: 580;
+  }
+  p {
+    font-weight: 525;
+  }
+
+  /* Everything is rounded: no sharp corners anywhere, even on squares.
+     Components can still go rounder (rounded-full) but never sharper. */
+  button,
+  input,
+  select,
+  textarea,
+  img,
+  table,
+  dialog {
+    border-radius: 1rem;
+  }
+
+  /* Buttons: no border, a soft drop shadow instead. */
+  button,
+  input[type="submit"],
+  input[type="button"] {
+    border: 0;
+    border-radius: 9999px;
+    box-shadow: var(--shadow-pop);
+  }
+}
