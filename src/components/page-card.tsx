@@ -10,7 +10,7 @@ export function PageCard({
 }) {
   return (
     <section className="rounded-blob border-4 border-sunny bg-white p-6 shadow-pop">
-      <h1 className="mb-4 text-2xl font-extrabold">{title}</h1>
+      <h1 className="mb-4 text-2xl">{title}</h1>
       {children}
     </section>
   );

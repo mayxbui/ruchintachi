@@ -18,7 +18,7 @@ export function NavBar() {
   return (
     <nav
       aria-label="Main"
-      className="w-full max-w-full overflow-x-auto rounded-full border-4 border-white bg-sky-50/90 p-1 shadow-pop sm:p-1.5 [scrollbar-width:none] md:w-auto"
+      className="w-full max-w-full overflow-x-auto rounded-full border-4 border-white bg-white/85 p-1 shadow-pop sm:p-1.5 [scrollbar-width:none] md:w-auto"
     >
       <ul className="flex min-w-max justify-between gap-0 sm:gap-1 md:gap-2">
         {tabs.map((tab) => {
