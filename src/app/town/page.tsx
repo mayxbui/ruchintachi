@@ -1,6 +1,8 @@
 import { PageCard } from "@/components/page-card";
+import { requireUser } from "@/lib/auth/session";
 
-export default function TownPage() {
+export default async function TownPage() {
+  await requireUser();
   return (
     <PageCard title="Town">
       <p className="text-ink/70">

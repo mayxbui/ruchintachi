@@ -1,6 +1,8 @@
 import { PageCard } from "@/components/page-card";
+import { requireUser } from "@/lib/auth/session";
 
-export default function DiaryPage() {
+export default async function DiaryPage() {
+  await requireUser();
   return (
     <PageCard title="My Diary">
       <p className="text-ink/70">
