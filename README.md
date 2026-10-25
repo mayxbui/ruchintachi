@@ -12,7 +12,7 @@ A habit tracker inspired by **Tomodachi Life: Living the Dream**. Create a Mii, 
 - Sign up with a **username + password only**. No email, no real name, no personal information.
 - At sign-up you get a one-time **recovery code** (the only way back in if you forget the password, since there's no email).
 - Create your Mii from **preset options and colours** (a full face builder may come later).
-- What's stored per account: username, password hash, friend code and friend list, Mii appearance, habits/plan, completions, items, mood, settings. Nothing else.
+- What's stored per account: username, password hash, friend code and friend list, Mii appearance, habits/plan, completions, items, mood, cheers sent and received, group memberships, settings. Nothing else.
 - You can delete your account and all its data.
 
 ### 2. Habits
@@ -55,8 +55,16 @@ Your Mii's mood shows as a coloured thought bubble, with five levels (names are 
 - Every player has a unique **friend code** to share.
 - Enter a friend's code to send a request; once they accept, you appear in each other's **Town**.
 - From Town you can visit a friend's Mii and see its look, the clothes it's wearing and its item collection — and they can see yours.
-- **That's all friends can see.** Your habits, diary and calendar are always private.
+- **Friends leaderboard** — Town lists your friends by **today's progress** (e.g. "70% done"), plus each friend's current streak (days in a row with every task done). Only numbers are shared, never habit names.
+- **Cheer a friend** — tap an emoji button (👏 🎉 🔥 💪 ⭐) on a friend's row to congratulate them; they see who cheered them today. No free-text messages.
+- Sharing your progress is **on by default**; turn off "Share my progress with friends" in Settings to drop off the leaderboard. Your Mii and items stay visible either way.
+- **Everything else stays private**: habit names, your diary, calendar, which days you missed and your mood history.
 - Remove a friend at any time.
+
+### 8. Group trackers (tentative)
+- Make a **group habit** with friends, e.g. "Drink 8 glasses of water". Everyone gets it on their own diary and ticks it themselves.
+- The group page shows who has done it today and a **group streak** (days in a row when every member finished it).
+- Only the shared group habit is visible to the group; your other habits stay private. Leave a group at any time.
 
 ## Pages
 
@@ -64,7 +72,7 @@ Your Mii's mood shows as a coloured thought bubble, with five levels (names are 
 |---|---|
 | **My Diary** | Today's tasks to tick off, your habit list, create/edit habits |
 | **Calendar** | Month grid filled with the gifts you earned, plus bar charts |
-| **Town** | Your friend code, add friends, visit friends' Miis |
+| **Town** | Your friend code, add friends, friends leaderboard with cheers, visit friends' Miis, group trackers |
 | **Mii** | Mii creator, wardrobe, inventory, mood line |
 | **Settings** | Time zone, week start (Monday/Sunday), account, recovery code, delete account, **FAQ** |
 
@@ -93,6 +101,7 @@ Everything is free and open source, and runs on one Azure VM.
 - [ ] Final mood names.
 - [ ] Domain name.
 - [ ] Who can sign up: only you, invite codes, or anyone with the link.
+- [ ] Group trackers: group size limit, who can invite, and whether a group habit can repeat on any rule or daily only.
 
 ## References
 
