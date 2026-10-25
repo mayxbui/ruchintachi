@@ -142,6 +142,7 @@ export function HabitForm({
   action,
   initial,
   lockStartDate = false,
+  cancelHref = "/chronicle",
   submitLabel,
   pendingLabel,
 }: {
@@ -150,6 +151,7 @@ export function HabitForm({
   action: (prev: HabitFormState, formData: FormData) => Promise<HabitFormState>;
   initial?: HabitFormInitial;
   lockStartDate?: boolean;
+  cancelHref?: string;
   submitLabel: string;
   pendingLabel: string;
 }) {
@@ -327,7 +329,7 @@ export function HabitForm({
       <FormMessage error={state.error} />
       <div className="flex flex-wrap items-center gap-4">
         <SubmitButton pendingLabel={pendingLabel}>{submitLabel}</SubmitButton>
-        <Link href="/chronicle" className="font-bold text-caption hover:brightness-75">
+        <Link href={cancelHref} className="font-bold text-caption hover:brightness-75">
           Cancel
         </Link>
       </div>
