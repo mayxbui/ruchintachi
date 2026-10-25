@@ -1,6 +1,7 @@
 "use client";
 
-import { IconCheck } from "@tabler/icons-react";
+import { IconCheck, IconPencil } from "@tabler/icons-react";
+import Link from "next/link";
 import { useOptimistic, useState, useTransition } from "react";
 import { FormMessage } from "@/components/form";
 import { iconEmoji } from "@/lib/habit-icons";
@@ -8,7 +9,7 @@ import { dayProgress, type DayItem } from "@/lib/today";
 import { toggleCompletionAction } from "./actions";
 
 /** Today's tasks as big round yes/no checkboxes. Ticks show at once and roll back on error. */
-export function TodayList({ items }: { items: DayItem[] }) {
+export function TodayList({ items, today }: { items: DayItem[]; today: string }) {
   const [shown, setDone] = useOptimistic(items, (current, change: { habitId: string; done: boolean }) =>
     current.map((item) => (item.habitId === change.habitId ? { ...item, done: change.done } : item)),
   );
@@ -37,8 +38,8 @@ export function TodayList({ items }: { items: DayItem[] }) {
       </p>
       <ul className="space-y-3">
         {shown.map((item) => (
-          <li key={item.habitId}>
-            <label className="flex cursor-pointer items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-pop">
+          <li key={item.habitId} className="flex items-center gap-1 rounded-2xl bg-white pr-2 shadow-pop">
+            <label className="flex min-w-0 flex-1 cursor-pointer items-center gap-3 px-4 py-3">
               <input
                 type="checkbox"
                 checked={item.done}
@@ -62,6 +63,13 @@ export function TodayList({ items }: { items: DayItem[] }) {
                 {item.name}
               </span>
             </label>
+            <Link
+              href={`/diary/${item.habitId}/edit?date=${today}`}
+              aria-label={`Edit ${item.name}`}
+              className="shrink-0 rounded-full p-2 text-caption transition hover:bg-sand hover:text-ink"
+            >
+              <IconPencil className="size-5" stroke={2.25} />
+            </Link>
           </li>
         ))}
       </ul>
