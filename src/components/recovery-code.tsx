@@ -9,7 +9,7 @@ export function RecoveryCodeNotice({ code }: { code: string }) {
   return (
     <div className="space-y-3 rounded-blob bg-sunny/30 p-5">
       <p className="font-bold">Your recovery code</p>
-      <p className="text-ink/70">
+      <p className="text-caption">
         This is the only way back into your account if you forget your
         password. Write it down or save it somewhere safe. We can&apos;t
         show it again.

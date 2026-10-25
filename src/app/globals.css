@@ -3,10 +3,13 @@
 /* Palette from ruchintachi-logo.png, the beach, and the five mood bubbles. */
 @theme {
   --font-sans: var(--font-rounded), ui-rounded, system-ui, sans-serif;
+  --font-weight-bold: 800; /* labels, buttons, nav: a step above body text */
 
+  --color-cream: #fefae9;
   --color-sunny: #ffe500; /* logo blob */
   --color-sunny-deep: #f8a800; /* logo blob edge */
   --color-ink: #1b1b1b; /* wordmark */
+  --color-caption: #866330; /* captions, hints, subtitles */
   --color-sand: #fcefc7; /* page background */
   --color-sand-deep: #f3dc9c;
   --color-sky: #2f6fd6; /* "Habit" / "Tracker" */
@@ -22,35 +25,32 @@
   --color-mood-fuming: #ef3b2d;
 
   --radius-blob: 2rem;
-  --shadow-pop: 0 4px 0 0 rgb(0 0 0 / 0.12);
+  --shadow-pop: 0 .4rem 0 0 rgb(180 105 22 / 0.25);
 }
 
 body {
+  /* Default background (#43). Sand shows while the image loads. */
   background-color: var(--color-sand);
-  /* Faint sand grains. */
-  background-image: radial-gradient(
-    rgb(214 176 96 / 0.22) 1.2px,
-    transparent 1.2px
-  );
-  background-size: 18px 18px;
+  background-image: url("/bg-og.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   color: var(--color-ink);
 }
 
-/* Cards use a 60% opaque background (bg-white/60) so the sand shows
+/* Cards use a 80% opaque background (bg-white/80) so the background shows
    through slightly. Everything else (nav, buttons, footer) stays solid. */
 @layer base {
-  /* Quicksand is a variable font, so in-between weights render exactly. */
-  h1 {
+  /* Nunito is variable (200–1000): body 700, font-bold 800, headings 900. */
+  body {
     font-weight: 700;
+    letter-spacing: -0.025em; 
   }
-  h2 {
-    font-weight: 630;
-  }
+  h1,
+  h2,
   h3 {
-    font-weight: 580;
-  }
-  p {
-    font-weight: 525;
+    font-weight: 900;
+    letter-spacing: -0.025em; 
   }
 
   /* Everything is rounded: no sharp corners anywhere, even on squares.
@@ -65,10 +65,13 @@ body {
     border-radius: 1rem;
   }
 
-  /* Buttons: no border, a soft drop shadow instead. */
+  /* Buttons: no border, a soft drop shadow instead, and never too short
+     ("Save" gets the same pill as longer labels). */
   button,
   input[type="submit"],
   input[type="button"] {
+    min-width: 6rem;
+    
     border: 0;
     border-radius: 9999px;
     box-shadow: var(--shadow-pop);

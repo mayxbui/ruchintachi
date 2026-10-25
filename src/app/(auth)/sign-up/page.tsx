@@ -7,7 +7,7 @@ import { SignUpForm } from "./sign-up-form";
 export default function SignUpPage() {
   return (
     <PageCard title="Sign up">
-      <p className="mb-6 text-ink/70">
+      <p className="mb-6 text-caption">
         Just a username and password. No email, no real name.
       </p>
       <SignUpForm />

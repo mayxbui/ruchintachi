@@ -28,7 +28,7 @@ export function PreferencesForm({
         <label htmlFor="timeZone" className="mb-1 block font-bold">
           Time zone
         </label>
-        <p className="mb-2 text-sm text-ink/60">
+        <p className="mb-2 text-sm text-caption">
           &ldquo;Today&rdquo; follows this, so your tasks reset at your midnight.
         </p>
         <div className="flex flex-wrap gap-3">
@@ -48,7 +48,7 @@ export function PreferencesForm({
           <button
             type="button"
             onClick={() => setZone(Intl.DateTimeFormat().resolvedOptions().timeZone)}
-            className="bg-white px-4 py-2 font-bold"
+            className="bg-white px-3 py-3 font-bold"
           >
             Use this device&apos;s
           </button>
@@ -67,7 +67,7 @@ export function PreferencesForm({
                 defaultChecked={weekStart === day}
                 className="peer sr-only"
               />
-              <span className="block rounded-full bg-white px-5 py-2 font-bold text-slate-500 capitalize shadow-pop transition peer-checked:bg-tangerine peer-checked:text-white peer-focus-visible:ring-4 peer-focus-visible:ring-sky">
+              <span className="block rounded-full bg-white px-5 py-3 font-bold text-slate-500 capitalize shadow-pop transition peer-checked:bg-tangerine peer-checked:text-white peer-focus-visible:ring-4 peer-focus-visible:ring-sky">
                 {day}
               </span>
             </label>
@@ -87,8 +87,8 @@ export function RecoveryCodeForm() {
   if (state.recoveryCode) return <RecoveryCodeNotice code={state.recoveryCode} />;
 
   return (
-    <form action={formAction} className="space-y-4">
-      <p className="text-ink/70">
+    <form action={formAction} className="space-y-5">
+      <p className="text-caption">
         Lost your recovery code? Make a new one. Your old code stops working.
       </p>
       <FormMessage error={state.error} />
@@ -108,8 +108,8 @@ export function DeleteAccountForm({ username }: { username: string }) {
   const [state, formAction] = useActionState(deleteAccountAction, {});
 
   return (
-    <form action={formAction} className="space-y-4">
-      <p className="text-ink/70">
+    <form action={formAction} className="space-y-5">
+      <p className="text-caption">
         This deletes your account, your Mii, habits, diary, calendar, items
         and friends for good. It can&apos;t be undone.
       </p>

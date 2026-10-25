@@ -72,7 +72,7 @@ export default async function SettingsPage() {
           {faq.map(({ q, a }) => (
             <div key={q}>
               <dt className="font-bold">{q}</dt>
-              <dd className="text-ink/70">{a}</dd>
+              <dd className="text-caption">{a}</dd>
             </div>
           ))}
         </dl>

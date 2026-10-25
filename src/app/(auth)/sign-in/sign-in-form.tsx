@@ -31,7 +31,7 @@ export function SignInForm() {
           Forgot password?
         </Link>
       </div>
-      <p className="pt-2 text-ink/70">
+      <p className="pt-2 text-caption">
         New here?{" "}
         <Link href="/sign-up" className="font-bold text-sky underline">
           Sign up

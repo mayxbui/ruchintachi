@@ -16,7 +16,7 @@ export function TextField({
         className="w-full bg-white px-4 py-3 shadow-pop outline-none focus:ring-4 focus:ring-sunny"
         {...input}
       />
-      {hint && <span className="mt-1 block text-sm text-ink/60">{hint}</span>}
+      {hint && <span className="mt-1 block text-sm text-caption">{hint}</span>}
     </label>
   );
 }
@@ -37,7 +37,7 @@ export function SubmitButton({
     <button
       type="submit"
       disabled={pending}
-      className={`${colour} px-6 py-3 font-bold text-white transition hover:brightness-105 disabled:opacity-60`}
+      className={`${colour} px-3 py-3 font-bold text-white transition hover:brightness-105 disabled:opacity-60`}
     >
       {pending ? pendingLabel : children}
     </button>
