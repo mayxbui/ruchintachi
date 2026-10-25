@@ -104,7 +104,7 @@ export async function requireUser(): Promise<CurrentUser> {
 
 /** For sign-in/sign-up pages: signed-in users go straight home. */
 export async function redirectIfSignedIn(): Promise<void> {
-  if (await getCurrentUser()) redirect("/diary");
+  if (await getCurrentUser()) redirect("/chronicle");
 }
 
 /** Client IP as forwarded by Caddy, used only as a rate-limit key. */

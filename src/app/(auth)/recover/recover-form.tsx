@@ -19,10 +19,10 @@ export function RecoverForm() {
         </p>
         <RecoveryCodeNotice code={state.recoveryCode} />
         <Link
-          href="/diary"
+          href="/chronicle"
           className="inline-block rounded-full bg-tangerine px-6 py-3 font-bold text-white shadow-pop"
         >
-          I&apos;ve saved it, go to my diary
+          I&apos;ve saved it, go to my chronicle
         </Link>
       </div>
     );

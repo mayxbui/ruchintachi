@@ -286,7 +286,7 @@ export function NewHabitForm({ today, weekStart }: { today: string; weekStart: W
       <FormMessage error={state.error} />
       <div className="flex flex-wrap items-center gap-4">
         <SubmitButton pendingLabel="Creating…">Create task</SubmitButton>
-        <Link href="/diary" className="font-bold text-caption hover:brightness-75">
+        <Link href="/chronicle" className="font-bold text-caption hover:brightness-75">
           Cancel
         </Link>
       </div>

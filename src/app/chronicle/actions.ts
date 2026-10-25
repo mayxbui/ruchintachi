@@ -19,6 +19,6 @@ export async function createHabitAction(
   if ("error" in result) return { error: result.error };
 
   createHabit(db, user.id, result.habit);
-  revalidatePath("/diary");
-  redirect("/diary");
+  revalidatePath("/chronicle");
+  redirect("/chronicle");
 }

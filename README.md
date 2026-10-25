@@ -58,11 +58,11 @@ Your Mii's mood shows as a coloured thought bubble, with five levels (names are 
 - **Friends leaderboard** — Town lists your friends by **today's progress** (e.g. "70% done"), plus each friend's current streak (days in a row with every task done). Only numbers are shared, never habit names.
 - **Cheer a friend** — tap an emoji button (👏 🎉 🔥 💪 ⭐) on a friend's row to congratulate them; they see who cheered them today. No free-text messages.
 - Sharing your progress is **on by default**; turn off "Share my progress with friends" in Settings to drop off the leaderboard. Your Mii and items stay visible either way.
-- **Everything else stays private**: habit names, your diary, calendar, which days you missed and your mood history.
+- **Everything else stays private**: habit names, your chronicle, calendar, which days you missed and your mood history.
 - Remove a friend at any time.
 
 ### 8. Group trackers (tentative)
-- Make a **group habit** with friends, e.g. "Drink 8 glasses of water". Everyone gets it on their own diary and ticks it themselves.
+- Make a **group habit** with friends, e.g. "Drink 8 glasses of water". Everyone gets it on their own chronicle and ticks it themselves.
 - The group page shows who has done it today and a **group streak** (days in a row when every member finished it).
 - Only the shared group habit is visible to the group; your other habits stay private. Leave a group at any time.
 
@@ -70,7 +70,7 @@ Your Mii's mood shows as a coloured thought bubble, with five levels (names are 
 
 | Navbar | What's there |
 |---|---|
-| **My Diary** | Today's tasks to tick off, your habit list, create/edit habits |
+| **My Chronicle** | Today's tasks to tick off, your habit list, create/edit habits |
 | **Calendar** | Month grid filled with the gifts you earned, plus bar charts |
 | **Town** | Your friend code, add friends, friends leaderboard with cheers, visit friends' Miis, group trackers |
 | **Mii** | Mii creator, wardrobe, inventory, mood line |

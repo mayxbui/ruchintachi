@@ -14,7 +14,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 // Each tab has its own blob colour (a theme colour name). `bg` is the same
 // colour as a class, painted on the link before the blob is measured.
 const tabs = [
-  { href: "/diary", label: "My Diary", icon: IconNotebook, colour: "tangerine", bg: "bg-tangerine" },
+  { href: "/chronicle", label: "My Chronicle", icon: IconNotebook, colour: "tangerine", bg: "bg-tangerine" },
   { href: "/calendar", label: "Calendar", icon: IconCalendarHeart, colour: "sky", bg: "bg-sky" },
   { href: "/town", label: "Town", icon: IconBuildingCommunity, colour: "leaf", bg: "bg-leaf" },
   { href: "/mii", label: "Mii", icon: IconMoodSmile, colour: "blossom", bg: "bg-blossom" },

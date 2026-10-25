@@ -26,7 +26,7 @@ const faq = [
   },
   {
     q: "What can my friends see?",
-    a: "Only your Mii: its look, its clothes and its item collection. Your habits, diary and calendar stay private.",
+    a: "Only your Mii: its look, its clothes and its item collection. Your habits, chronicle and calendar stay private.",
   },
 ];
 
