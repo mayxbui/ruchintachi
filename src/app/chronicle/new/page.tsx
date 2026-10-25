@@ -1,13 +1,20 @@
 import { PageCard } from "@/components/page-card";
 import { requireUser } from "@/lib/auth/session";
 import { todayIn } from "@/lib/dates";
-import { NewHabitForm } from "./new-habit-form";
+import { createHabitAction } from "../actions";
+import { HabitForm } from "../habit-form";
 
 export default async function NewHabitPage() {
   const user = await requireUser();
   return (
     <PageCard title="Create a task">
-      <NewHabitForm today={todayIn(user.timeZone)} weekStart={user.weekStart} />
+      <HabitForm
+        today={todayIn(user.timeZone)}
+        weekStart={user.weekStart}
+        action={createHabitAction}
+        submitLabel="Create task"
+        pendingLabel="Creating…"
+      />
     </PageCard>
   );
 }
