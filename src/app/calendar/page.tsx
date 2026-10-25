@@ -1,6 +1,8 @@
 import { PageCard } from "@/components/page-card";
+import { requireUser } from "@/lib/auth/session";
 
-export default function CalendarPage() {
+export default async function CalendarPage() {
+  await requireUser();
   return (
     <PageCard title="Calendar">
       <p className="text-ink/70">

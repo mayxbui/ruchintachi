@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Quicksand } from "next/font/google";
 import { NavBar } from "@/components/nav-bar";
+import { getCurrentUser } from "@/lib/auth/session";
 import "./globals.css";
 
 // Self-hosted by next/font, so no request to Google from visitors.
@@ -21,9 +22,10 @@ export const viewport: Viewport = {
   themeColor: "#fcefc7",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const user = await getCurrentUser();
   return (
     <html lang="en" className={quicksand.variable}>
       <body className="flex min-h-dvh flex-col font-sans font-medium antialiased">
@@ -43,7 +45,7 @@ export default function RootLayout({
               className="h-16 w-auto md:h-18"
             />
           </Link>
-          <NavBar />
+          {user && <NavBar />}
         </header>
 
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 pt-6 pb-12">

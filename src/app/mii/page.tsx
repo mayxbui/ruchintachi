@@ -1,7 +1,9 @@
 import { PageCard } from "@/components/page-card";
 import { MoodBubble, moods } from "@/components/mood-bubble";
+import { requireUser } from "@/lib/auth/session";
 
-export default function MiiPage() {
+export default async function MiiPage() {
+  await requireUser();
   return (
     <PageCard title="Mii">
       <p className="mb-6 text-ink/70">
