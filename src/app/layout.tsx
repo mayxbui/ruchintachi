@@ -1,12 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { M_PLUS_Rounded_1c } from "next/font/google";
+import { Quicksand } from "next/font/google";
 import { NavBar } from "@/components/nav-bar";
 import "./globals.css";
 
-const rounded = M_PLUS_Rounded_1c({
-  weight: ["400", "700", "800"],
+// Self-hosted by next/font, so no request to Google from visitors.
+const quicksand = Quicksand({
+  weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-rounded",
 });
@@ -24,9 +25,9 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={rounded.variable}>
-      <body className="min-h-dvh font-sans antialiased">
-        <header className="mx-auto flex max-w-5xl items-center justify-center px-4 pt-4 md:justify-between">
+    <html lang="en" className={quicksand.variable}>
+      <body className="min-h-dvh font-sans font-medium antialiased">
+        <header className="mx-auto flex max-w-5xl flex-col items-center gap-3 px-4 pt-4">
           <Link href="/diary" aria-label="Ruchintachi home">
             <Image
               src="/ruchintachi-logo.png"
@@ -40,11 +41,9 @@ export default function RootLayout({
           <NavBar />
         </header>
 
-        <main className="mx-auto max-w-5xl px-4 pt-6 pb-28 md:pb-12">
-          {children}
-        </main>
+        <main className="mx-auto max-w-5xl px-4 pt-6 pb-12">{children}</main>
 
-        <footer className="mx-auto max-w-5xl px-4 pb-28 text-center text-xs text-ink/60 md:pb-8">
+        <footer className="mx-auto max-w-5xl px-4 pb-8 text-center text-xs text-ink/60">
           Ruchintachi is an unofficial, non-commercial fan project, not
           affiliated with or endorsed by Nintendo. Tomodachi Life and its
           assets are © Nintendo. Sprite rips courtesy of The Spriters

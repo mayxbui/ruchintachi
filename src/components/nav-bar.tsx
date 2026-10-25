@@ -4,23 +4,23 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const tabs = [
-  { href: "/diary", label: "My Diary", icon: "📔" },
-  { href: "/calendar", label: "Calendar", icon: "📅" },
-  { href: "/town", label: "Town", icon: "🏘️" },
-  { href: "/mii", label: "Mii", icon: "🙂" },
-  { href: "/settings", label: "Settings", icon: "⚙️" },
+  { href: "/diary", label: "My Diary" },
+  { href: "/calendar", label: "Calendar" },
+  { href: "/town", label: "Town" },
+  { href: "/mii", label: "Mii" },
+  { href: "/settings", label: "Settings" },
 ] as const;
 
-/** Bottom tab bar on phones, inline row in the header on desktop. */
+/** Top pill bar; the active tab is a bold orange pill. Scrolls sideways on narrow phones. */
 export function NavBar() {
   const pathname = usePathname();
 
   return (
     <nav
       aria-label="Main"
-      className="fixed inset-x-0 bottom-0 z-20 border-t-4 border-sunny-deep bg-sunny md:static md:border-0 md:bg-transparent"
+      className="w-full max-w-full overflow-x-auto rounded-full border-4 border-white bg-sky-50/90 p-1 shadow-pop sm:p-1.5 [scrollbar-width:none] md:w-auto"
     >
-      <ul className="mx-auto flex max-w-md justify-around md:max-w-none md:justify-end md:gap-2">
+      <ul className="flex min-w-max justify-between gap-0 sm:gap-1 md:gap-2">
         {tabs.map((tab) => {
           const active = pathname.startsWith(tab.href);
           return (
@@ -28,15 +28,12 @@ export function NavBar() {
               <Link
                 href={tab.href}
                 aria-current={active ? "page" : undefined}
-                className={`flex flex-col items-center gap-0.5 rounded-2xl px-2 py-2 text-xs font-bold transition md:flex-row md:gap-2 md:px-4 md:text-sm ${
+                className={`block rounded-full border-2 px-2 py-2 text-[13px] font-bold whitespace-nowrap transition sm:px-4 sm:text-sm md:px-6 md:text-base ${
                   active
-                    ? "bg-white text-ink shadow-pop"
-                    : "text-ink/70 hover:bg-white/60 hover:text-ink"
+                    ? "border-ink bg-tangerine text-white"
+                    : "border-transparent text-slate-500 hover:bg-white hover:text-ink"
                 }`}
               >
-                <span aria-hidden className="text-xl md:text-base">
-                  {tab.icon}
-                </span>
                 {tab.label}
               </Link>
             </li>
