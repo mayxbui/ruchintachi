@@ -18,7 +18,7 @@ export function NavBar() {
   return (
     <nav
       aria-label="Main"
-      className="w-full max-w-full overflow-x-auto rounded-full border-4 border-white bg-white/85 p-1 shadow-pop sm:p-1.5 [scrollbar-width:none] md:w-auto"
+      className="w-full max-w-full overflow-x-auto rounded-full bg-white/85 p-1 shadow-pop sm:p-1.5 [scrollbar-width:none] md:w-auto"
     >
       <ul className="flex min-w-max justify-between gap-0 sm:gap-1 md:gap-2">
         {tabs.map((tab) => {
@@ -28,10 +28,10 @@ export function NavBar() {
               <Link
                 href={tab.href}
                 aria-current={active ? "page" : undefined}
-                className={`block rounded-full border-2 px-2 py-2 text-[13px] font-bold whitespace-nowrap transition sm:px-4 sm:text-sm md:px-6 md:text-base ${
+                className={`block rounded-full px-2 py-2 text-[13px] font-bold whitespace-nowrap transition sm:px-4 sm:text-sm md:px-6 md:text-base ${
                   active
-                    ? "border-ink bg-tangerine text-white"
-                    : "border-transparent text-slate-500 hover:bg-white hover:text-ink"
+                    ? "bg-tangerine/90 text-white shadow-pop"
+                    : "text-slate-500 hover:bg-white/85 hover:text-ink hover:shadow-pop"
                 }`}
               >
                 {tab.label}
