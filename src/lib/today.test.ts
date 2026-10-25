@@ -6,6 +6,7 @@ const water: DayHabit = {
   id: "water",
   name: "Drink water",
   icon: "water",
+  note: "After lunch",
   startDate: "2026-10-01",
   frequency: "daily",
   endType: "never",
@@ -24,8 +25,8 @@ const future: DayHabit = { ...water, id: "future", name: "Later", startDate: "20
 describe("itemsOn", () => {
   it("lists only habits scheduled that day, in order, with done flags", () => {
     expect(itemsOn([water, run, future], [], new Set(["run"]), "2026-10-26")).toEqual([
-      { habitId: "water", name: "Drink water", icon: "water", done: false },
-      { habitId: "run", name: "Run", icon: null, done: true },
+      { habitId: "water", name: "Drink water", icon: "water", note: "After lunch", done: false },
+      { habitId: "run", name: "Run", icon: null, note: null, done: true },
     ]);
     expect(itemsOn([water, run], [], new Set(), "2026-10-27").map((i) => i.habitId)).toEqual([
       "water",
@@ -39,7 +40,7 @@ describe("itemsOn", () => {
       { habitId: "run", date: "2026-10-28", overrideName: null }, // other day, ignored
     ];
     expect(itemsOn([water, run], exceptions, new Set(), "2026-10-26")).toEqual([
-      { habitId: "run", name: "Short run", icon: null, done: false },
+      { habitId: "run", name: "Short run", icon: null, note: null, done: false },
     ]);
   });
 

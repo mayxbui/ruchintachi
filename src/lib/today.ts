@@ -3,7 +3,7 @@
 
 import { occurrenceOn, type RepeatRule } from "./repeat-rule";
 
-export type DayHabit = RepeatRule & { id: string; icon: string | null };
+export type DayHabit = RepeatRule & { id: string; icon: string | null; note?: string | null };
 
 export interface DayException {
   habitId: string;
@@ -15,6 +15,7 @@ export interface DayItem {
   habitId: string;
   name: string; // the day's name, after any "only this day" rename
   icon: string | null;
+  note: string | null;
   done: boolean;
 }
 
@@ -37,6 +38,7 @@ export function itemsOn(
       habitId: habit.id,
       name: occurrence.name,
       icon: habit.icon,
+      note: habit.note ?? null,
       done: completedHabitIds.has(habit.id),
     });
   }
