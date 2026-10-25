@@ -12,7 +12,7 @@ A habit tracker inspired by **Tomodachi Life: Living the Dream**. Create a Mii, 
 - Sign up with a **username + password only**. No email, no real name, no personal information.
 - At sign-up you get a one-time **recovery code** (the only way back in if you forget the password, since there's no email).
 - Create your Mii from **preset options and colours** (a full face builder may come later).
-- What's stored per account: username, password hash, Mii appearance, habits/plan, completions, items, settings. Nothing else.
+- What's stored per account: username, password hash, friend code and friend list, Mii appearance, habits/plan, completions, items, mood, settings. Nothing else.
 - You can delete your account and all its data.
 
 ### 2. Habits
@@ -38,11 +38,37 @@ A habit tracker inspired by **Tomodachi Life: Living the Dream**. Create a Mii, 
 - A perfect week lets you gift your Mii a **random clothing item**, also weighted by price, and the Mii wears it.
 
 ### 6. Mii mood
-- The Mii's happiness goes up when you complete days and perfect weeks, and down when you miss scheduled tasks.
+Your Mii's mood shows as a coloured thought bubble, with five levels (names are tentative):
 
-### Settings
-- **Time zone**: "today" follows your time zone (detected from your browser, changeable in settings).
-- **Week start**: Monday or Sunday.
+| Bubble | Mood |
+|---|---|
+| 🩷 Pink | **Lovestruck** |
+| 🧡 Orange | **Overjoyed** |
+| 💛 Yellow | **Content** — every Mii starts here |
+| 💙 Blue | **Gloomy** |
+| ❤️ Red | **Fuming** |
+
+- Mood goes up when you complete days and perfect weeks, and down when you miss scheduled tasks. Days with no tasks don't change it.
+- A mood line chart shows how your Mii has felt over time.
+
+### 7. Friends (Town)
+- Every player has a unique **friend code** to share.
+- Enter a friend's code to send a request; once they accept, you appear in each other's **Town**.
+- From Town you can visit a friend's Mii and see its look, the clothes it's wearing and its item collection — and they can see yours.
+- **That's all friends can see.** Your habits, diary and calendar are always private.
+- Remove a friend at any time.
+
+## Pages
+
+| Navbar | What's there |
+|---|---|
+| **My Diary** | Today's tasks to tick off, your habit list, create/edit habits |
+| **Calendar** | Month grid filled with the gifts you earned, plus bar charts |
+| **Town** | Your friend code, add friends, visit friends' Miis |
+| **Mii** | Mii creator, wardrobe, inventory, mood line |
+| **Settings** | Time zone, week start (Monday/Sunday), account, recovery code, delete account, **FAQ** |
+
+On phones the navbar is a bottom tab bar; on desktop it sits at the top.
 
 ## Tech stack
 
@@ -57,19 +83,22 @@ Everything is free and open source, and runs on one Azure VM.
 | Dates & repeats | **date-fns** / **date-fns-tz** + **rrule** | Time zones and repeat rules with known edge-case behaviour |
 | Charts | **Recharts** | Bar and mood-line charts |
 | Tests | **Vitest** | Unit tests for repeat rules, gift rolls and perfect-week logic |
+| Package manager | **pnpm** | Faster installs, less disk use on the VM |
 | Hosting | **Azure VM** + **Caddy** (reverse proxy, automatic free HTTPS) + **systemd** to keep the app running | |
+| Domain | Bought from **Namecheap**, A record pointing at the VM | |
 
 ## Still to decide
 
-- [ ] Item prices: The Spriters Resource has sprites but no prices. Prices need collecting by hand (e.g. from a Tomodachi Life wiki) into the item catalogue.
-- [ ] Exact mood formula (how much a completed/missed day moves it, and the range).
-- [ ] Domain name, or just the VM's IP / Azure DNS name.
+- [ ] Exact mood formula (how much a completed/missed day moves it).
+- [ ] Final mood names.
+- [ ] Domain name.
 - [ ] Who can sign up: only you, invite codes, or anyone with the link.
 
 ## References
 
 - Item sprites: [The Spriters Resource — Tomodachi Life: Living the Dream](https://www.spriters-resource.com/nintendo_switch/tomodachilifelivingthedream/)
-- Visual/UX reference: [tomoboard.com](https://www.tomoboard.com/)
+- Item prices: [community price sheet](https://docs.google.com/spreadsheets/d/1iPb1freZ57gP7tBDMbvIUi3cDvIE979COqlDsRTYu3Y)
+- Visual/UX reference: [tomoboard.com](https://www.tomoboard.com/) — the UI should feel close to it
 
 ## Disclaimer
 
