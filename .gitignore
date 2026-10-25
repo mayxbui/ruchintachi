@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+build/
+
+# env & secrets
+.env
+.env*.local
+
+# database
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# logs & OS
+*.log
+.DS_Store
+Thumbs.db
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Claude Code project notes (kept local)
+CLAUDE.md
