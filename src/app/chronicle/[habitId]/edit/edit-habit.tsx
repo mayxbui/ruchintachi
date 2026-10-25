@@ -26,6 +26,7 @@ export function EditHabit({
   repeating,
   dateLabel,
   dayName,
+  returnTo,
   today,
   weekStart,
   initial,
@@ -37,6 +38,7 @@ export function EditHabit({
   repeating: boolean;
   dateLabel: string;
   dayName: string;
+  returnTo: string;
   today: string;
   weekStart: WeekStart;
   initial: HabitFormInitial;
@@ -83,7 +85,7 @@ export function EditHabit({
       )}
 
       {scope === "day" && repeating ? (
-        <RenameDay key="day" action={editDay} dayName={dayName} />
+        <RenameDay key="day" action={editDay} dayName={dayName} returnTo={returnTo} />
       ) : (
         <HabitForm
           key="future"
@@ -92,6 +94,7 @@ export function EditHabit({
           action={editFuture}
           initial={initial}
           lockStartDate={repeating}
+          cancelHref={returnTo}
           submitLabel="Save"
           pendingLabel="Saving…"
         />
@@ -103,7 +106,15 @@ export function EditHabit({
 }
 
 /** "Only this day": give that one date a different name. */
-function RenameDay({ action, dayName }: { action: FormAction; dayName: string }) {
+function RenameDay({
+  action,
+  dayName,
+  returnTo,
+}: {
+  action: FormAction;
+  dayName: string;
+  returnTo: string;
+}) {
   const [state, formAction] = useActionState(action, {});
   const [name, setName] = useState(dayName);
   return (
@@ -123,7 +134,7 @@ function RenameDay({ action, dayName }: { action: FormAction; dayName: string })
       <FormMessage error={state.error} />
       <div className="flex flex-wrap items-center gap-4">
         <SubmitButton pendingLabel="Saving…">Save</SubmitButton>
-        <Link href="/chronicle" className="font-bold text-caption hover:brightness-75">
+        <Link href={returnTo} className="font-bold text-caption hover:brightness-75">
           Cancel
         </Link>
       </div>

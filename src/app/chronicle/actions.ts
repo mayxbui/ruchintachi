@@ -22,6 +22,10 @@ import { occurrenceOn } from "@/lib/repeat-rule";
 
 export type HabitFormState = { error?: string };
 
+/** Where edit/delete send the user afterwards: the tab they came from. */
+export type ReturnTo = "/chronicle" | "/chronicle/tasks";
+const backTo = (path: string): ReturnTo => (path === "/chronicle/tasks" ? path : "/chronicle");
+
 export async function createHabitAction(
   _prev: HabitFormState,
   formData: FormData,
@@ -31,7 +35,7 @@ export async function createHabitAction(
   if ("error" in result) return { error: result.error };
 
   createHabit(db, user.id, result.habit);
-  revalidatePath("/chronicle");
+  revalidatePath("/chronicle", "layout");
   redirect("/chronicle");
 }
 
@@ -54,7 +58,7 @@ export async function toggleCompletionAction(
   }
 
   setCompletion(db, user.id, habitId, today, done);
-  revalidatePath("/chronicle");
+  revalidatePath("/chronicle", "layout");
   return {};
 }
 
@@ -79,6 +83,7 @@ export async function editHabitAction(
   habitId: string,
   date: string,
   scope: EditScope,
+  returnTo: ReturnTo,
   _prev: HabitFormState,
   formData: FormData,
 ): Promise<HabitFormState> {
@@ -111,8 +116,8 @@ export async function editHabitAction(
     }
   }
 
-  revalidatePath("/chronicle");
-  redirect("/chronicle");
+  revalidatePath("/chronicle", "layout");
+  redirect(backTo(returnTo));
 }
 
 /** Deletes `date` only ("day") or `date` and every later day ("future"). */
@@ -120,6 +125,7 @@ export async function deleteHabitAction(
   habitId: string,
   date: string,
   scope: EditScope,
+  returnTo: ReturnTo,
 ): Promise<HabitFormState> {
   const found = await editableHabit(habitId, date);
   if ("error" in found) return { error: found.error };
@@ -134,6 +140,6 @@ export async function deleteHabitAction(
     else endHabit(db, user.id, habitId, plan.endDate);
   }
 
-  revalidatePath("/chronicle");
-  redirect("/chronicle");
+  revalidatePath("/chronicle", "layout");
+  redirect(backTo(returnTo));
 }

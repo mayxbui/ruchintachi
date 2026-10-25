@@ -10,7 +10,7 @@ import { formatDate } from "@/lib/describe-rule";
 import { isEditableDay, nextOccurrence, remainingCount } from "@/lib/habit-edit";
 import { isHabitIcon } from "@/lib/habit-icons";
 import { occurrenceOn } from "@/lib/repeat-rule";
-import { deleteHabitAction, editHabitAction } from "../../actions";
+import { deleteHabitAction, editHabitAction, type ReturnTo } from "../../actions";
 import { EditHabit } from "./edit-habit";
 
 export default async function EditHabitPage({
@@ -18,11 +18,12 @@ export default async function EditHabitPage({
   searchParams,
 }: {
   params: Promise<{ habitId: string }>;
-  searchParams: Promise<{ date?: string }>;
+  searchParams: Promise<{ date?: string; from?: string }>;
 }) {
   const user = await requireUser();
   const { habitId } = await params;
-  const { date: asked } = await searchParams;
+  const { date: asked, from } = await searchParams;
+  const returnTo: ReturnTo = from === "tasks" ? "/chronicle/tasks" : "/chronicle";
   const habit = getHabit(db, user.id, habitId);
   if (!habit) notFound();
 
@@ -40,7 +41,7 @@ export default async function EditHabitPage({
         <p className="mb-4 text-caption">
           &ldquo;{habit.name}&rdquo; has no days left, and past days stay as they were.
         </p>
-        <Link href="/chronicle" className="font-bold text-caption hover:brightness-75">
+        <Link href={returnTo} className="font-bold text-caption hover:brightness-75">
           Back to My Chronicle
         </Link>
       </PageCard>
@@ -56,6 +57,7 @@ export default async function EditHabitPage({
         repeating={repeating}
         dateLabel={formatDate(date)}
         dayName={dayName}
+        returnTo={returnTo}
         today={today}
         weekStart={user.weekStart}
         initial={{
@@ -65,10 +67,10 @@ export default async function EditHabitPage({
           startDate: repeating ? date : habit.startDate,
           endCount: remainingCount(habit, date) ?? habit.endCount,
         }}
-        editDay={editHabitAction.bind(null, habitId, date, "day")}
-        editFuture={editHabitAction.bind(null, habitId, date, "future")}
-        deleteDay={deleteHabitAction.bind(null, habitId, date, "day")}
-        deleteFuture={deleteHabitAction.bind(null, habitId, date, "future")}
+        editDay={editHabitAction.bind(null, habitId, date, "day", returnTo)}
+        editFuture={editHabitAction.bind(null, habitId, date, "future", returnTo)}
+        deleteDay={deleteHabitAction.bind(null, habitId, date, "day", returnTo)}
+        deleteFuture={deleteHabitAction.bind(null, habitId, date, "future", returnTo)}
       />
     </PageCard>
   );
