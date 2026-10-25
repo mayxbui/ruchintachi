@@ -64,7 +64,7 @@ export function TodayList({ items, today }: { items: DayItem[]; today: string })
               </span>
             </label>
             <Link
-              href={`/diary/${item.habitId}/edit?date=${today}`}
+              href={`/chronicle/${item.habitId}/edit?date=${today}`}
               aria-label={`Edit ${item.name}`}
               className="shrink-0 rounded-full p-2 text-caption transition hover:bg-sand hover:text-ink"
             >

@@ -40,8 +40,8 @@ export default async function EditHabitPage({
         <p className="mb-4 text-caption">
           &ldquo;{habit.name}&rdquo; has no days left, and past days stay as they were.
         </p>
-        <Link href="/diary" className="font-bold text-caption hover:brightness-75">
-          Back to My Diary
+        <Link href="/chronicle" className="font-bold text-caption hover:brightness-75">
+          Back to My Chronicle
         </Link>
       </PageCard>
     );

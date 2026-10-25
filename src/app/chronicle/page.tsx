@@ -12,7 +12,7 @@ import { iconEmoji } from "@/lib/habit-icons";
 import { itemsOn } from "@/lib/today";
 import { TodayList } from "./today-list";
 
-export default async function DiaryPage() {
+export default async function ChroniclePage() {
   const user = await requireUser();
   const habits = listHabits(db, user.id);
   // "Today" follows the user's time zone setting.
@@ -30,7 +30,7 @@ export default async function DiaryPage() {
   });
 
   return (
-    <PageCard title="My Diary">
+    <PageCard title="My Chronicle">
       <section className="mb-8">
         <h2 className="mb-1 text-xl">Today</h2>
         <p className="mb-3 text-caption">{formatDate(today)}</p>
@@ -40,7 +40,7 @@ export default async function DiaryPage() {
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <h2 className="text-xl">My habits</h2>
         <Link
-          href="/diary/new"
+          href="/chronicle/new"
           className="rounded-full bg-tangerine px-5 py-2 font-bold text-white shadow-pop transition hover:brightness-105"
         >
           + Create a task
@@ -61,7 +61,7 @@ export default async function DiaryPage() {
               </span>
               <span className="min-w-0 flex-1">
                 <span className="block font-bold break-words">{habit.name}</span>
-                <span className="block text-caption">
+                <span className="block text-caption text-sm">
                   {describeRule(habit, user.weekStart)}
                 </span>
                 {habit.note && (
@@ -71,7 +71,7 @@ export default async function DiaryPage() {
                 )}
               </span>
               <Link
-                href={`/diary/${habit.id}/edit?date=${habit.next}`}
+                href={`/chronicle/${habit.id}/edit?date=${habit.next}`}
                 aria-label={`Edit ${habit.name}`}
                 className="shrink-0 rounded-full p-2 text-caption transition hover:bg-sand hover:text-ink"
               >

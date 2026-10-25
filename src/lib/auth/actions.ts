@@ -83,7 +83,7 @@ export async function signIn(
 
   clearAttempts(username);
   await startSession(user.id);
-  redirect("/diary");
+  redirect("/chronicle");
 }
 
 /** Sets a new password with the recovery code, then issues a new code. */

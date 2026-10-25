@@ -31,8 +31,8 @@ export async function createHabitAction(
   if ("error" in result) return { error: result.error };
 
   createHabit(db, user.id, result.habit);
-  revalidatePath("/diary");
-  redirect("/diary");
+  revalidatePath("/chronicle");
+  redirect("/chronicle");
 }
 
 /**
@@ -54,7 +54,7 @@ export async function toggleCompletionAction(
   }
 
   setCompletion(db, user.id, habitId, today, done);
-  revalidatePath("/diary");
+  revalidatePath("/chronicle");
   return {};
 }
 
@@ -111,8 +111,8 @@ export async function editHabitAction(
     }
   }
 
-  revalidatePath("/diary");
-  redirect("/diary");
+  revalidatePath("/chronicle");
+  redirect("/chronicle");
 }
 
 /** Deletes `date` only ("day") or `date` and every later day ("future"). */
@@ -134,6 +134,6 @@ export async function deleteHabitAction(
     else endHabit(db, user.id, habitId, plan.endDate);
   }
 
-  revalidatePath("/diary");
-  redirect("/diary");
+  revalidatePath("/chronicle");
+  redirect("/chronicle");
 }

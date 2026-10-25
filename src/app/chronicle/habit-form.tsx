@@ -319,7 +319,7 @@ export function HabitForm({
       {summary && (
         <p className="rounded-2xl bg-sunny/30 px-4 py-3">
           {icon && <span className="mr-2 text-xl">{HABIT_ICONS[icon]}</span>}
-          <span className="font-bold">{name.trim() || "New habit"}</span>
+          <span className="font-bold">{name.trim() || "Your task"}</span>
           <span className="block text-caption">{summary}</span>
         </p>
       )}
@@ -327,7 +327,7 @@ export function HabitForm({
       <FormMessage error={state.error} />
       <div className="flex flex-wrap items-center gap-4">
         <SubmitButton pendingLabel={pendingLabel}>{submitLabel}</SubmitButton>
-        <Link href="/diary" className="font-bold text-caption hover:brightness-75">
+        <Link href="/chronicle" className="font-bold text-caption hover:brightness-75">
           Cancel
         </Link>
       </div>

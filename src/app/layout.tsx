@@ -32,7 +32,7 @@ export default async function RootLayout({
         {/* Logo left, nav centred on one line; on phones the nav drops below. */}
         <header className="mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-3 px-4 pt-4 md:grid-cols-[1fr_auto_1fr]">
           <Link
-            href="/diary"
+            href="/chronicle"
             aria-label="Ruchintachi home"
             className="justify-self-start"
           >
