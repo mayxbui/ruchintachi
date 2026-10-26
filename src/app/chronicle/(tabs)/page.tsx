@@ -34,7 +34,12 @@ export default async function TodayPage() {
         <SortMenu sort={user.taskSort} doneLast={user.doneLast} />
       </div>
       <QuickAdd />
-      <TodayList items={items} today={today} doneLast={user.doneLast} />
+      <TodayList
+        items={items}
+        today={today}
+        doneLast={user.doneLast}
+        reorderable={user.taskSort === "custom"}
+      />
     </section>
   );
 }

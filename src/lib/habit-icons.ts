@@ -1,9 +1,12 @@
 // The fixed set of habit icons. Habits store the key; the UI shows the emoji.
 
+// The picker shows four per row, in this order: the first row is the most used.
 export const HABIT_ICONS = {
   star: "⭐",
-  water: "💧",
+  important: "❗",
   book: "📚",
+  heart: "💖",
+  water: "💧",
   run: "🏃",
   stretch: "🧘",
   sleep: "😴",
@@ -15,8 +18,6 @@ export const HABIT_ICONS = {
   music: "🎵",
   art: "🎨",
   study: "✏️",
-  heart: "💖",
-  sun: "☀️",
 } as const;
 
 export type HabitIcon = keyof typeof HABIT_ICONS;

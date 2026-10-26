@@ -12,6 +12,7 @@ import {
   listHabits,
   renameHabit,
   setException,
+  setHabitIcon,
   setHabitNote,
   splitHabit,
   updateHabit,
@@ -142,6 +143,21 @@ describe("updateHabit / deleteHabit", () => {
     expect(getHabit(db, may, id)?.name).toBe("Tea");
     deleteHabit(db, may, id);
     expect(getHabit(db, may, id)).toBeUndefined();
+  });
+});
+
+describe("setHabitIcon", () => {
+  it("sets and clears the owner's icon only", () => {
+    const db = createTestDb();
+    const may = addUser(db, "may");
+    const kai = addUser(db, "kai");
+    const id = createHabit(db, may, { ...daily, icon: null });
+    setHabitIcon(db, kai, id, "star");
+    expect(getHabit(db, may, id)?.icon).toBeNull();
+    setHabitIcon(db, may, id, "important");
+    expect(getHabit(db, may, id)?.icon).toBe("important");
+    setHabitIcon(db, may, id, null);
+    expect(getHabit(db, may, id)?.icon).toBeNull();
   });
 });
 

@@ -12,6 +12,7 @@ import {
   getHabit,
   renameHabit,
   setException,
+  setHabitIcon,
   setHabitNote,
   splitHabit,
   updateHabit,
@@ -213,6 +214,16 @@ export async function renameSeriesAction(habitId: string, rawName: string): Prom
       endCount: from.endCount,
     });
   }
+  revalidatePath("/chronicle", "layout");
+  return {};
+}
+
+/** Changes a task's icon from its row (Today or Tasks). Null removes it. */
+export async function setIconAction(habitId: string, icon: string | null): Promise<{ error?: string }> {
+  const user = await requireUser();
+  if (!getHabit(db, user.id, habitId)) return { error: "That task doesn't exist." };
+  if (icon !== null && !isHabitIcon(icon)) return { error: "Pick an icon from the list." };
+  setHabitIcon(db, user.id, habitId, icon);
   revalidatePath("/chronicle", "layout");
   return {};
 }

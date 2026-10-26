@@ -1,5 +1,6 @@
 import { and, asc, eq, gt, gte, max } from "drizzle-orm";
 import type { NewHabit } from "@/lib/habit-form";
+import type { HabitIcon } from "@/lib/habit-icons";
 import { placeInSlots } from "@/lib/sort-habits";
 import type { Db } from "./accounts";
 import { completions, habitExceptions, habits } from "./schema";
@@ -78,6 +79,14 @@ export function setException(
 export function renameHabit(db: Db, userId: string, habitId: string, name: string): void {
   db.update(habits)
     .set({ name })
+    .where(and(eq(habits.id, habitId), eq(habits.userId, userId)))
+    .run();
+}
+
+/** Sets a habit's icon (null = none). Like notes, icons aren't per day. */
+export function setHabitIcon(db: Db, userId: string, habitId: string, icon: HabitIcon | null): void {
+  db.update(habits)
+    .set({ icon })
     .where(and(eq(habits.id, habitId), eq(habits.userId, userId)))
     .run();
 }

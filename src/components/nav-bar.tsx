@@ -24,14 +24,14 @@ const tabs = [
 // Liquid-gel indicator: a big blob slides to the new tab, squashing and
 // stretching, and wobbles like jelly when it lands. A short chain of small
 // droplets trails behind it; an SVG goo filter melts it all into one liquid shape.
-const DURATION = 900; // ms for the big blob's trip
+const DURATION = 950; // ms for the big blob's trip
 const GOO_ID = "nav-goo";
 
 // Trailing droplets, biggest first: diameter (share of the blob's height),
 // how long each waits before chasing, and its trip time.
 const DROPS = [
-  { size: 0.9, hold: 0.25, duration: DURATION * 1.2 },
-  { size: 0.7, hold: 0.35, duration: DURATION * 1.4 },
+  { size: 0.9, hold: 0.2, duration: DURATION * 1.2 },
+  { size: 0.7, hold: 0.3, duration: DURATION * 1.4 },
 ];
 
 type Box = { left: number; width: number; top: number; height: number };
