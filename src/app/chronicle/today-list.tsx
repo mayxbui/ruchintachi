@@ -13,6 +13,8 @@ import { TaskText } from "./task-text";
 import { useTimer } from "./timer";
 import { useDragReorder } from "./use-drag-reorder";
 
+const SPARKS = 8; // sparks around a ticked task's check
+
 /**
  * Slides list rows from where they were to where they are now (FLIP), so a
  * ticked task glides to the bottom instead of jumping. Skipped for users
@@ -67,6 +69,8 @@ export function TodayList({
   const [error, setError] = useState<string>();
   const [timerFor, setTimerFor] = useState<string | null>(null); // task whose timer picker is open
   const timer = useTimer();
+  // The task just ticked, keyed so ticking it again replays the sparkle.
+  const [cheer, setCheer] = useState<{ id: string; key: number } | null>(null);
   const sorted = doneLast ? moveDoneLast(shown) : shown;
   const drag = useDragReorder(
     sorted.map((i) => i.habitId),
@@ -84,6 +88,7 @@ export function TodayList({
 
   function toggle(item: DayItem) {
     setError(undefined);
+    if (!item.done) setCheer((c) => ({ id: item.habitId, key: (c?.key ?? 0) + 1 }));
     startTransition(async () => {
       change({ habitId: item.habitId, done: !item.done });
       const result = await toggleCompletionAction(item.habitId, !item.done);
@@ -131,9 +136,19 @@ export function TodayList({
                 />
                 <span
                   aria-hidden
-                  className="flex size-8 shrink-0 items-center justify-center rounded-full border-3 border-leaf bg-white text-white transition peer-checked:bg-leaf peer-focus-visible:ring-4 peer-focus-visible:ring-sky"
+                  key={cheer?.id === item.habitId ? cheer.key : 0}
+                  className={`relative flex size-8 shrink-0 items-center justify-center rounded-full border-3 border-leaf bg-white text-white transition peer-checked:bg-leaf peer-focus-visible:ring-4 peer-focus-visible:ring-sky ${
+                    cheer?.id === item.habitId && item.done ? "animate-check-pop" : ""
+                  }`}
                 >
                   {item.done && <IconCheck className="size-5" stroke={3.5} />}
+                  {cheer?.id === item.habitId && item.done && (
+                    <span className="sparkle pointer-events-none absolute inset-0">
+                      {Array.from({ length: SPARKS }, (_, i) => (
+                        <i key={i} style={{ "--angle": `${(360 / SPARKS) * i}deg` } as React.CSSProperties} />
+                      ))}
+                    </span>
+                  )}
                 </span>
               </label>
               <span className="ml-2">
