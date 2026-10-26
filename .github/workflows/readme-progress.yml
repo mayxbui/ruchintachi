@@ -1,0 +1,49 @@
+# Keeps the progress bars in README.md in step with the GitHub issues.
+# Runs whenever an issue or milestone changes, plus once a day as a safety net.
+name: README progress
+
+on:
+  issues:
+    types: [opened, closed, reopened, deleted, transferred, milestoned, demilestoned]
+  milestone:
+    types: [created, edited, closed, opened, deleted]
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: read
+
+# Several issue events at once: let only the latest run commit.
+concurrency:
+  group: readme-progress
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Update progress section
+        run: node scripts/update-progress.mjs
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet README.md; then
+            echo "No change."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Update README progress [skip ci]"
+          git push
