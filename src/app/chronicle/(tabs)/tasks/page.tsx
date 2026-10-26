@@ -17,6 +17,7 @@ import {
   UP_NEXT_DAYS,
   type TaskFilter,
 } from "@/lib/task-lists";
+import { TaskText } from "../../task-text";
 import { ListMenu, NewList } from "./list-controls";
 
 const tasksHref = (filter: TaskFilter) => {
@@ -95,23 +96,20 @@ export default async function TasksPage({
         <NewList />
       </nav>
 
-      {activeList && <ListMenu key={activeList.id} listId={activeList.id} name={activeList.name} />}
-
-      <div className="mb-4 flex flex-wrap items-center justify-end gap-3">
-      <div className="mb-4 flex flex-wrap items-center justify-end gap-3 py-2">
-        <Link
-          href={activeList ? `/chronicle/new?list=${activeList.id}` : "/chronicle/new"}
-          className="rounded-full bg-tangerine px-5 py-2 font-bold text-white shadow-pop transition hover:brightness-105"
-        >
-          + Create a task
-        </Link>
-      </div>
+      {activeList && (
+        <ListMenu
+          key={activeList.id}
+          listId={activeList.id}
+          name={activeList.name}
+          taskCount={shown.length}
+        />
+      )}
 
       {shown.length === 0 ? (
         <p className="text-caption">{empty}</p>
       ) : (
         <ul className="space-y-5">
-          {current.map((habit) => (
+          {shown.map((habit) => (
             <li
               key={habit.id}
               className="flex items-start gap-3 rounded-2xl bg-white px-4 py-3 shadow-pop"
@@ -119,25 +117,21 @@ export default async function TasksPage({
               <span className="w-8 shrink-0 text-center text-2xl" aria-hidden>
                 {iconEmoji(habit.icon) ?? "•"}
               </span>
-              <span className="min-w-0 flex-1">
-                <span className="block font-bold break-words">{habit.name}</span>
-                <span className="block text-caption text-sm">
-                  {filter.kind === "next"
-                    ? nextDateLabel(habit.next, today)
-                    : describeRule(habit, user.weekStart)}
-                  {/* Which list it's in, unless we're looking at that list. */}
-                  {habit.listId && !activeList && (
-                    <span className="ml-2 inline-block rounded-full bg-sky/15 px-2 font-bold text-sky">
-                      {listName.get(habit.listId)}
-                    </span>
-                  )}
-                </span>
-                {habit.note && (
-                  <span className="mt-1 py-[1.5] block text-gray-700 break-words whitespace-pre-line">
-                    {habit.note}
+              <div className="min-w-0 flex-1">
+                <TaskText habitId={habit.id} name={habit.name} note={habit.note} scope="series">
+                  <span className="block text-caption text-sm">
+                    {filter.kind === "next"
+                      ? nextDateLabel(habit.next, today)
+                      : describeRule(habit, user.weekStart)}
+                    {/* Which list it's in, unless we're looking at that list. */}
+                    {habit.listId && !activeList && (
+                      <span className="ml-2 inline-block rounded-full bg-sky/15 px-2 font-bold text-sky">
+                        {listName.get(habit.listId)}
+                      </span>
+                    )}
                   </span>
-                )}
-              </span>
+                </TaskText>
+              </div>
               <Link
                 href={`/chronicle/${habit.id}/edit?date=${habit.next}&from=tasks${param ? `&list=${param}` : ""}`}
                 aria-label={`Edit ${habit.name}`}

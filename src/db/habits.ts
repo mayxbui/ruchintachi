@@ -64,6 +64,22 @@ export function setException(
     .run();
 }
 
+/** Renames a whole habit (one-off tasks; repeating ones rename a day with setException). */
+export function renameHabit(db: Db, userId: string, habitId: string, name: string): void {
+  db.update(habits)
+    .set({ name })
+    .where(and(eq(habits.id, habitId), eq(habits.userId, userId)))
+    .run();
+}
+
+/** Sets a habit's note (null = none). Notes aren't per day, so this never splits a series. */
+export function setHabitNote(db: Db, userId: string, habitId: string, note: string | null): void {
+  db.update(habits)
+    .set({ note })
+    .where(and(eq(habits.id, habitId), eq(habits.userId, userId)))
+    .run();
+}
+
 /** Changes a whole series in place. Only for series with no past days. */
 export function updateHabit(db: Db, userId: string, habitId: string, habit: NewHabit): void {
   db.update(habits)

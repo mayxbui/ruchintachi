@@ -17,6 +17,7 @@ import type { WeekStart } from "@/lib/dates";
 import { describeRule, formatDate } from "@/lib/describe-rule";
 import { END_COUNT_MAX, HABIT_NAME_MAX, HABIT_NOTE_MAX } from "@/lib/habit-form";
 import { HABIT_ICONS, type HabitIcon } from "@/lib/habit-icons";
+import { LIST_NAME_MAX, NEW_LIST } from "@/lib/task-lists";
 import type { EndType, Frequency } from "@/lib/repeat-rule";
 import type { HabitFormState } from "./actions";
 
@@ -153,7 +154,7 @@ export function HabitForm({
   weekStart: WeekStart;
   action: (prev: HabitFormState, formData: FormData) => Promise<HabitFormState>;
   initial?: HabitFormInitial;
-  /** The user's own lists; the List field only shows once they have one. */
+  /** The user's own lists. "+ New list" makes one when the task is saved. */
   lists?: { id: string; name: string }[];
   /** List picked to start with when creating (opened from that list). */
   defaultListId?: string;
@@ -174,6 +175,7 @@ export function HabitForm({
   const [endCount, setEndCount] = useState(String(initial?.endCount ?? 10));
   const [note, setNote] = useState(initial?.note ?? "");
   const [listId, setListId] = useState(initial?.listId ?? defaultListId ?? "");
+  const [newListName, setNewListName] = useState("");
 
   const weekOrder = weekStart === "monday" ? [1, 2, 3, 4, 5, 6, 0] : [0, 1, 2, 3, 4, 5, 6];
   const startWeekday = new Date(`${startDate || today}T00:00:00Z`).getUTCDay();
@@ -311,20 +313,35 @@ export function HabitForm({
         </div>
       )}
 
-      {lists.length > 0 && (
-        <div className="grid grid-cols-2 gap-2 sm:gap-3">
-          <Dropdown
-            label="List"
-            name="listId"
-            value={listId}
-            options={[
-              { value: "", label: "No list" },
-              ...lists.map((l) => ({ value: l.id, label: l.name })),
-            ]}
-            onChange={setListId}
-          />
-        </div>
-      )}
+      <div className="grid grid-cols-2 gap-2 sm:gap-3">
+        <Dropdown
+          label="List"
+          name="listId"
+          value={listId}
+          options={[
+            { value: "", label: "No list" },
+            ...lists.map((l) => ({ value: l.id, label: l.name })),
+            { value: NEW_LIST, label: "+ New list" },
+          ]}
+          onChange={setListId}
+        />
+        {listId === NEW_LIST && (
+          <label className="block min-w-0">
+            <span className="mb-1 block font-bold">List name</span>
+            <input
+              name="newListName"
+              value={newListName}
+              onChange={(e) => setNewListName(e.target.value)}
+              required
+              maxLength={LIST_NAME_MAX}
+              placeholder="e.g. Health"
+              autoComplete="off"
+              autoFocus
+              className={pairedClass}
+            />
+          </label>
+        )}
+      </div>
 
       <label className="block">
         <span className="mb-1 block font-bold">

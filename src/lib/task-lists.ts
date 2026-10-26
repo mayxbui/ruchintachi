@@ -5,6 +5,8 @@ import { addDays } from "./dates";
 
 export const LIST_NAME_MAX = 30;
 export const LISTS_MAX = 20;
+/** The List dropdown's "+ New list" choice. Real list ids are UUIDs, so it can't clash. */
+export const NEW_LIST = "new";
 /** "Up next" covers today and the six days after it. */
 export const UP_NEXT_DAYS = 7;
 

@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import { PageCard } from "@/components/page-card";
 import { ChronicleTabs } from "../chronicle-tabs";
 import { TimerBar, TimerProvider } from "../timer";
@@ -8,7 +8,10 @@ export default function ChronicleLayout({ children }: { children: ReactNode }) {
   return (
     <PageCard title="My Chronicle">
       <TimerProvider>
-        <ChronicleTabs />
+        {/* The tabs read ?list= for "Create a task". */}
+        <Suspense>
+          <ChronicleTabs />
+        </Suspense>
         <TimerBar />
         {children}
       </TimerProvider>

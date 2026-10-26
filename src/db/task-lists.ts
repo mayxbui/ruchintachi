@@ -1,7 +1,9 @@
 import { and, asc, eq, max } from "drizzle-orm";
+import { nextOccurrence, planFutureDelete } from "@/lib/habit-edit";
 import { LISTS_MAX } from "@/lib/task-lists";
 import type { Db } from "./accounts";
-import { getHabit } from "./habits";
+import { listExceptions } from "./completions";
+import { deleteHabit, endHabit, getHabit, listHabits } from "./habits";
 import { habits, taskLists } from "./schema";
 
 /** The user's own lists, in the order they made them. */
@@ -56,6 +58,27 @@ export function deleteTaskList(db: Db, userId: string, listId: string): void {
       .where(and(eq(habits.listId, listId), eq(habits.userId, userId)))
       .run();
     tx.delete(taskLists).where(eq(taskLists.id, listId)).run();
+  });
+}
+
+/**
+ * Deletes a list and its tasks from `today` on, like "delete this day and
+ * future": a task with no past days goes; one with past days stops yesterday,
+ * so its history stays. Finished tasks only lose the list.
+ */
+export function deleteTaskListAndTasks(db: Db, userId: string, listId: string, today: string): void {
+  db.transaction((tx) => {
+    if (!getTaskList(tx, userId, listId)) return;
+    const exceptions = listExceptions(tx, userId);
+    for (const habit of listHabits(tx, userId)) {
+      if (habit.listId !== listId) continue;
+      const own = exceptions.filter((e) => e.habitId === habit.id);
+      if (!nextOccurrence(habit, own, today)) continue;
+      const plan = planFutureDelete(habit, today);
+      if (plan.kind === "delete") deleteHabit(tx, userId, habit.id);
+      else endHabit(tx, userId, habit.id, plan.endDate);
+    }
+    deleteTaskList(tx, userId, listId);
   });
 }
 

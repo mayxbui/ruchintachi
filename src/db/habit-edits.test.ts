@@ -10,7 +10,9 @@ import {
   endHabit,
   getHabit,
   listHabits,
+  renameHabit,
   setException,
+  setHabitNote,
   splitHabit,
   updateHabit,
 } from "./habits";
@@ -140,5 +142,33 @@ describe("updateHabit / deleteHabit", () => {
     expect(getHabit(db, may, id)?.name).toBe("Tea");
     deleteHabit(db, may, id);
     expect(getHabit(db, may, id)).toBeUndefined();
+  });
+});
+
+describe("setHabitNote", () => {
+  it("sets and clears the owner's note only", () => {
+    const db = createTestDb();
+    const may = addUser(db, "may");
+    const kai = addUser(db, "kai");
+    const id = createHabit(db, may, daily);
+    setHabitNote(db, kai, id, "Hacked");
+    expect(getHabit(db, may, id)?.note).toBe(daily.note);
+    setHabitNote(db, may, id, "With lemon");
+    expect(getHabit(db, may, id)?.note).toBe("With lemon");
+    setHabitNote(db, may, id, null);
+    expect(getHabit(db, may, id)?.note).toBeNull();
+  });
+});
+
+describe("renameHabit", () => {
+  it("renames the owner's habit only", () => {
+    const db = createTestDb();
+    const may = addUser(db, "may");
+    const kai = addUser(db, "kai");
+    const id = createHabit(db, may, { ...daily, frequency: "none" });
+    renameHabit(db, kai, id, "Hacked");
+    expect(getHabit(db, may, id)?.name).toBe(daily.name);
+    renameHabit(db, may, id, "Call grandma");
+    expect(getHabit(db, may, id)?.name).toBe("Call grandma");
   });
 });
