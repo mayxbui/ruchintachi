@@ -70,23 +70,24 @@ export default async function RootLayout({
   );
 }
 
-/** Orange shoreline at the bottom of every page. */
+/**
+ * Orange shoreline at the bottom of every page: one soft, shallow ripple,
+ * like the Tomodachi Life: Living the Dream wallpapers. Stretched to the
+ * page width, so phones see fewer, wider bumps.
+ */
 function WaveFooter() {
   return (
     <footer className="mt-auto">
       <svg
         aria-hidden
-        viewBox="0 0 1440 80"
+        viewBox="0 0 1440 40"
         preserveAspectRatio="none"
-        className="block h-10 w-full md:h-16"
+        // -mb-px hides the hairline seam against the block below.
+        className="-mb-px block h-6 w-full md:h-10"
       >
         <path
-          className="fill-tangerine-light"
-          d="M0 40 C 180 5, 360 5, 540 35 S 900 75, 1080 40 S 1320 0, 1440 25 V80 H0 Z"
-        />
-        <path
           className="fill-tangerine"
-          d="M0 60 C 200 30, 380 30, 600 55 S 960 85, 1180 55 S 1380 35, 1440 50 V80 H0 Z"
+          d="M0 18 C 60 12, 90 8, 150 9 S 280 26, 380 24 S 520 10, 620 11 S 760 27, 860 25 S 1000 9, 1100 10 S 1260 24, 1340 21 S 1420 15, 1440 15 V40 H0 Z"
         />
       </svg>
       <div className="bg-tangerine px-4 pt-6 pb-6">
