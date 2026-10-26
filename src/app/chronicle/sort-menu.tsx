@@ -70,18 +70,22 @@ export function SortMenu({
               </button>
             ))}
           </div>
+          {/* Same round green check as the tasks themselves. */}
           <label className="mt-2 flex cursor-pointer items-center gap-2 rounded-2xl bg-white px-3 py-2 font-bold">
             <input
               type="checkbox"
               checked={shown.doneLast}
               onChange={(e) => save({ ...shown, doneLast: e.target.checked })}
-              className="size-5 accent-leaf"
+              className="peer sr-only"
             />
+            <span
+              aria-hidden
+              className="flex size-6 shrink-0 items-center justify-center rounded-full border-3 border-leaf bg-white text-white transition peer-checked:bg-leaf peer-focus-visible:ring-4 peer-focus-visible:ring-sky"
+            >
+              {shown.doneLast && <IconCheck className="size-4" stroke={3.5} />}
+            </span>
             Move done tasks to the bottom
           </label>
-          {shown.sort === "custom" && (
-            <p className="px-3 pt-2 text-sm text-caption">Drag tasks on the Tasks tab to set the order.</p>
-          )}
           {error && (
             <p role="alert" className="px-3 pt-2 text-cherry">
               {error}

@@ -7,7 +7,6 @@ import { requireUser } from "@/lib/auth/session";
 import { todayIn } from "@/lib/dates";
 import { describeRule } from "@/lib/describe-rule";
 import { nextOccurrence } from "@/lib/habit-edit";
-import { iconEmoji } from "@/lib/habit-icons";
 import { sortHabits } from "@/lib/sort-habits";
 import {
   filterParam,
@@ -121,7 +120,7 @@ export default async function TasksPage({
             id: habit.id,
             name: habit.name,
             note: habit.note,
-            emoji: iconEmoji(habit.icon) ?? "•",
+            icon: habit.icon,
             subtitle:
               filter.kind === "next" ? nextDateLabel(habit.next, today) : describeRule(habit, user.weekStart),
             listTag: habit.listId && !activeList ? (listName.get(habit.listId) ?? null) : null,

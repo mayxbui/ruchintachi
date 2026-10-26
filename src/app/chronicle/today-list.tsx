@@ -1,23 +1,25 @@
 "use client";
 
-import { IconCheck, IconHourglassHigh, IconPencil } from "@tabler/icons-react";
+import { IconCheck, IconGripVertical, IconHourglassHigh, IconPencil } from "@tabler/icons-react";
 import Link from "next/link";
 import { useLayoutEffect, useOptimistic, useRef, useState, useTransition } from "react";
 import { FormMessage } from "@/components/form";
-import { iconEmoji } from "@/lib/habit-icons";
 import { formatClock, parseMinutes, remainingMs, TIMER_MAX_MINUTES, TIMER_PRESETS } from "@/lib/timer";
 import { doneLast as moveDoneLast } from "@/lib/sort-habits";
 import { dayProgress, type DayItem } from "@/lib/today";
-import { toggleCompletionAction } from "./actions";
+import { reorderHabitsAction, toggleCompletionAction } from "./actions";
+import { TaskIcon } from "./task-icon";
 import { TaskText } from "./task-text";
 import { useTimer } from "./timer";
+import { useDragReorder } from "./use-drag-reorder";
 
 /**
  * Slides list rows from where they were to where they are now (FLIP), so a
  * ticked task glides to the bottom instead of jumping. Skipped for users
- * who prefer reduced motion.
+ * who prefer reduced motion, and for the row being dragged (it follows the
+ * pointer instead).
  */
-function useSlideOnReorder(order: string) {
+function useSlideOnReorder(order: string, draggingId: string | null) {
   const els = useRef(new Map<string, HTMLElement>());
   const tops = useRef(new Map<string, number>());
   useLayoutEffect(() => {
@@ -26,13 +28,13 @@ function useSlideOnReorder(order: string) {
       const top = el.getBoundingClientRect().top;
       const before = tops.current.get(id);
       tops.current.set(id, top);
-      if (reduce || before === undefined || before === top) return;
+      if (reduce || id === draggingId || before === undefined || before === top) return;
       el.animate([{ transform: `translateY(${before - top}px)` }, { transform: "translateY(0)" }], {
         duration: 350,
         easing: "cubic-bezier(0.2, 0.8, 0.2, 1)",
       });
     });
-  }, [order]);
+  }, [order, draggingId]);
   return (id: string) => (el: HTMLElement | null) => {
     if (el) els.current.set(id, el);
     else els.current.delete(id);
@@ -41,16 +43,20 @@ function useSlideOnReorder(order: string) {
 
 /**
  * Today's tasks as big round yes/no checkboxes. Ticks show at once and roll
- * back on error. With `doneLast`, ticked tasks move below the rest.
+ * back on error. With `doneLast`, ticked tasks move below the rest. With
+ * `reorderable` (the Custom sort) each row has a drag handle; its arrow
+ * keys move the row too.
  */
 export function TodayList({
   items,
   today,
   doneLast,
+  reorderable,
 }: {
   items: DayItem[];
   today: string;
   doneLast: boolean;
+  reorderable: boolean;
 }) {
   const [shown, change] = useOptimistic(
     items,
@@ -61,8 +67,14 @@ export function TodayList({
   const [error, setError] = useState<string>();
   const [timerFor, setTimerFor] = useState<string | null>(null); // task whose timer picker is open
   const timer = useTimer();
-  const ordered = doneLast ? moveDoneLast(shown) : shown;
-  const slideRef = useSlideOnReorder(ordered.map((i) => i.habitId).join());
+  const sorted = doneLast ? moveDoneLast(shown) : shown;
+  const drag = useDragReorder(
+    sorted.map((i) => i.habitId),
+    reorderHabitsAction,
+  );
+  const byId = new Map(sorted.map((i) => [i.habitId, i]));
+  const ordered = drag.order.flatMap((id) => byId.get(id) ?? []);
+  const slideRef = useSlideOnReorder(ordered.map((i) => i.habitId).join(), drag.draggingId);
 
   if (shown.length === 0) {
     return <p className="text-caption">No tasks today. Enjoy the day off! 🌴</p>;
@@ -86,9 +98,31 @@ export function TodayList({
       </p>
       <ul className="space-y-3">
         {ordered.map((item) => (
-          <li key={item.habitId} ref={slideRef(item.habitId)} className="rounded-2xl bg-white shadow-pop">
+          <li
+            key={item.habitId}
+            ref={(el) => {
+              slideRef(item.habitId)(el);
+              drag.rowRef(item.habitId)(el);
+            }}
+            style={drag.rowStyle(item.habitId)}
+            className={`relative rounded-2xl bg-white shadow-pop ${
+              drag.draggingId === item.habitId ? "z-10 scale-[1.02] ring-4 ring-sunny" : ""
+            }`}
+          >
             <div className="flex items-center gap-1 pr-2">
-              <label className="flex shrink-0 cursor-pointer items-center gap-3 py-3 pl-4">
+              {reorderable && (
+                <button
+                  type="button"
+                  aria-label={`Reorder ${item.name}: drag, or use the up and down arrow keys`}
+                  {...drag.handleProps(item.habitId)}
+                  className="min-w-0 shrink-0 cursor-grab touch-none self-stretch bg-transparent pl-2 text-caption shadow-none active:cursor-grabbing"
+                >
+                  <IconGripVertical className="size-5" stroke={2.25} />
+                </button>
+              )}
+              <label
+                className={`flex shrink-0 cursor-pointer items-center gap-3 py-3 ${reorderable ? "pl-1" : "pl-4"}`}
+              >
                 <input
                   type="checkbox"
                   checked={item.done}
@@ -101,11 +135,11 @@ export function TodayList({
                 >
                   {item.done && <IconCheck className="size-5" stroke={3.5} />}
                 </span>
-                <span className="w-8 shrink-0 text-center text-2xl" aria-hidden>
-                  {iconEmoji(item.icon) ?? "•"}
-                </span>
               </label>
-              <div className="min-w-0 flex-1 py-3 pl-3">
+              <span className="ml-2">
+                <TaskIcon habitId={item.habitId} icon={item.icon} name={item.name} />
+              </span>
+              <div className="min-w-0 flex-1 py-3 pl-2">
                 <TaskText
                   habitId={item.habitId}
                   name={item.name}
@@ -138,7 +172,7 @@ export function TodayList({
           </li>
         ))}
       </ul>
-      <FormMessage error={error} />
+      <FormMessage error={error ?? drag.error} />
     </div>
   );
 }

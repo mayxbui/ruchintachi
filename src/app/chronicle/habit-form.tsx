@@ -3,8 +3,6 @@
 import Link from "next/link";
 import {
   useActionState,
-  useCallback,
-  useRef,
   useState,
   type ComponentProps,
   type ReactNode,
@@ -12,7 +10,7 @@ import {
 import { DatePicker } from "@/components/date-picker";
 import { Dropdown } from "@/components/dropdown";
 import { FormMessage, SubmitButton } from "@/components/form";
-import { useDismiss } from "@/components/use-dismiss";
+import { IconPicker } from "@/components/icon-picker";
 import type { WeekStart } from "@/lib/dates";
 import { describeRule, formatDate } from "@/lib/describe-rule";
 import { END_COUNT_MAX, HABIT_NAME_MAX, HABIT_NOTE_MAX } from "@/lib/habit-form";
@@ -54,69 +52,6 @@ function Pill({
         {children}
       </span>
     </label>
-  );
-}
-
-/**
- * Square button beside the name that opens a grid of icons. Picking an
- * icon is optional; the hidden input posts "" for none.
- */
-function IconPicker({
-  value,
-  onChange,
-}: {
-  value: HabitIcon | null;
-  onChange: (icon: HabitIcon | null) => void;
-}) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const close = useCallback(() => setOpen(false), []);
-  useDismiss(open, close, ref);
-
-  function choose(icon: HabitIcon | null) {
-    onChange(icon);
-    setOpen(false);
-  }
-
-  return (
-    <div ref={ref} className="relative shrink-0">
-      <input type="hidden" name="icon" value={value ?? ""} />
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        aria-label={value ? `Icon: ${value}. Change icon` : "Pick an icon (optional)"}
-        aria-expanded={open}
-        aria-haspopup="true"
-        className="flex size-12 min-w-0 items-center justify-center bg-white text-2xl shadow-pop outline-none focus-visible:ring-4 focus-visible:ring-sky"
-      >
-        {value ? HABIT_ICONS[value] : <span className="text-3xl leading-none text-caption">+</span>}
-      </button>
-      {open && (
-        <div className="absolute top-full left-0 z-20 mt-2 w-max rounded-3xl bg-sunny p-3 shadow-pop">
-          <div className="grid grid-cols-4 gap-1">
-            {(Object.entries(HABIT_ICONS) as [HabitIcon, string][]).map(([key, emoji]) => (
-              <button
-                key={key}
-                type="button"
-                onClick={() => choose(key)}
-                aria-label={key}
-                aria-pressed={value === key}
-                className={`flex size-11 min-w-0 bg-white items-center justify-center rounded-2xl text-2xl transition hover:bg-sand/80 ${value === key ? "bg-sunny ring-2 ring-tangerine" : ""}`}
-              >
-                {emoji}
-              </button>
-            ))}
-          </div>
-          <button
-            type="button"
-            onClick={() => choose(null)}
-            className="mt-1 w-full rounded-2xl px-3 py-2 bg-white text-sm font-bold text-caption transition hover:bg-sunny/50"
-          >
-            No icon
-          </button>
-        </div>
-      )}
-    </div>
   );
 }
 
@@ -211,6 +146,7 @@ export function HabitForm({
           Name
         </label>
         <div className="flex gap-2">
+          <input type="hidden" name="icon" value={icon ?? ""} />
           <IconPicker value={icon} onChange={setIcon} />
           <input
             id="habit-name"
