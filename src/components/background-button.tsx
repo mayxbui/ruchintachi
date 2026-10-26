@@ -7,7 +7,7 @@ import { BackgroundPicker } from "./background-picker";
 import { popoverClass } from "./dropdown";
 import { useDismiss } from "./use-dismiss";
 
-/** Pill button at the right of the navbar; opens the background picker (#43). */
+/** Square button at the right of the navbar; opens the background picker (#43). */
 export function BackgroundButton({ background }: { background: BackgroundId }) {
   const id = useId();
   const ref = useRef<HTMLDivElement>(null);
@@ -24,7 +24,7 @@ export function BackgroundButton({ background }: { background: BackgroundId }) {
         aria-expanded={open}
         aria-controls={id}
         onClick={() => setOpen((o) => !o)}
-        className={`flex h-14 items-center justify-center rounded-full bg-cream/90 px-7 text-slate-500 shadow-pop transition duration-300 ease-[cubic-bezier(.3,1.8,.5,1)] hover:-translate-y-0.5 hover:-rotate-6 hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sunny motion-reduce:hover:transform-none ${
+        className={`flex size-13 min-w-0 items-center justify-center rounded-2xl bg-cream/90 text-slate-500 shadow-pop transition duration-300 ease-[cubic-bezier(.3,1.8,.5,1)] hover:-translate-y-0.5 hover:-rotate-6 hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sunny motion-reduce:hover:transform-none ${
           open ? "text-ink ring-4 ring-sunny" : ""
         }`}
       >
