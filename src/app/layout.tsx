@@ -70,23 +70,33 @@ export default async function RootLayout({
   );
 }
 
-/** Orange shoreline at the bottom of every page. */
+/** The footer's crest line, in a 1440×48 box. */
+const WAVE =
+  "M0 22 C 60 12, 90 6, 150 7 S 280 34, 380 32 S 520 8, 620 9 S 760 36, 860 34 S 1000 6, 1100 8 S 1260 32, 1340 28 S 1420 18, 1440 18";
+
+/**
+ * Orange shoreline at the bottom of every page: one soft, rolling wave,
+ * like the Tomodachi Life: Living the Dream wallpapers. Stretched to the
+ * page width, so phones see fewer, wider bumps.
+ */
 function WaveFooter() {
   return (
     <footer className="mt-auto">
       <svg
         aria-hidden
-        viewBox="0 0 1440 80"
+        viewBox="0 0 1440 48"
         preserveAspectRatio="none"
-        className="block h-10 w-full md:h-16"
+        // -mb-px hides the hairline seam against the block below.
+        className="-mb-px block h-8 w-full md:h-14"
       >
+        <path className="fill-tangerine" d={`${WAVE} V48 H0 Z`} />
+        {/* Darker edge along the crest only; keeps its width when stretched. */}
         <path
-          className="fill-tangerine-light"
-          d="M0 40 C 180 5, 360 5, 540 35 S 900 75, 1080 40 S 1320 0, 1440 25 V80 H0 Z"
-        />
-        <path
-          className="fill-tangerine"
-          d="M0 60 C 200 30, 380 30, 600 55 S 960 85, 1180 55 S 1380 35, 1440 50 V80 H0 Z"
+          d={WAVE}
+          fill="none"
+          vectorEffect="non-scaling-stroke"
+          strokeWidth={3}
+          className="stroke-tangerine-deep"
         />
       </svg>
       <div className="bg-tangerine px-4 pt-6 pb-6">
