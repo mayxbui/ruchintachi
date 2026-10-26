@@ -18,7 +18,7 @@ export default async function NewHabitPage({
   const fromList = lists.find((l) => l.id === list)?.id;
   const returnTo = fromList ? `/chronicle/tasks?list=${fromList}` : "/chronicle";
   return (
-    <PageCard title="Create a task">
+    <PageCard title="Create a habit">
       <HabitForm
         today={todayIn(user.timeZone)}
         weekStart={user.weekStart}
@@ -26,7 +26,7 @@ export default async function NewHabitPage({
         lists={lists}
         defaultListId={fromList}
         cancelHref={returnTo}
-        submitLabel="Create task"
+        submitLabel="Create habit"
         pendingLabel="Creating…"
       />
     </PageCard>

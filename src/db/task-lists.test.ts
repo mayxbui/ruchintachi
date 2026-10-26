@@ -2,11 +2,13 @@ import { describe, expect, it } from "vitest";
 import type { NewHabit } from "@/lib/habit-form";
 import { LISTS_MAX } from "@/lib/task-lists";
 import { createAccount, deleteAccount } from "./accounts";
-import { createHabit, getHabit, splitHabit } from "./habits";
+import { completedHabitIds, setCompletion } from "./completions";
+import { createHabit, getHabit, listHabits, splitHabit } from "./habits";
 import * as schema from "./schema";
 import {
   createTaskList,
   deleteTaskList,
+  deleteTaskListAndTasks,
   getTaskList,
   listTaskLists,
   renameTaskList,
@@ -85,6 +87,39 @@ describe("task lists", () => {
     deleteTaskList(db, may, list);
     expect(listTaskLists(db, may)).toEqual([]);
     expect(getHabit(db, may, habit)).toMatchObject({ name: "Drink water", listId: null });
+  });
+
+  it("deleting a list with its tasks removes them from today on, keeping the past", () => {
+    const db = createTestDb();
+    const may = addUser(db, "may");
+    const kai = addUser(db, "kai");
+    const today = "2026-10-26";
+    const list = createTaskList(db, may, "Health")!;
+    const other = createTaskList(db, may, "Study")!;
+    const inList = (habit: NewHabit) => {
+      const id = createHabit(db, may, habit);
+      setHabitList(db, may, id, list);
+      return id;
+    };
+    const started = inList(water); // since 20 Oct: has past days
+    const upcoming = inList({ ...water, name: "Later", startDate: "2026-10-30" });
+    const finished = inList({ ...water, name: "Done", endType: "on_date", endDate: "2026-10-22" });
+    const elsewhere = createHabit(db, may, water);
+    setHabitList(db, may, elsewhere, other);
+    setCompletion(db, may, started, "2026-10-25", true);
+    setCompletion(db, may, started, today, true);
+
+    deleteTaskListAndTasks(db, kai, list, today); // not Kai's: nothing happens
+    expect(listHabits(db, may)).toHaveLength(4);
+
+    deleteTaskListAndTasks(db, may, list, today);
+    expect(getTaskList(db, may, list)).toBeUndefined();
+    expect(getHabit(db, may, upcoming)).toBeUndefined();
+    expect(getHabit(db, may, started)).toMatchObject({ endDate: "2026-10-25", listId: null });
+    expect(completedHabitIds(db, may, "2026-10-25")).toEqual(new Set([started])); // past stays
+    expect(completedHabitIds(db, may, today)).toEqual(new Set());
+    expect(getHabit(db, may, finished)).toMatchObject({ endDate: "2026-10-22", listId: null });
+    expect(getHabit(db, may, elsewhere)?.listId).toBe(other);
   });
 
   it("only files a user's task under their own list", () => {

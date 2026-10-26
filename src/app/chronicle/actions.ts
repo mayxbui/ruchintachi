@@ -10,23 +10,28 @@ import {
   deleteHabit,
   endHabit,
   getHabit,
+  renameHabit,
   setException,
+  setHabitNote,
   splitHabit,
   updateHabit,
 } from "@/db/habits";
-import { setHabitList } from "@/db/task-lists";
+import { createTaskList, setHabitList } from "@/db/task-lists";
 import { requireUser } from "@/lib/auth/session";
 import { todayIn } from "@/lib/dates";
 import {
   isEditableDay,
+  nextOccurrence,
   planFutureDelete,
   planFutureEdit,
   sameSeries,
   seriesFrom,
   type EditScope,
 } from "@/lib/habit-edit";
-import { HABIT_NAME_MAX, readHabitForm, validateHabit } from "@/lib/habit-form";
+import { HABIT_NAME_MAX, HABIT_NOTE_MAX, readHabitForm, validateHabit } from "@/lib/habit-form";
+import { isHabitIcon } from "@/lib/habit-icons";
 import { occurrenceOn } from "@/lib/repeat-rule";
+import { LISTS_MAX, NEW_LIST, validateListName } from "@/lib/task-lists";
 
 export type HabitFormState = { error?: string };
 
@@ -38,8 +43,19 @@ export type ReturnTo = string;
 const backTo = (path: string): ReturnTo =>
   /^\/chronicle(\/tasks(\?list=[\w-]+)?)?$/.test(path) ? path : "/chronicle";
 
-/** The form's list choice; "" is no list. Ownership is checked when it's saved. */
-const readListId = (formData: FormData) => String(formData.get("listId") ?? "") || null;
+/**
+ * The form's list choice: null for no list, or a list id (ownership is
+ * checked when it's saved). "+ New list" checks the name and makes the list;
+ * call this after the task itself is valid, so a bad task leaves no stray list.
+ */
+function resolveListId(userId: string, formData: FormData): { listId: string | null } | { error: string } {
+  const choice = String(formData.get("listId") ?? "");
+  if (choice !== NEW_LIST) return { listId: choice || null };
+  const result = validateListName(String(formData.get("newListName") ?? ""));
+  if ("error" in result) return result;
+  const listId = createTaskList(db, userId, result.name);
+  return listId ? { listId } : { error: `You can have up to ${LISTS_MAX} lists.` };
+}
 
 export async function createHabitAction(
   returnTo: ReturnTo,
@@ -50,9 +66,11 @@ export async function createHabitAction(
   const result = validateHabit(readHabitForm(formData), todayIn(user.timeZone));
   if ("error" in result) return { error: result.error };
 
+  const list = resolveListId(user.id, formData);
+  if ("error" in list) return { error: list.error };
+
   const id = createHabit(db, user.id, result.habit);
-  const listId = readListId(formData);
-  if (listId) setHabitList(db, user.id, id, listId);
+  if (list.listId) setHabitList(db, user.id, id, list.listId);
   revalidatePath("/chronicle", "layout");
   redirect(backTo(returnTo));
 }
@@ -76,6 +94,114 @@ export async function toggleCompletionAction(
   }
 
   setCompletion(db, user.id, habitId, today, done);
+  revalidatePath("/chronicle", "layout");
+  return {};
+}
+
+export type QuickAddState = { error?: string; added?: number };
+
+/** The quick "Add a task" box on Today: a one-off task for today, made at once. */
+export async function quickAddTaskAction(
+  _prev: QuickAddState,
+  formData: FormData,
+): Promise<QuickAddState> {
+  const user = await requireUser();
+  const today = todayIn(user.timeZone);
+  const result = validateHabit(
+    {
+      name: String(formData.get("name") ?? ""),
+      icon: "",
+      note: "",
+      startDate: today,
+      frequency: "none",
+      weekdays: [],
+      endType: "never",
+      endDate: "",
+      endCount: "",
+    },
+    today,
+  );
+  if ("error" in result) return { error: result.error };
+
+  createHabit(db, user.id, result.habit);
+  revalidatePath("/chronicle", "layout");
+  return { added: Date.now() };
+}
+
+/**
+ * Renames one of today's tasks in place. A one-off is renamed outright; a
+ * repeating task is renamed for today only (the edit page changes the series).
+ */
+export async function renameTodayAction(habitId: string, rawName: string): Promise<{ error?: string }> {
+  const user = await requireUser();
+  const today = todayIn(user.timeZone);
+  const found = await editableHabit(habitId, today);
+  if ("error" in found) return { error: found.error };
+  const { habit } = found;
+
+  const name = rawName.trim().replace(/\s+/g, " ");
+  if (!name) return { error: "Give the task a name." };
+  if (name.length > HABIT_NAME_MAX) {
+    return { error: `Keep the name to ${HABIT_NAME_MAX} characters or fewer.` };
+  }
+
+  if (habit.frequency === "none") renameHabit(db, user.id, habitId, name);
+  else if (name === habit.name) clearException(db, user.id, habitId, today);
+  else setException(db, user.id, habitId, today, name);
+  revalidatePath("/chronicle", "layout");
+  return {};
+}
+
+/**
+ * Renames a task from the Tasks tab: the whole task from its next day on,
+ * like "this day and future". A task with past days is split there, so past
+ * days keep the old name.
+ */
+export async function renameSeriesAction(habitId: string, rawName: string): Promise<{ error?: string }> {
+  const user = await requireUser();
+  const today = todayIn(user.timeZone);
+  const habit = getHabit(db, user.id, habitId);
+  if (!habit) return { error: "That task doesn't exist." };
+  const exceptions = listExceptions(db, user.id).filter((e) => e.habitId === habitId);
+  const next = nextOccurrence(habit, exceptions, today);
+  if (!next) return { error: "That task has no days left to rename." };
+
+  const name = rawName.trim().replace(/\s+/g, " ");
+  if (!name) return { error: "Give the task a name." };
+  if (name.length > HABIT_NAME_MAX) {
+    return { error: `Keep the name to ${HABIT_NAME_MAX} characters or fewer.` };
+  }
+
+  const plan = planFutureEdit(habit, next);
+  if (habit.frequency === "none" || plan.kind === "replace") {
+    renameHabit(db, user.id, habitId, name);
+  } else {
+    const from = seriesFrom(habit, next);
+    splitHabit(db, user.id, habitId, plan.oldEndDate, {
+      name,
+      icon: from.icon && isHabitIcon(from.icon) ? from.icon : null,
+      note: from.note,
+      startDate: from.startDate,
+      frequency: from.frequency,
+      weekdays: from.weekdays,
+      endType: from.endType,
+      endDate: from.endDate,
+      endCount: from.endCount,
+    });
+  }
+  revalidatePath("/chronicle", "layout");
+  return {};
+}
+
+/** Edits a task's note in place (Today or Tasks). An empty note removes it. */
+export async function setNoteAction(habitId: string, rawNote: string): Promise<{ error?: string }> {
+  const user = await requireUser();
+  if (!getHabit(db, user.id, habitId)) return { error: "That task doesn't exist." };
+  const note = rawNote.trim();
+  if (note.length > HABIT_NOTE_MAX) {
+    return { error: `Keep the note to ${HABIT_NOTE_MAX} characters or fewer.` };
+  }
+  setHabitNote(db, user.id, habitId, note || null);
   revalidatePath("/chronicle", "layout");
   return {};
 }
@@ -125,6 +251,8 @@ export async function editHabitAction(
     if (repeating) values.startDate = date;
     const result = validateHabit(values, today);
     if ("error" in result) return { error: result.error };
+    const list = resolveListId(user.id, formData);
+    if ("error" in list) return { error: list.error };
 
     // Only the list changed (or nothing): no need to touch, or split, the series.
     let savedId: string | null = habitId;
@@ -136,7 +264,7 @@ export async function editHabitAction(
         savedId = splitHabit(db, user.id, habitId, plan.oldEndDate, result.habit);
       }
     }
-    if (savedId) setHabitList(db, user.id, savedId, readListId(formData));
+    if (savedId) setHabitList(db, user.id, savedId, list.listId);
   }
 
   revalidatePath("/chronicle", "layout");

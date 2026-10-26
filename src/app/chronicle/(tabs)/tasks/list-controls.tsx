@@ -3,6 +3,7 @@
 import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
 import { useActionState, useCallback, useEffect, useState } from "react";
 import { FormMessage, SubmitButton } from "@/components/form";
+import { useFormStatus } from "react-dom";
 import { LIST_NAME_MAX } from "@/lib/task-lists";
 import {
   createListAction,
@@ -79,7 +80,7 @@ export function NewList() {
       </button>
       {open && (
         // Full width under the pill row (the row wraps it onto its own line).
-        <div className="basis-full">
+        <div className="basis-full py-3">
           <NameForm action={createListAction} label="List name" submitLabel="Add" onCancel={close} />
         </div>
       )}
@@ -87,9 +88,78 @@ export function NewList() {
   );
 }
 
-/** Rename / delete for the list being shown. */
-export function ListMenu({ listId, name }: { listId: string; name: string }) {
+/** A delete choice; greys out while any choice in the panel is posting. */
+function DeleteChoice({ children, danger = false }: { children: string; danger?: boolean }) {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className={`px-4 py-2 font-bold transition hover:brightness-105 disabled:opacity-60 ${
+        danger ? "bg-cherry text-white" : "bg-white text-ink"
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
+
+/**
+ * Asks what happens to the list's tasks: keep them (unlisted) or delete
+ * them too. An empty list just has "Delete list".
+ */
+function DeletePanel({
+  listId,
+  name,
+  taskCount,
+  onCancel,
+}: {
+  listId: string;
+  name: string;
+  taskCount: number;
+  onCancel: () => void;
+}) {
+  const tasks = `${taskCount} task${taskCount === 1 ? "" : "s"}`;
+  return (
+    <div role="alertdialog" aria-label={`Delete ${name}`} className="mb-4 rounded-2xl bg-cherry/10 p-4">
+      <p className="font-bold">Delete the list &ldquo;{name}&rdquo;?</p>
+      {taskCount > 0 && (
+        <p className="mt-1 text-caption">
+          It has {tasks}. Deleting them too removes them from today on; past days stay in your
+          history.
+        </p>
+      )}
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        {taskCount > 0 ? (
+          <>
+            <form action={deleteListAction.bind(null, listId, "keep")}>
+              <DeleteChoice>Keep tasks</DeleteChoice>
+            </form>
+            <form action={deleteListAction.bind(null, listId, "delete")}>
+              <DeleteChoice danger>Delete tasks with list</DeleteChoice>
+            </form>
+          </>
+        ) : (
+          <form action={deleteListAction.bind(null, listId, "keep")}>
+            <DeleteChoice danger>Delete list</DeleteChoice>
+          </form>
+        )}
+        <button
+          type="button"
+          onClick={onCancel}
+          className="min-w-0 bg-transparent px-2 font-bold text-caption shadow-none hover:brightness-75"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/** Rename / delete for the list being shown. `taskCount` is its current tasks. */
+export function ListMenu({ listId, name, taskCount }: { listId: string; name: string; taskCount: number }) {
   const [renaming, setRenaming] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const close = useCallback(() => setRenaming(false), []);
 
   if (renaming) {
@@ -104,6 +174,12 @@ export function ListMenu({ listId, name }: { listId: string; name: string }) {
     );
   }
 
+  if (deleting) {
+    return (
+      <DeletePanel listId={listId} name={name} taskCount={taskCount} onCancel={() => setDeleting(false)} />
+    );
+  }
+
   return (
     <div className="mb-4 flex items-center gap-1">
       <h3 className="mr-auto min-w-0 truncate text-xl font-extrabold">{name}</h3>
@@ -115,22 +191,14 @@ export function ListMenu({ listId, name }: { listId: string; name: string }) {
       >
         <IconPencil className="size-5" stroke={2.25} />
       </button>
-      <form
-        action={deleteListAction.bind(null, listId)}
-        onSubmit={(e) => {
-          if (!window.confirm(`Delete the list "${name}"? Its tasks stay, without a list.`)) {
-            e.preventDefault();
-          }
-        }}
+      <button
+        type="button"
+        onClick={() => setDeleting(true)}
+        aria-label={`Delete ${name}`}
+        className="min-w-0 shrink-0 rounded-full bg-transparent p-2 text-caption shadow-none transition hover:bg-cherry/10 hover:text-cherry"
       >
-        <button
-          type="submit"
-          aria-label={`Delete ${name}`}
-          className="min-w-0 shrink-0 rounded-full bg-transparent p-2 text-caption shadow-none transition hover:bg-cherry/10 hover:text-cherry"
-        >
-          <IconTrash className="size-5" stroke={2.25} />
-        </button>
-      </form>
+        <IconTrash className="size-5" stroke={2.25} />
+      </button>
     </div>
   );
 }

@@ -8,12 +8,15 @@ import { iconEmoji } from "@/lib/habit-icons";
 import { formatClock, parseMinutes, remainingMs, TIMER_MAX_MINUTES, TIMER_PRESETS } from "@/lib/timer";
 import { dayProgress, type DayItem } from "@/lib/today";
 import { toggleCompletionAction } from "./actions";
+import { TaskText } from "./task-text";
 import { useTimer } from "./timer";
 
 /** Today's tasks as big round yes/no checkboxes. Ticks show at once and roll back on error. */
 export function TodayList({ items, today }: { items: DayItem[]; today: string }) {
-  const [shown, setDone] = useOptimistic(items, (current, change: { habitId: string; done: boolean }) =>
-    current.map((item) => (item.habitId === change.habitId ? { ...item, done: change.done } : item)),
+  const [shown, change] = useOptimistic(
+    items,
+    (current, update: { habitId: string; done: boolean }) =>
+      current.map((item) => (item.habitId === update.habitId ? { ...item, ...update } : item)),
   );
   const [, startTransition] = useTransition();
   const [error, setError] = useState<string>();
@@ -29,7 +32,7 @@ export function TodayList({ items, today }: { items: DayItem[]; today: string })
   function toggle(item: DayItem) {
     setError(undefined);
     startTransition(async () => {
-      setDone({ habitId: item.habitId, done: !item.done });
+      change({ habitId: item.habitId, done: !item.done });
       const result = await toggleCompletionAction(item.habitId, !item.done);
       if (result.error) setError(result.error);
     });
@@ -44,7 +47,7 @@ export function TodayList({ items, today }: { items: DayItem[]; today: string })
         {shown.map((item) => (
           <li key={item.habitId} className="rounded-2xl bg-white shadow-pop">
             <div className="flex items-center gap-1 pr-2">
-              <label className="flex min-w-0 flex-1 cursor-pointer items-center gap-3 px-4 py-3">
+              <label className="flex shrink-0 cursor-pointer items-center gap-3 py-3 pl-4">
                 <input
                   type="checkbox"
                   checked={item.done}
@@ -60,21 +63,16 @@ export function TodayList({ items, today }: { items: DayItem[]; today: string })
                 <span className="w-8 shrink-0 text-center text-2xl" aria-hidden>
                   {iconEmoji(item.icon) ?? "•"}
                 </span>
-                <span className="min-w-0">
-                  <span
-                    className={`block font-bold break-words transition ${
-                      item.done ? "text-caption line-through" : ""
-                    }`}
-                  >
-                    {item.name}
-                  </span>
-                  {item.note && (
-                    <span className="mt-1 block text-gray-700 break-words whitespace-pre-line">
-                      {item.note}
-                    </span>
-                  )}
-                </span>
               </label>
+              <div className="min-w-0 flex-1 py-3 pl-3">
+                <TaskText
+                  habitId={item.habitId}
+                  name={item.name}
+                  note={item.note}
+                  done={item.done}
+                  scope="today"
+                />
+              </div>
               <TimerButton
                 item={item}
                 open={timerFor === item.habitId}
