@@ -7,21 +7,21 @@ A habit tracker inspired by **Tomodachi Life: Living the Dream**. Create a Mii, 
 ## Progress
 
 <!-- progress:start -->
-**Overall: 41%** (19 of 46 issues closed)
+**Overall: 46%** (21 of 46 issues closed)
 
-`████████░░░░░░░░░░░░`
+`█████████░░░░░░░░░░░`
 
 | Milestone | Progress | Done |
 |---|---|---|
 | [M1 · Project setup](https://github.com/mayxbui/ruchintachi/milestone/1) | `████████████████████` 100% | 4/4 ✅ |
 | [M2 · Accounts & Mii](https://github.com/mayxbui/ruchintachi/milestone/2) | `████████████████░░░░` 80% | 4/5 |
 | [M3 · Habits & check-off](https://github.com/mayxbui/ruchintachi/milestone/3) | `████████████████████` 100% | 11/11 ✅ |
-| [M4 · Calendar & daily gift (MVP)](https://github.com/mayxbui/ruchintachi/milestone/4) | `░░░░░░░░░░░░░░░░░░░░` 0% | 0/6 |
+| [M4 · Calendar & daily gift (MVP)](https://github.com/mayxbui/ruchintachi/milestone/4) | `███░░░░░░░░░░░░░░░░░` 17% | 1/6 |
 | [M5 · Deploy to Azure](https://github.com/mayxbui/ruchintachi/milestone/5) | `░░░░░░░░░░░░░░░░░░░░` 0% | 0/4 |
 | [M6 · Charts & Mii mood](https://github.com/mayxbui/ruchintachi/milestone/6) | `░░░░░░░░░░░░░░░░░░░░` 0% | 0/5 |
 | [M7 · Perfect week & clothing](https://github.com/mayxbui/ruchintachi/milestone/7) | `░░░░░░░░░░░░░░░░░░░░` 0% | 0/3 |
 | [M8 · Friends & Town](https://github.com/mayxbui/ruchintachi/milestone/8) | `░░░░░░░░░░░░░░░░░░░░` 0% | 0/7 |
-| [M9 · Polish & extras](https://github.com/mayxbui/ruchintachi/milestone/9) | `░░░░░░░░░░░░░░░░░░░░` 0% | 0/1 |
+| [M9 · Polish & extras](https://github.com/mayxbui/ruchintachi/milestone/9) | `████████████████████` 100% | 1/1 ✅ |
 
 <sub>Updated automatically from GitHub issues.</sub>
 <!-- progress:end -->
