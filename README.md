@@ -95,7 +95,7 @@ Your Mii's mood shows as a coloured thought bubble, with five levels (names are 
 | **Town** | Your friend code, add friends, friends leaderboard with cheers, visit friends' Miis, group trackers |
 | **Mii** | Mii creator, wardrobe, inventory, mood line |
 | **Settings** | Time zone, week start (Monday/Sunday), account, recovery code, delete account, **FAQ** |
-| **Background** button (right of the navbar) | Pick one of 15 page backgrounds; it switches straight away |
+| **Background** button (right of the navbar) | Pick one of 22 page backgrounds; it switches straight away |
 
 On phones the navbar is a bottom tab bar; on desktop it sits at the top.
 
