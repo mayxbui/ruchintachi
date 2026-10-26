@@ -109,7 +109,7 @@ export async function toggleCompletionAction(
   return gift ? { gift } : {};
 }
 
-export type DailyGift = Pick<Item, "id" | "name" | "sprite">;
+export type DailyGift = Pick<Item, "id" | "name" | "category" | "sprite">;
 
 /**
  * Awards today's gift once every task scheduled today is done. Returns the
@@ -123,7 +123,7 @@ function awardDailyGiftIfEarned(userId: string, today: string): DailyGift | unde
 
   const item = rollGift(dailyGiftPool());
   if (!item || !awardDailyGift(db, userId, today, item.id)) return undefined;
-  return { id: item.id, name: item.name, sprite: item.sprite };
+  return { id: item.id, name: item.name, category: item.category, sprite: item.sprite };
 }
 
 /** Saves the sort menu: the order and whether done tasks drop to the bottom. */

@@ -1,6 +1,6 @@
 # Ruchintachi — Habit Planner & Tracker
 
-![Ruchintachi logo](ruchintachi-logo.png)
+![Ruchintachi logo](public/ruchintachi-logo.png)
 
 A habit tracker inspired by **Tomodachi Life: Living the Dream**. Create a Mii, give it habits to work on, and watch your calendar fill up with gifts as you keep your habits.
 

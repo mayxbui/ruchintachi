@@ -34,6 +34,34 @@
   /* Themed form warning (FieldWarning) and a ticked task's check. */
   --animate-warning-in: warning-in 220ms ease-out both;
   --animate-check-pop: tile-pop 380ms ease-out;
+  /* Daily gift reveal (#17): the wrapped present shakes, then the item rises. */
+  --animate-gift-wobble: gift-wobble 700ms ease-in-out infinite;
+  --animate-gift-rise: gift-rise 600ms cubic-bezier(0.2, 1.4, 0.4, 1) both;
+
+  @keyframes gift-wobble {
+    0%,
+    100% {
+      transform: rotate(0) scale(1);
+    }
+    20% {
+      transform: rotate(-8deg) scale(1.03, 0.97);
+    }
+    40% {
+      transform: rotate(7deg) scale(0.97, 1.03);
+    }
+    60% {
+      transform: rotate(-4deg);
+    }
+    80% {
+      transform: rotate(2deg);
+    }
+  }
+  @keyframes gift-rise {
+    from {
+      opacity: 0;
+      transform: translateY(2.5rem) scale(0.4);
+    }
+  }
 
   @keyframes bg-in {
     from {
@@ -108,7 +136,9 @@
   .animate-bg-in,
   .animate-tile-pop,
   .animate-check-pop,
-  .animate-warning-in {
+  .animate-warning-in,
+  .animate-gift-wobble,
+  .animate-gift-rise {
     animation: none;
   }
   .poof,

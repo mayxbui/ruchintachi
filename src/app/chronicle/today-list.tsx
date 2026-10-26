@@ -7,7 +7,8 @@ import { FormMessage } from "@/components/form";
 import { formatClock, parseMinutes, remainingMs, TIMER_MAX_MINUTES, TIMER_PRESETS } from "@/lib/timer";
 import { doneLast as moveDoneLast } from "@/lib/sort-habits";
 import { dayProgress, type DayItem } from "@/lib/today";
-import { reorderHabitsAction, toggleCompletionAction } from "./actions";
+import { reorderHabitsAction, toggleCompletionAction, type DailyGift } from "./actions";
+import { GiftReveal } from "./gift-reveal";
 import { TaskIcon } from "./task-icon";
 import { TaskText } from "./task-text";
 import { useTimer } from "./timer";
@@ -71,6 +72,8 @@ export function TodayList({
   const timer = useTimer();
   // The task just ticked, keyed so ticking it again replays the sparkle.
   const [cheer, setCheer] = useState<{ id: string; key: number } | null>(null);
+  // Today's gift, set when the tick that finished the day awarded it (#16).
+  const [gift, setGift] = useState<DailyGift | null>(null);
   const sorted = doneLast ? moveDoneLast(shown) : shown;
   const drag = useDragReorder(
     sorted.map((i) => i.habitId),
@@ -93,6 +96,7 @@ export function TodayList({
       change({ habitId: item.habitId, done: !item.done });
       const result = await toggleCompletionAction(item.habitId, !item.done);
       if (result.error) setError(result.error);
+      if (result.gift) setGift(result.gift);
     });
   }
 
@@ -188,6 +192,7 @@ export function TodayList({
         ))}
       </ul>
       <FormMessage error={error ?? drag.error} />
+      {gift && <GiftReveal gift={gift} onClose={() => setGift(null)} />}
     </div>
   );
 }
