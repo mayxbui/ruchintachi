@@ -1,0 +1,4591 @@
+[
+  {
+    "id": "cloth-headwear-hat-jet",
+    "name": "5-panel cap",
+    "category": "clothing",
+    "slot": "headwear",
+    "price": 15.5,
+    "sprite": "/items/cloth-headwear-hat-jet.png"
+  },
+  {
+    "id": "cloth-socks-one-point",
+    "name": "accented socks",
+    "category": "clothing",
+    "slot": "socks",
+    "price": 4.7,
+    "sprite": "/items/cloth-socks-one-point.png"
+  },
+  {
+    "id": "cloth-bottoms-skirt-long-accordion",
+    "name": "accordion skirt",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 9.7,
+    "sprite": "/items/cloth-bottoms-skirt-long-accordion.png"
+  },
+  {
+    "id": "cloth-accessory-back-angel",
+    "name": "angel wings",
+    "category": "clothing",
+    "slot": "accessory",
+    "price": 20,
+    "sprite": "/items/cloth-accessory-back-angel.png"
+  },
+  {
+    "id": "cloth-tops-tshirt-half-animal",
+    "name": "animal-print graphic tee",
+    "category": "clothing",
+    "slot": "top",
+    "price": 14,
+    "sprite": "/items/cloth-tops-tshirt-half-animal.png"
+  },
+  {
+    "id": "cloth-socks-short",
+    "name": "ankle socks",
+    "category": "clothing",
+    "slot": "socks",
+    "price": 4.8,
+    "sprite": "/items/cloth-socks-short.png"
+  },
+  {
+    "id": "cloth-all-costume-long-avocado",
+    "name": "avocado suit",
+    "category": "clothing",
+    "slot": "costume",
+    "price": 26,
+    "sprite": "/items/cloth-all-costume-long-avocado.png"
+  },
+  {
+    "id": "cloth-socks-back-ribbon",
+    "name": "back-ribbon socks",
+    "category": "clothing",
+    "slot": "socks",
+    "price": 5.2,
+    "sprite": "/items/cloth-socks-back-ribbon.png"
+  },
+  {
+    "id": "cloth-tops-coat-long-soutien-collar",
+    "name": "balmacaan coat",
+    "category": "clothing",
+    "slot": "top",
+    "price": 18,
+    "sprite": "/items/cloth-tops-coat-long-soutien-collar.png"
+  },
+  {
+    "id": "cloth-headwear-hat-simple-cap",
+    "name": "basic cap",
+    "category": "clothing",
+    "slot": "headwear",
+    "price": 10,
+    "sprite": "/items/cloth-headwear-hat-simple-cap.png"
+  },
+  {
+    "id": "cloth-topslong-aline-half-linen",
+    "name": "basic dress",
+    "category": "clothing",
+    "slot": "long-top",
+    "price": 22,
+    "sprite": "/items/cloth-topslong-aline-half-linen.png"
+  },
+  {
+    "id": "cloth-tops-yshirt-long-simple",
+    "name": "basic dress shirt",
+    "category": "clothing",
+    "slot": "top",
+    "price": 11,
+    "sprite": "/items/cloth-tops-yshirt-long-simple.png"
+  },
+  {
+    "id": "cloth-headwear-hat-simple-knit",
+    "name": "basic knit beanie",
+    "category": "clothing",
+    "slot": "headwear",
+    "price": 10,
+    "sprite": "/items/cloth-headwear-hat-simple-knit.png"
+  },
+  {
+    "id": "cloth-socks-leggings",
+    "name": "basic leggings",
+    "category": "clothing",
+    "slot": "socks",
+    "price": 5,
+    "sprite": "/items/cloth-socks-leggings.png"
+  },
+  {
+    "id": "cloth-tops-tshirt-long-simple",
+    "name": "basic long-sleeve tee",
+    "category": "clothing",
+    "slot": "top",
+    "price": 11,
+    "sprite": "/items/cloth-tops-tshirt-long-simple.png"
+  },
+  {
+    "id": "cloth-shoes-pumps-simple",
+    "name": "basic pumps",
+    "category": "clothing",
+    "slot": "shoes",
+    "price": 7,
+    "sprite": "/items/cloth-shoes-pumps-simple.png"
+  },
+  {
+    "id": "cloth-accessory-muffler-simple",
+    "name": "basic scarf",
+    "category": "clothing",
+    "slot": "accessory",
+    "price": 17,
+    "sprite": "/items/cloth-accessory-muffler-simple.png"
+  },
+  {
+    "id": "cloth-shoes-sneaker-simple",
+    "name": "basic sneakers",
+    "category": "clothing",
+    "slot": "shoes",
+    "price": 7,
+    "sprite": "/items/cloth-shoes-sneaker-simple.png"
+  },
+  {
+    "id": "cloth-tops-outer-long-simple-sweater",
+    "name": "basic sweatshirt",
+    "category": "clothing",
+    "slot": "top",
+    "price": 10,
+    "sprite": "/items/cloth-tops-outer-long-simple-sweater.png"
+  },
+  {
+    "id": "cloth-tops-tshirt-half-simple",
+    "name": "basic tee",
+    "category": "clothing",
+    "slot": "top",
+    "price": 10,
+    "sprite": "/items/cloth-tops-tshirt-half-simple.png"
+  },
+  {
+    "id": "cloth-bottoms-pants-wide-simple",
+    "name": "basic wide-leg pants",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 11.5,
+    "sprite": "/items/cloth-bottoms-pants-wide-simple.png"
+  },
+  {
+    "id": "coordinate0002",
+    "name": "basic-dress outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 33.9,
+    "sprite": "/items/coordinate0002.png"
+  },
+  {
+    "id": "coordinate0004",
+    "name": "basic-dress-shirt outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 33.4,
+    "sprite": "/items/coordinate0004.png"
+  },
+  {
+    "id": "coordinate0012",
+    "name": "basic-sweatshirt outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 31.2,
+    "sprite": "/items/coordinate0012.png"
+  },
+  {
+    "id": "coordinate0001",
+    "name": "basic-tee outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 30.9,
+    "sprite": "/items/coordinate0001.png"
+  },
+  {
+    "id": "cloth-headwear-hat-knit",
+    "name": "beanie",
+    "category": "clothing",
+    "slot": "headwear",
+    "price": 15,
+    "sprite": "/items/cloth-headwear-hat-knit.png"
+  },
+  {
+    "id": "cloth-tops-tshirt-half-big-number",
+    "name": "big-number jersey",
+    "category": "clothing",
+    "slot": "top",
+    "price": 11.5,
+    "sprite": "/items/cloth-tops-tshirt-half-big-number.png"
+  },
+  {
+    "id": "cloth-tops-tshirt-long-riders",
+    "name": "biker jacket",
+    "category": "clothing",
+    "slot": "top",
+    "price": 20,
+    "sprite": "/items/cloth-tops-tshirt-long-riders.png"
+  },
+  {
+    "id": "coordinate0133",
+    "name": "biker outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 65.5,
+    "sprite": "/items/coordinate0133.png"
+  },
+  {
+    "id": "cloth-socks-block-check",
+    "name": "block-checkered socks",
+    "category": "clothing",
+    "slot": "socks",
+    "price": 5.5,
+    "sprite": "/items/cloth-socks-block-check.png"
+  },
+  {
+    "id": "cloth-headwear-ornament-front-bunny",
+    "name": "bunny ears",
+    "category": "clothing",
+    "slot": "headwear",
+    "price": 19.5,
+    "sprite": "/items/cloth-headwear-ornament-front-bunny.png"
+  },
+  {
+    "id": "cloth-shoes-pointed-business",
+    "name": "business shoes",
+    "category": "clothing",
+    "slot": "shoes",
+    "price": 10,
+    "sprite": "/items/cloth-shoes-pointed-business.png"
+  },
+  {
+    "id": "coordinate0019",
+    "name": "business suit & tie outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 42.5,
+    "sprite": "/items/coordinate0019.png"
+  },
+  {
+    "id": "cloth-tops-tshirt-long-office",
+    "name": "business-suit jacket",
+    "category": "clothing",
+    "slot": "top",
+    "price": 20,
+    "sprite": "/items/cloth-tops-tshirt-long-office.png"
+  },
+  {
+    "id": "cloth-tops-yshirt-long-suit",
+    "name": "business-suit jacket and tie",
+    "category": "clothing",
+    "slot": "top",
+    "price": 20,
+    "sprite": "/items/cloth-tops-yshirt-long-suit.png"
+  },
+  {
+    "id": "coordinate0020",
+    "name": "business-suit outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 43.1,
+    "sprite": "/items/coordinate0020.png"
+  },
+  {
+    "id": "coordinate0189",
+    "name": "cardboard-box costume",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 10,
+    "sprite": "/items/coordinate0189.png"
+  },
+  {
+    "id": "cloth-headwear-fullface-cardboard",
+    "name": "cardboard-box mask",
+    "category": "clothing",
+    "slot": "headwear",
+    "price": 5,
+    "sprite": "/items/cloth-headwear-fullface-cardboard.png"
+  },
+  {
+    "id": "cloth-all-box-long-cardboard",
+    "name": "cardboard-box suit",
+    "category": "clothing",
+    "slot": "costume",
+    "price": 5,
+    "sprite": "/items/cloth-all-box-long-cardboard.png"
+  },
+  {
+    "id": "cloth-bottoms-pants-wide-cargo",
+    "name": "cargo pants",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 9.4,
+    "sprite": "/items/cloth-bottoms-pants-wide-cargo.png"
+  },
+  {
+    "id": "cloth-bottoms-pants-wide-cargo-half",
+    "name": "cargo shorts",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 8.4,
+    "sprite": "/items/cloth-bottoms-pants-wide-cargo-half.png"
+  },
+  {
+    "id": "coordinate0006",
+    "name": "cargo-shorts outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 31.5,
+    "sprite": "/items/coordinate0006.png"
+  },
+  {
+    "id": "coordinate0011",
+    "name": "casual cardigan outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 37.4,
+    "sprite": "/items/coordinate0011.png"
+  },
+  {
+    "id": "coordinate0024",
+    "name": "casual vest outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 53,
+    "sprite": "/items/coordinate0024.png"
+  },
+  {
+    "id": "cloth-bottoms-pants-wide-check",
+    "name": "checkered wide-leg pants",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 12,
+    "sprite": "/items/cloth-bottoms-pants-wide-check.png"
+  },
+  {
+    "id": "cloth-bottoms-pants-long-roll-up",
+    "name": "checkered-hem pants",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 9.2,
+    "sprite": "/items/cloth-bottoms-pants-long-roll-up.png"
+  },
+  {
+    "id": "cloth-bottoms-pants-long-chino",
+    "name": "chino pants",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 10,
+    "sprite": "/items/cloth-bottoms-pants-long-chino.png"
+  },
+  {
+    "id": "cloth-accessory-bag-town",
+    "name": "city backpack",
+    "category": "clothing",
+    "slot": "accessory",
+    "price": 14,
+    "sprite": "/items/cloth-accessory-bag-town.png"
+  },
+  {
+    "id": "coordinate0143",
+    "name": "city-walk outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 49.1,
+    "sprite": "/items/coordinate0143.png"
+  },
+  {
+    "id": "cloth-tops-yshirt-long-coach-jacket",
+    "name": "coach jacket",
+    "category": "clothing",
+    "slot": "top",
+    "price": 14,
+    "sprite": "/items/cloth-tops-yshirt-long-coach-jacket.png"
+  },
+  {
+    "id": "cloth-tops-tshirt-half-switching",
+    "name": "color-blocked tee",
+    "category": "clothing",
+    "slot": "top",
+    "price": 11.8,
+    "sprite": "/items/cloth-tops-tshirt-half-switching.png"
+  },
+  {
+    "id": "cloth-bottoms-pants-long-simple-color",
+    "name": "colorful pants",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 8.5,
+    "sprite": "/items/cloth-bottoms-pants-long-simple-color.png"
+  },
+  {
+    "id": "cloth-bottoms-pants-wide-corduroy",
+    "name": "corduroy pants",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 9,
+    "sprite": "/items/cloth-bottoms-pants-wide-corduroy.png"
+  },
+  {
+    "id": "cloth-bottoms-skirt-long-denim-maxi",
+    "name": "denim maxi skirt",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 10.2,
+    "sprite": "/items/cloth-bottoms-skirt-long-denim-maxi.png"
+  },
+  {
+    "id": "cloth-accessory-back-devil",
+    "name": "devil wings",
+    "category": "clothing",
+    "slot": "accessory",
+    "price": 20,
+    "sprite": "/items/cloth-accessory-back-devil.png"
+  },
+  {
+    "id": "cloth-accessory-neck-sunglasses",
+    "name": "display-only sunglasses",
+    "category": "clothing",
+    "slot": "accessory",
+    "price": 13,
+    "sprite": "/items/cloth-accessory-neck-sunglasses.png"
+  },
+  {
+    "id": "cloth-tops-yshirt-puff-dolly",
+    "name": "dolly shirt",
+    "category": "clothing",
+    "slot": "top",
+    "price": 19,
+    "sprite": "/items/cloth-tops-yshirt-puff-dolly.png"
+  },
+  {
+    "id": "coordinate0142",
+    "name": "dolly-shirt outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 56.6,
+    "sprite": "/items/coordinate0142.png"
+  },
+  {
+    "id": "cloth-tops-yshirt-long-dot",
+    "name": "dotted shirt",
+    "category": "clothing",
+    "slot": "top",
+    "price": 11.8,
+    "sprite": "/items/cloth-tops-yshirt-long-dot.png"
+  },
+  {
+    "id": "coordinate0055",
+    "name": "dotted-shirt outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 33.6,
+    "sprite": "/items/coordinate0055.png"
+  },
+  {
+    "id": "cloth-socks-tow-line",
+    "name": "double-striped socks",
+    "category": "clothing",
+    "slot": "socks",
+    "price": 5,
+    "sprite": "/items/cloth-socks-tow-line.png"
+  },
+  {
+    "id": "cloth-tops-outer-long-yumekawa-sukajan",
+    "name": "dreamy jacket",
+    "category": "clothing",
+    "slot": "top",
+    "price": 12.5,
+    "sprite": "/items/cloth-tops-outer-long-yumekawa-sukajan.png"
+  },
+  {
+    "id": "cloth-tops-yshirt-long-shirt-cardigan",
+    "name": "dress shirt and cardigan",
+    "category": "clothing",
+    "slot": "top",
+    "price": 13.5,
+    "sprite": "/items/cloth-tops-yshirt-long-shirt-cardigan.png"
+  },
+  {
+    "id": "cloth-tops-coat-long-duffle",
+    "name": "duffle coat",
+    "category": "clothing",
+    "slot": "top",
+    "price": 18,
+    "sprite": "/items/cloth-tops-coat-long-duffle.png"
+  },
+  {
+    "id": "coordinate0018",
+    "name": "duffle coat & skirt outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 58.2,
+    "sprite": "/items/coordinate0018.png"
+  },
+  {
+    "id": "coordinate0007",
+    "name": "energetic-skirt outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 33.7,
+    "sprite": "/items/coordinate0007.png"
+  },
+  {
+    "id": "cloth-shoes-boots-long-engineer",
+    "name": "engineer boots",
+    "category": "clothing",
+    "slot": "shoes",
+    "price": 8.2,
+    "sprite": "/items/cloth-shoes-boots-long-engineer.png"
+  },
+  {
+    "id": "cloth-topslong-salopette-half-jump-suit",
+    "name": "floral jumpsuit",
+    "category": "clothing",
+    "slot": "long-top",
+    "price": 26.5,
+    "sprite": "/items/cloth-topslong-salopette-half-jump-suit.png"
+  },
+  {
+    "id": "cloth-shoes-sandal-gladiator",
+    "name": "gladiator sandals",
+    "category": "clothing",
+    "slot": "shoes",
+    "price": 5.9,
+    "sprite": "/items/cloth-shoes-sandal-gladiator.png"
+  },
+  {
+    "id": "cloth-headwear-protector-half-helmet",
+    "name": "half helmet and goggles",
+    "category": "clothing",
+    "slot": "headwear",
+    "price": 23,
+    "sprite": "/items/cloth-headwear-protector-half-helmet.png"
+  },
+  {
+    "id": "coordinate0197",
+    "name": "hamster costume",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 51,
+    "sprite": "/items/coordinate0197.png"
+  },
+  {
+    "id": "cloth-headwear-costume-hamster",
+    "name": "hamster hood",
+    "category": "clothing",
+    "slot": "headwear",
+    "price": 26,
+    "sprite": "/items/cloth-headwear-costume-hamster.png"
+  },
+  {
+    "id": "cloth-all-plump-long-hamster",
+    "name": "hamster suit",
+    "category": "clothing",
+    "slot": "costume",
+    "price": 25,
+    "sprite": "/items/cloth-all-plump-long-hamster.png"
+  },
+  {
+    "id": "cloth-accessory-muffler-headphone",
+    "name": "headphones",
+    "category": "clothing",
+    "slot": "accessory",
+    "price": 16,
+    "sprite": "/items/cloth-accessory-muffler-headphone.png"
+  },
+  {
+    "id": "cloth-accessory-neck-heart",
+    "name": "heart pendant",
+    "category": "clothing",
+    "slot": "accessory",
+    "price": 20,
+    "sprite": "/items/cloth-accessory-neck-heart.png"
+  },
+  {
+    "id": "cloth-bottoms-skirt-mini-heart-buckle",
+    "name": "heart-buckle skirt",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 10,
+    "sprite": "/items/cloth-bottoms-skirt-mini-heart-buckle.png"
+  },
+  {
+    "id": "cloth-bottoms-pants-long-denim",
+    "name": "jeans",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 9.2,
+    "sprite": "/items/cloth-bottoms-pants-long-denim.png"
+  },
+  {
+    "id": "cloth-shoes-sneaker-kids",
+    "name": "kid sneakers",
+    "category": "clothing",
+    "slot": "shoes",
+    "price": 6,
+    "sprite": "/items/cloth-shoes-sneaker-kids.png"
+  },
+  {
+    "id": "cloth-shoes-boots-short-lace-up",
+    "name": "lace-up boots",
+    "category": "clothing",
+    "slot": "shoes",
+    "price": 7.8,
+    "sprite": "/items/cloth-shoes-boots-short-lace-up.png"
+  },
+  {
+    "id": "cloth-tops-coat-long-layered",
+    "name": "layered button-down",
+    "category": "clothing",
+    "slot": "top",
+    "price": 15.7,
+    "sprite": "/items/cloth-tops-coat-long-layered.png"
+  },
+  {
+    "id": "cloth-tops-tshirt-long-layered-heart",
+    "name": "layered heart tee",
+    "category": "clothing",
+    "slot": "top",
+    "price": 14.3,
+    "sprite": "/items/cloth-tops-tshirt-long-layered-heart.png"
+  },
+  {
+    "id": "cloth-shoes-boots-long-leather",
+    "name": "leather boots",
+    "category": "clothing",
+    "slot": "shoes",
+    "price": 8.5,
+    "sprite": "/items/cloth-shoes-boots-long-leather.png"
+  },
+  {
+    "id": "cloth-shoes-loafer-loafer",
+    "name": "loafers",
+    "category": "clothing",
+    "slot": "shoes",
+    "price": 7.9,
+    "sprite": "/items/cloth-shoes-loafer-loafer.png"
+  },
+  {
+    "id": "cloth-topslong-box-dress-long-denim",
+    "name": "long denim dress",
+    "category": "clothing",
+    "slot": "long-top",
+    "price": 29,
+    "sprite": "/items/cloth-topslong-box-dress-long-denim.png"
+  },
+  {
+    "id": "cloth-bottoms-skirt-box-long",
+    "name": "long pencil skirt",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 12.2,
+    "sprite": "/items/cloth-bottoms-skirt-box-long.png"
+  },
+  {
+    "id": "coordinate0146",
+    "name": "long-denim-dress outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 56.1,
+    "sprite": "/items/coordinate0146.png"
+  },
+  {
+    "id": "cloth-tops-tshirt-long-border",
+    "name": "long-sleeve striped tee",
+    "category": "clothing",
+    "slot": "top",
+    "price": 12.2,
+    "sprite": "/items/cloth-tops-tshirt-long-border.png"
+  },
+  {
+    "id": "coordinate0003",
+    "name": "long-sleeve striped-tee outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 41.9,
+    "sprite": "/items/coordinate0003.png"
+  },
+  {
+    "id": "coordinate0005",
+    "name": "long-sleeve tee & skirt outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 44.9,
+    "sprite": "/items/coordinate0005.png"
+  },
+  {
+    "id": "cloth-headwear-mask-mask",
+    "name": "medical face mask",
+    "category": "clothing",
+    "slot": "headwear",
+    "price": 1,
+    "sprite": "/items/cloth-headwear-mask-mask.png"
+  },
+  {
+    "id": "cloth-socks-multi-border",
+    "name": "multicolored striped socks",
+    "category": "clothing",
+    "slot": "socks",
+    "price": 5.5,
+    "sprite": "/items/cloth-socks-multi-border.png"
+  },
+  {
+    "id": "cloth-bottoms-pants-wide-multi-stripe",
+    "name": "multistriped pants",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 8.9,
+    "sprite": "/items/cloth-bottoms-pants-wide-multi-stripe.png"
+  },
+  {
+    "id": "cloth-topslong-along-long-natural",
+    "name": "natural-fiber dress",
+    "category": "clothing",
+    "slot": "long-top",
+    "price": 30,
+    "sprite": "/items/cloth-topslong-along-long-natural.png"
+  },
+  {
+    "id": "coordinate0160",
+    "name": "natural-fiber-dress outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 96.1,
+    "sprite": "/items/coordinate0160.png"
+  },
+  {
+    "id": "cloth-topslong-salopette-long-splashed",
+    "name": "painter coveralls",
+    "category": "clothing",
+    "slot": "long-top",
+    "price": 21,
+    "sprite": "/items/cloth-topslong-salopette-long-splashed.png"
+  },
+  {
+    "id": "cloth-tops-tshirt-long-paisley",
+    "name": "paisley jacket",
+    "category": "clothing",
+    "slot": "top",
+    "price": 13,
+    "sprite": "/items/cloth-tops-tshirt-long-paisley.png"
+  },
+  {
+    "id": "coordinate0051",
+    "name": "paisley-jacket outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 34.6,
+    "sprite": "/items/coordinate0051.png"
+  },
+  {
+    "id": "cloth-tops-coat-long-pea",
+    "name": "peacoat",
+    "category": "clothing",
+    "slot": "top",
+    "price": 17.5,
+    "sprite": "/items/cloth-tops-coat-long-pea.png"
+  },
+  {
+    "id": "coordinate0017",
+    "name": "peacoat outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 56.7,
+    "sprite": "/items/coordinate0017.png"
+  },
+  {
+    "id": "cloth-accessory-neck-pendant",
+    "name": "pendant",
+    "category": "clothing",
+    "slot": "accessory",
+    "price": 37,
+    "sprite": "/items/cloth-accessory-neck-pendant.png"
+  },
+  {
+    "id": "cloth-tops-tshirt-half-photo",
+    "name": "photo-print tee",
+    "category": "clothing",
+    "slot": "top",
+    "price": 12,
+    "sprite": "/items/cloth-tops-tshirt-half-photo.png"
+  },
+  {
+    "id": "coordinate0015",
+    "name": "photo-print-tee outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 26.5,
+    "sprite": "/items/coordinate0015.png"
+  },
+  {
+    "id": "cloth-topslong-along-long-check",
+    "name": "plaid dress",
+    "category": "clothing",
+    "slot": "long-top",
+    "price": 26,
+    "sprite": "/items/cloth-topslong-along-long-check.png"
+  },
+  {
+    "id": "coordinate0009",
+    "name": "plaid-flannel outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 33.2,
+    "sprite": "/items/coordinate0009.png"
+  },
+  {
+    "id": "cloth-tops-yshirt-long-retro-check",
+    "name": "plaid-flannel shirt",
+    "category": "clothing",
+    "slot": "top",
+    "price": 12,
+    "sprite": "/items/cloth-tops-yshirt-long-retro-check.png"
+  },
+  {
+    "id": "cloth-socks-socks",
+    "name": "plain socks",
+    "category": "clothing",
+    "slot": "socks",
+    "price": 4.5,
+    "sprite": "/items/cloth-socks-socks.png"
+  },
+  {
+    "id": "cloth-all-box-long-trump",
+    "name": "playing-card suit",
+    "category": "clothing",
+    "slot": "costume",
+    "price": 21,
+    "sprite": "/items/cloth-all-box-long-trump.png"
+  },
+  {
+    "id": "cloth-bottoms-skirt-box-office",
+    "name": "professional skirt",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 11,
+    "sprite": "/items/cloth-bottoms-skirt-box-office.png"
+  },
+  {
+    "id": "cloth-bottoms-skirt-mini-double-button",
+    "name": "quad-button skirt",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 9,
+    "sprite": "/items/cloth-bottoms-skirt-mini-double-button.png"
+  },
+  {
+    "id": "cloth-tops-tshirt-long-raglan",
+    "name": "raglan long-sleeve tee",
+    "category": "clothing",
+    "slot": "top",
+    "price": 12,
+    "sprite": "/items/cloth-tops-tshirt-long-raglan.png"
+  },
+  {
+    "id": "cloth-shoes-boots-long-rain",
+    "name": "rain boots",
+    "category": "clothing",
+    "slot": "shoes",
+    "price": 6.7,
+    "sprite": "/items/cloth-shoes-boots-long-rain.png"
+  },
+  {
+    "id": "cloth-socks-retro-check",
+    "name": "retro checkered socks",
+    "category": "clothing",
+    "slot": "socks",
+    "price": 5.3,
+    "sprite": "/items/cloth-socks-retro-check.png"
+  },
+  {
+    "id": "cloth-socks-rib",
+    "name": "ribbed leggings",
+    "category": "clothing",
+    "slot": "socks",
+    "price": 5.2,
+    "sprite": "/items/cloth-socks-rib.png"
+  },
+  {
+    "id": "cloth-headwear-ornament-side-ribbon",
+    "name": "ribbon",
+    "category": "clothing",
+    "slot": "headwear",
+    "price": 15.5,
+    "sprite": "/items/cloth-headwear-ornament-side-ribbon.png"
+  },
+  {
+    "id": "cloth-bottoms-pants-long-denim-damaged",
+    "name": "rocker jeans",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 9.5,
+    "sprite": "/items/cloth-bottoms-pants-long-denim-damaged.png"
+  },
+  {
+    "id": "cloth-shoes-highcut-rubber-toe",
+    "name": "rubber-toe high-tops",
+    "category": "clothing",
+    "slot": "shoes",
+    "price": 7.8,
+    "sprite": "/items/cloth-shoes-highcut-rubber-toe.png"
+  },
+  {
+    "id": "cloth-shoes-sneaker-rubber-toe",
+    "name": "rubber-toe sneakers",
+    "category": "clothing",
+    "slot": "shoes",
+    "price": 7.1,
+    "sprite": "/items/cloth-shoes-sneaker-rubber-toe.png"
+  },
+  {
+    "id": "cloth-socks-frilled",
+    "name": "ruffled socks",
+    "category": "clothing",
+    "slot": "socks",
+    "price": 5.8,
+    "sprite": "/items/cloth-socks-frilled.png"
+  },
+  {
+    "id": "cloth-tops-yshirt-long-half-cardigan",
+    "name": "short-sleeve cardigan",
+    "category": "clothing",
+    "slot": "top",
+    "price": 11,
+    "sprite": "/items/cloth-tops-yshirt-long-half-cardigan.png"
+  },
+  {
+    "id": "coordinate0010",
+    "name": "short-sleeve-cardigan outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 32.9,
+    "sprite": "/items/coordinate0010.png"
+  },
+  {
+    "id": "cloth-shoes-sandal-shower",
+    "name": "shower sandals",
+    "category": "clothing",
+    "slot": "shoes",
+    "price": 5.3,
+    "sprite": "/items/cloth-shoes-sandal-shower.png"
+  },
+  {
+    "id": "cloth-shoes-boots-short-side-gore",
+    "name": "side-gore ankle boots",
+    "category": "clothing",
+    "slot": "shoes",
+    "price": 8,
+    "sprite": "/items/cloth-shoes-boots-short-side-gore.png"
+  },
+  {
+    "id": "cloth-shoes-sneaker-sideline",
+    "name": "side-stripe sneakers",
+    "category": "clothing",
+    "slot": "shoes",
+    "price": 7.2,
+    "sprite": "/items/cloth-shoes-sneaker-sideline.png"
+  },
+  {
+    "id": "cloth-tops-tshirt-half-skipper",
+    "name": "skipper-collar shirt",
+    "category": "clothing",
+    "slot": "top",
+    "price": 11.5,
+    "sprite": "/items/cloth-tops-tshirt-half-skipper.png"
+  },
+  {
+    "id": "cloth-bottoms-pants-long-slacks",
+    "name": "slacks",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 8,
+    "sprite": "/items/cloth-bottoms-pants-long-slacks.png"
+  },
+  {
+    "id": "cloth-tops-yshirt-sleeveless-denim-shirt",
+    "name": "sleeveless denim shirt",
+    "category": "clothing",
+    "slot": "top",
+    "price": 15,
+    "sprite": "/items/cloth-tops-yshirt-sleeveless-denim-shirt.png"
+  },
+  {
+    "id": "coordinate0016",
+    "name": "sleeveless-shirt outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 32.4,
+    "sprite": "/items/coordinate0016.png"
+  },
+  {
+    "id": "cloth-shoes-standard-slipon",
+    "name": "slip-ons",
+    "category": "clothing",
+    "slot": "shoes",
+    "price": 6.9,
+    "sprite": "/items/cloth-shoes-standard-slipon.png"
+  },
+  {
+    "id": "cloth-bottoms-pants-wide-slit",
+    "name": "slit pants",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 12.5,
+    "sprite": "/items/cloth-bottoms-pants-wide-slit.png"
+  },
+  {
+    "id": "cloth-headwear-glass-star",
+    "name": "star sunglasses",
+    "category": "clothing",
+    "slot": "headwear",
+    "price": 14,
+    "sprite": "/items/cloth-headwear-glass-star.png"
+  },
+  {
+    "id": "cloth-socks-stocking",
+    "name": "stockings",
+    "category": "clothing",
+    "slot": "socks",
+    "price": 5.1,
+    "sprite": "/items/cloth-socks-stocking.png"
+  },
+  {
+    "id": "cloth-bottoms-skirt-mini-strap",
+    "name": "strapped skirt",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 10,
+    "sprite": "/items/cloth-bottoms-skirt-mini-strap.png"
+  },
+  {
+    "id": "cloth-shoes-mule-strap",
+    "name": "strappy pumps",
+    "category": "clothing",
+    "slot": "shoes",
+    "price": 6.9,
+    "sprite": "/items/cloth-shoes-mule-strap.png"
+  },
+  {
+    "id": "cloth-headwear-hat-boater",
+    "name": "straw boater hat",
+    "category": "clothing",
+    "slot": "headwear",
+    "price": 18,
+    "sprite": "/items/cloth-headwear-hat-boater.png"
+  },
+  {
+    "id": "cloth-socks-two-line-short",
+    "name": "striped-cuff ankle socks",
+    "category": "clothing",
+    "slot": "socks",
+    "price": 4.6,
+    "sprite": "/items/cloth-socks-two-line-short.png"
+  },
+  {
+    "id": "coordinate0310",
+    "name": "stylish heart outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 55.3,
+    "sprite": "/items/coordinate0310.png"
+  },
+  {
+    "id": "cloth-tops-tshirt-long-summer-cardigan",
+    "name": "summer cardigan",
+    "category": "clothing",
+    "slot": "top",
+    "price": 11,
+    "sprite": "/items/cloth-tops-tshirt-long-summer-cardigan.png"
+  },
+  {
+    "id": "coordinate0013",
+    "name": "summer-cardigan outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 34,
+    "sprite": "/items/coordinate0013.png"
+  },
+  {
+    "id": "cloth-tops-tshirt-half-egg",
+    "name": "sunny-side-up tee",
+    "category": "clothing",
+    "slot": "top",
+    "price": 12,
+    "sprite": "/items/cloth-tops-tshirt-half-egg.png"
+  },
+  {
+    "id": "cloth-topslong-overall-long-suspenders",
+    "name": "suspenders getup",
+    "category": "clothing",
+    "slot": "long-top",
+    "price": 31.1,
+    "sprite": "/items/cloth-topslong-overall-long-suspenders.png"
+  },
+  {
+    "id": "cloth-bottoms-pants-long-sweat-pants",
+    "name": "sweatpants",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 8.2,
+    "sprite": "/items/cloth-bottoms-pants-long-sweat-pants.png"
+  },
+  {
+    "id": "cloth-tops-tshirt-long-tailored-jacket",
+    "name": "tailored jacket",
+    "category": "clothing",
+    "slot": "top",
+    "price": 11.5,
+    "sprite": "/items/cloth-tops-tshirt-long-tailored-jacket.png"
+  },
+  {
+    "id": "coordinate0008",
+    "name": "tailored-jacket outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 33.8,
+    "sprite": "/items/coordinate0008.png"
+  },
+  {
+    "id": "cloth-bottoms-skirt-mini-tennis",
+    "name": "tennis skirt",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 9,
+    "sprite": "/items/cloth-bottoms-skirt-mini-tennis.png"
+  },
+  {
+    "id": "cloth-bottoms-skirt-long-tiered",
+    "name": "tiered skirt",
+    "category": "clothing",
+    "slot": "legwear",
+    "price": 11.5,
+    "sprite": "/items/cloth-bottoms-skirt-long-tiered.png"
+  },
+  {
+    "id": "cloth-socks-tights",
+    "name": "tights",
+    "category": "clothing",
+    "slot": "socks",
+    "price": 5,
+    "sprite": "/items/cloth-socks-tights.png"
+  },
+  {
+    "id": "cloth-headwear-hat-trilby",
+    "name": "trilby",
+    "category": "clothing",
+    "slot": "headwear",
+    "price": 16.7,
+    "sprite": "/items/cloth-headwear-hat-trilby.png"
+  },
+  {
+    "id": "cloth-tops-yshirt-long-turtleneck-knit",
+    "name": "turtleneck sweater",
+    "category": "clothing",
+    "slot": "top",
+    "price": 17,
+    "sprite": "/items/cloth-tops-yshirt-long-turtleneck-knit.png"
+  },
+  {
+    "id": "coordinate0014",
+    "name": "turtleneck-sweater outfit",
+    "category": "clothing",
+    "slot": "outfit",
+    "price": 37.8,
+    "sprite": "/items/coordinate0014.png"
+  },
+  {
+    "id": "cloth-tops-tshirt-half-gilet",
+    "name": "vest and tee",
+    "category": "clothing",
+    "slot": "top",
+    "price": 13,
+    "sprite": "/items/cloth-tops-tshirt-half-gilet.png"
+  },
+  {
+    "id": "cloth-tops-outer-long-parka-zip",
+    "name": "zip-up hoodie",
+    "category": "clothing",
+    "slot": "top",
+    "price": 11,
+    "sprite": "/items/cloth-tops-outer-long-parka-zip.png"
+  },
+  {
+    "id": "anpan",
+    "name": "anpan",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/anpan.png"
+  },
+  {
+    "id": "apple",
+    "name": "apple",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/apple.png"
+  },
+  {
+    "id": "apple-crumble",
+    "name": "apple crumble",
+    "category": "food",
+    "price": 6.8,
+    "sprite": "/items/apple-crumble.png"
+  },
+  {
+    "id": "apple-juice",
+    "name": "apple juice",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/apple-juice.png"
+  },
+  {
+    "id": "apple-pie",
+    "name": "apple pie",
+    "category": "food",
+    "price": 4.8,
+    "sprite": "/items/apple-pie.png"
+  },
+  {
+    "id": "abokado",
+    "name": "avocado",
+    "category": "food",
+    "price": 1,
+    "sprite": "/items/abokado.png"
+  },
+  {
+    "id": "bacalhau",
+    "name": "bacalao",
+    "category": "food",
+    "price": 7.6,
+    "sprite": "/items/bacalhau.png"
+  },
+  {
+    "id": "bacon",
+    "name": "bacon",
+    "category": "food",
+    "price": 3.8,
+    "sprite": "/items/bacon.png"
+  },
+  {
+    "id": "baguette",
+    "name": "baguette",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/baguette.png"
+  },
+  {
+    "id": "baked-beans",
+    "name": "baked beans",
+    "category": "food",
+    "price": 2.5,
+    "sprite": "/items/baked-beans.png"
+  },
+  {
+    "id": "baked-potato",
+    "name": "baked potato",
+    "category": "food",
+    "price": 5,
+    "sprite": "/items/baked-potato.png"
+  },
+  {
+    "id": "yakiimo",
+    "name": "baked sweet potato",
+    "category": "food",
+    "price": 3.8,
+    "sprite": "/items/yakiimo.png"
+  },
+  {
+    "id": "banana",
+    "name": "banana",
+    "category": "food",
+    "price": 1,
+    "sprite": "/items/banana.png"
+  },
+  {
+    "id": "banana-kawa",
+    "name": "banana peel",
+    "category": "food",
+    "price": 0.2,
+    "sprite": "/items/banana-kawa.png"
+  },
+  {
+    "id": "banana-split",
+    "name": "banana split",
+    "category": "food",
+    "price": 6.5,
+    "sprite": "/items/banana-split.png"
+  },
+  {
+    "id": "banh-mi",
+    "name": "banh mi",
+    "category": "food",
+    "price": 5.6,
+    "sprite": "/items/banh-mi.png"
+  },
+  {
+    "id": "barbeque",
+    "name": "barbecue",
+    "category": "food",
+    "price": 15,
+    "sprite": "/items/barbeque.png"
+  },
+  {
+    "id": "beans-on-toast",
+    "name": "beans on toast",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/beans-on-toast.png"
+  },
+  {
+    "id": "beef-bourguignon",
+    "name": "beef bourguignon",
+    "category": "food",
+    "price": 9.8,
+    "sprite": "/items/beef-bourguignon.png"
+  },
+  {
+    "id": "beef-jerky",
+    "name": "beef jerky",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/beef-jerky.png"
+  },
+  {
+    "id": "ishiyaki-bibinba",
+    "name": "bibimbap",
+    "category": "food",
+    "price": 8,
+    "sprite": "/items/ishiyaki-bibinba.png"
+  },
+  {
+    "id": "scone",
+    "name": "biscuit",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/scone.png"
+  },
+  {
+    "id": "goya",
+    "name": "bitter melon",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/goya.png"
+  },
+  {
+    "id": "black-forest-gateau",
+    "name": "Black Forest cake",
+    "category": "food",
+    "price": 4.5,
+    "sprite": "/items/black-forest-gateau.png"
+  },
+  {
+    "id": "blue-cheese",
+    "name": "blue cheese",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/blue-cheese.png"
+  },
+  {
+    "id": "boiled-gyoza",
+    "name": "boiled dumplings",
+    "category": "food",
+    "price": 8.5,
+    "sprite": "/items/boiled-gyoza.png"
+  },
+  {
+    "id": "octopus",
+    "name": "boiled octopus",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/octopus.png"
+  },
+  {
+    "id": "neko-manma",
+    "name": "bonito-flakes rice bowl",
+    "category": "food",
+    "price": 1.7,
+    "sprite": "/items/neko-manma.png"
+  },
+  {
+    "id": "borscht",
+    "name": "borscht",
+    "category": "food",
+    "price": 7.8,
+    "sprite": "/items/borscht.png"
+  },
+  {
+    "id": "broccoli",
+    "name": "broccoli",
+    "category": "food",
+    "price": 1.9,
+    "sprite": "/items/broccoli.png"
+  },
+  {
+    "id": "brownie",
+    "name": "brownie",
+    "category": "food",
+    "price": 4.2,
+    "sprite": "/items/brownie.png"
+  },
+  {
+    "id": "brussel-sprouts",
+    "name": "brussels sprouts",
+    "category": "food",
+    "price": 1,
+    "sprite": "/items/brussel-sprouts.png"
+  },
+  {
+    "id": "bubble-tea",
+    "name": "bubble tea",
+    "category": "food",
+    "price": 5.5,
+    "sprite": "/items/bubble-tea.png"
+  },
+  {
+    "id": "bubble-waffle",
+    "name": "bubble waffle",
+    "category": "food",
+    "price": 9.8,
+    "sprite": "/items/bubble-waffle.png"
+  },
+  {
+    "id": "chidimi",
+    "name": "buchimgae",
+    "category": "food",
+    "price": 5.5,
+    "sprite": "/items/chidimi.png"
+  },
+  {
+    "id": "pudetige",
+    "name": "budae-jjigae",
+    "category": "food",
+    "price": 6,
+    "sprite": "/items/pudetige.png"
+  },
+  {
+    "id": "buffalo-wings",
+    "name": "buffalo wings",
+    "category": "food",
+    "price": 8.6,
+    "sprite": "/items/buffalo-wings.png"
+  },
+  {
+    "id": "bugne",
+    "name": "bugnes",
+    "category": "food",
+    "price": 8,
+    "sprite": "/items/bugne.png"
+  },
+  {
+    "id": "bulgogi",
+    "name": "bulgogi",
+    "category": "food",
+    "price": 12,
+    "sprite": "/items/bulgogi.png"
+  },
+  {
+    "id": "gugelhupf",
+    "name": "bundkuchen",
+    "category": "food",
+    "price": 6.2,
+    "sprite": "/items/gugelhupf.png"
+  },
+  {
+    "id": "cookie",
+    "name": "butter cookie",
+    "category": "food",
+    "price": 1.8,
+    "sprite": "/items/cookie.png"
+  },
+  {
+    "id": "zyaga-bata",
+    "name": "buttered potato",
+    "category": "food",
+    "price": 3.8,
+    "sprite": "/items/zyaga-bata.png"
+  },
+  {
+    "id": "ika-ring",
+    "name": "calamari",
+    "category": "food",
+    "price": 4.8,
+    "sprite": "/items/ika-ring.png"
+  },
+  {
+    "id": "ringo-ame",
+    "name": "candy apple",
+    "category": "food",
+    "price": 2.5,
+    "sprite": "/items/ringo-ame.png"
+  },
+  {
+    "id": "candy-corn",
+    "name": "candy corn",
+    "category": "food",
+    "price": 0.75,
+    "sprite": "/items/candy-corn.png"
+  },
+  {
+    "id": "cannele",
+    "name": "canelé",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/cannele.png"
+  },
+  {
+    "id": "cannoli",
+    "name": "cannoli",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/cannoli.png"
+  },
+  {
+    "id": "cappuccino",
+    "name": "cappuccino",
+    "category": "food",
+    "price": 5.8,
+    "sprite": "/items/cappuccino.png"
+  },
+  {
+    "id": "caprese-salad",
+    "name": "caprese salad",
+    "category": "food",
+    "price": 8.7,
+    "sprite": "/items/caprese-salad.png"
+  },
+  {
+    "id": "caramel-nuts",
+    "name": "caramelized nuts",
+    "category": "food",
+    "price": 5.7,
+    "sprite": "/items/caramel-nuts.png"
+  },
+  {
+    "id": "karubonara",
+    "name": "carbonara",
+    "category": "food",
+    "price": 8.8,
+    "sprite": "/items/karubonara.png"
+  },
+  {
+    "id": "carrot-cake",
+    "name": "carrot cake",
+    "category": "food",
+    "price": 5.3,
+    "sprite": "/items/carrot-cake.png"
+  },
+  {
+    "id": "kasutera",
+    "name": "castella cake",
+    "category": "food",
+    "price": 5,
+    "sprite": "/items/kasutera.png"
+  },
+  {
+    "id": "kyabia",
+    "name": "caviar",
+    "category": "food",
+    "price": 65,
+    "sprite": "/items/kyabia.png"
+  },
+  {
+    "id": "celery",
+    "name": "celery",
+    "category": "food",
+    "price": 1.3,
+    "sprite": "/items/celery.png"
+  },
+  {
+    "id": "ceviche",
+    "name": "ceviche",
+    "category": "food",
+    "price": 9.8,
+    "sprite": "/items/ceviche.png"
+  },
+  {
+    "id": "chamomile-tea",
+    "name": "chamomile tea",
+    "category": "food",
+    "price": 2.7,
+    "sprite": "/items/chamomile-tea.png"
+  },
+  {
+    "id": "chanko-nabe",
+    "name": "chankonabe",
+    "category": "food",
+    "price": 15.8,
+    "sprite": "/items/chanko-nabe.png"
+  },
+  {
+    "id": "yakiniku",
+    "name": "charcoal-grilled beef",
+    "category": "food",
+    "price": 13,
+    "sprite": "/items/yakiniku.png"
+  },
+  {
+    "id": "chawanmushi",
+    "name": "chawanmushi",
+    "category": "food",
+    "price": 5,
+    "sprite": "/items/chawanmushi.png"
+  },
+  {
+    "id": "cheese",
+    "name": "cheese",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/cheese.png"
+  },
+  {
+    "id": "hamburger",
+    "name": "cheeseburger",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/hamburger.png"
+  },
+  {
+    "id": "cheesacake",
+    "name": "cheesecake",
+    "category": "food",
+    "price": 4.9,
+    "sprite": "/items/cheesacake.png"
+  },
+  {
+    "id": "cherimoya",
+    "name": "cherimoya",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/cherimoya.png"
+  },
+  {
+    "id": "cherry",
+    "name": "cherries",
+    "category": "food",
+    "price": 2.9,
+    "sprite": "/items/cherry.png"
+  },
+  {
+    "id": "cherry-pie",
+    "name": "cherry pie",
+    "category": "food",
+    "price": 5.2,
+    "sprite": "/items/cherry-pie.png"
+  },
+  {
+    "id": "gum",
+    "name": "chewing gum",
+    "category": "food",
+    "price": 1.2,
+    "sprite": "/items/gum.png"
+  },
+  {
+    "id": "chicken-noodle-soup",
+    "name": "chicken noodle soup",
+    "category": "food",
+    "price": 6.8,
+    "sprite": "/items/chicken-noodle-soup.png"
+  },
+  {
+    "id": "chicken-pho",
+    "name": "chicken pho",
+    "category": "food",
+    "price": 8,
+    "sprite": "/items/chicken-pho.png"
+  },
+  {
+    "id": "chicken-pot-pie",
+    "name": "chicken pot pie",
+    "category": "food",
+    "price": 7.8,
+    "sprite": "/items/chicken-pot-pie.png"
+  },
+  {
+    "id": "chicken-tikka-masala",
+    "name": "chicken tikka masala",
+    "category": "food",
+    "price": 12.9,
+    "sprite": "/items/chicken-tikka-masala.png"
+  },
+  {
+    "id": "chikuwa",
+    "name": "chikuwa fish cake",
+    "category": "food",
+    "price": 1,
+    "sprite": "/items/chikuwa.png"
+  },
+  {
+    "id": "ebi-chili",
+    "name": "chili prawns",
+    "category": "food",
+    "price": 6.4,
+    "sprite": "/items/ebi-chili.png"
+  },
+  {
+    "id": "chili-con-carne",
+    "name": "chili sin carne",
+    "category": "food",
+    "price": 7.6,
+    "sprite": "/items/chili-con-carne.png"
+  },
+  {
+    "id": "shanghai-crab",
+    "name": "Chinese mitten crabs",
+    "category": "food",
+    "price": 32,
+    "sprite": "/items/shanghai-crab.png"
+  },
+  {
+    "id": "chirashi-sushi",
+    "name": "chirashi-zushi",
+    "category": "food",
+    "price": 8,
+    "sprite": "/items/chirashi-sushi.png"
+  },
+  {
+    "id": "chocolate",
+    "name": "chocolate",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/chocolate.png"
+  },
+  {
+    "id": "chocolate-easter-egg",
+    "name": "chocolate egg",
+    "category": "food",
+    "price": 3.5,
+    "sprite": "/items/chocolate-easter-egg.png"
+  },
+  {
+    "id": "gato-syokora",
+    "name": "chocolate gâteau",
+    "category": "food",
+    "price": 6,
+    "sprite": "/items/gato-syokora.png"
+  },
+  {
+    "id": "choco-parfait",
+    "name": "chocolate sundae",
+    "category": "food",
+    "price": 7.8,
+    "sprite": "/items/choco-parfait.png"
+  },
+  {
+    "id": "bread-chocolate-cream",
+    "name": "chocolate toast",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/bread-chocolate-cream.png"
+  },
+  {
+    "id": "churros",
+    "name": "churros",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/churros.png"
+  },
+  {
+    "id": "cinnamon-roll",
+    "name": "cinnamon roll",
+    "category": "food",
+    "price": 1.3,
+    "sprite": "/items/cinnamon-roll.png"
+  },
+  {
+    "id": "clam-chowder",
+    "name": "clam chowder",
+    "category": "food",
+    "price": 6,
+    "sprite": "/items/clam-chowder.png"
+  },
+  {
+    "id": "cream",
+    "name": "clotted cream",
+    "category": "food",
+    "price": 1.2,
+    "sprite": "/items/cream.png"
+  },
+  {
+    "id": "coconut",
+    "name": "coconut",
+    "category": "food",
+    "price": 5.5,
+    "sprite": "/items/coconut.png"
+  },
+  {
+    "id": "coffee",
+    "name": "coffee",
+    "category": "food",
+    "price": 5,
+    "sprite": "/items/coffee.png"
+  },
+  {
+    "id": "zarusoba",
+    "name": "cold soba noodles",
+    "category": "food",
+    "price": 6,
+    "sprite": "/items/zarusoba.png"
+  },
+  {
+    "id": "soumen",
+    "name": "cold somen noodles",
+    "category": "food",
+    "price": 6.7,
+    "sprite": "/items/soumen.png"
+  },
+  {
+    "id": "coleslaw",
+    "name": "coleslaw",
+    "category": "food",
+    "price": 3.2,
+    "sprite": "/items/coleslaw.png"
+  },
+  {
+    "id": "colomba-pasquale",
+    "name": "colomba pasquale",
+    "category": "food",
+    "price": 7.8,
+    "sprite": "/items/colomba-pasquale.png"
+  },
+  {
+    "id": "corn-dog",
+    "name": "corn dog",
+    "category": "food",
+    "price": 2.5,
+    "sprite": "/items/corn-dog.png"
+  },
+  {
+    "id": "corn",
+    "name": "corn on the cob",
+    "category": "food",
+    "price": 3.5,
+    "sprite": "/items/corn.png"
+  },
+  {
+    "id": "cornflakes",
+    "name": "cornflakes",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/cornflakes.png"
+  },
+  {
+    "id": "cornish-pasty",
+    "name": "Cornish pasty",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/cornish-pasty.png"
+  },
+  {
+    "id": "wataame",
+    "name": "cotton candy",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/wataame.png"
+  },
+  {
+    "id": "couscous",
+    "name": "couscous",
+    "category": "food",
+    "price": 9.9,
+    "sprite": "/items/couscous.png"
+  },
+  {
+    "id": "crab",
+    "name": "crab",
+    "category": "food",
+    "price": 60,
+    "sprite": "/items/crab.png"
+  },
+  {
+    "id": "biscuit",
+    "name": "cracker",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/biscuit.png"
+  },
+  {
+    "id": "shu-cream",
+    "name": "cream puff",
+    "category": "food",
+    "price": 2.5,
+    "sprite": "/items/shu-cream.png"
+  },
+  {
+    "id": "corn-soup",
+    "name": "creamy corn soup",
+    "category": "food",
+    "price": 3.8,
+    "sprite": "/items/corn-soup.png"
+  },
+  {
+    "id": "stew",
+    "name": "creamy stew",
+    "category": "food",
+    "price": 6.8,
+    "sprite": "/items/stew.png"
+  },
+  {
+    "id": "creme-brulee",
+    "name": "crème brûlée",
+    "category": "food",
+    "price": 4.6,
+    "sprite": "/items/creme-brulee.png"
+  },
+  {
+    "id": "crepe",
+    "name": "crepe",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/crepe.png"
+  },
+  {
+    "id": "croissant",
+    "name": "croissant",
+    "category": "food",
+    "price": 1.2,
+    "sprite": "/items/croissant.png"
+  },
+  {
+    "id": "korokke",
+    "name": "croquettes",
+    "category": "food",
+    "price": 6.8,
+    "sprite": "/items/korokke.png"
+  },
+  {
+    "id": "currypan",
+    "name": "curry bun",
+    "category": "food",
+    "price": 1.2,
+    "sprite": "/items/currypan.png"
+  },
+  {
+    "id": "curry-rice",
+    "name": "curry with rice",
+    "category": "food",
+    "price": 7,
+    "sprite": "/items/curry-rice.png"
+  },
+  {
+    "id": "kr-natume-cha",
+    "name": "daechu-cha",
+    "category": "food",
+    "price": 4.5,
+    "sprite": "/items/kr-natume-cha.png"
+  },
+  {
+    "id": "dalgona",
+    "name": "dalgona",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/dalgona.png"
+  },
+  {
+    "id": "tanping",
+    "name": "dan bing",
+    "category": "food",
+    "price": 8.5,
+    "sprite": "/items/tanping.png"
+  },
+  {
+    "id": "dates",
+    "name": "dates",
+    "category": "food",
+    "price": 2.5,
+    "sprite": "/items/dates.png"
+  },
+  {
+    "id": "deviled-eggs",
+    "name": "deviled eggs",
+    "category": "food",
+    "price": 6,
+    "sprite": "/items/deviled-eggs.png"
+  },
+  {
+    "id": "dim-sum",
+    "name": "dim sum",
+    "category": "food",
+    "price": 9.5,
+    "sprite": "/items/dim-sum.png"
+  },
+  {
+    "id": "kr-miso-tige",
+    "name": "doenjang-jjigae",
+    "category": "food",
+    "price": 5,
+    "sprite": "/items/kr-miso-tige.png"
+  },
+  {
+    "id": "doner-kebap",
+    "name": "doner kebab",
+    "category": "food",
+    "price": 5.9,
+    "sprite": "/items/doner-kebap.png"
+  },
+  {
+    "id": "dorayaki",
+    "name": "dorayaki",
+    "category": "food",
+    "price": 4.5,
+    "sprite": "/items/dorayaki.png"
+  },
+  {
+    "id": "doughnuts",
+    "name": "doughnut",
+    "category": "food",
+    "price": 1.3,
+    "sprite": "/items/doughnuts.png"
+  },
+  {
+    "id": "surume",
+    "name": "dried squid",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/surume.png"
+  },
+  {
+    "id": "bone-meat",
+    "name": "drumstick",
+    "category": "food",
+    "price": 10,
+    "sprite": "/items/bone-meat.png"
+  },
+  {
+    "id": "toufu-kimuti",
+    "name": "dubu-kimchi",
+    "category": "food",
+    "price": 12,
+    "sprite": "/items/toufu-kimuti.png"
+  },
+  {
+    "id": "durian",
+    "name": "durian",
+    "category": "food",
+    "price": 5,
+    "sprite": "/items/durian.png"
+  },
+  {
+    "id": "edamame",
+    "name": "edamame",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/edamame.png"
+  },
+  {
+    "id": "melanzane-alla-parmigiana",
+    "name": "eggplant parmigiana",
+    "category": "food",
+    "price": 10,
+    "sprite": "/items/melanzane-alla-parmigiana.png"
+  },
+  {
+    "id": "ehou-maki",
+    "name": "ehomaki",
+    "category": "food",
+    "price": 7,
+    "sprite": "/items/ehou-maki.png"
+  },
+  {
+    "id": "elephant-ear",
+    "name": "elephant ear",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/elephant-ear.png"
+  },
+  {
+    "id": "empanadas",
+    "name": "empanadas",
+    "category": "food",
+    "price": 12,
+    "sprite": "/items/empanadas.png"
+  },
+  {
+    "id": "enchilada",
+    "name": "enchiladas",
+    "category": "food",
+    "price": 14,
+    "sprite": "/items/enchilada.png"
+  },
+  {
+    "id": "eiyou-drink",
+    "name": "energy drink",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/eiyou-drink.png"
+  },
+  {
+    "id": "english-breakfast",
+    "name": "English breakfast",
+    "category": "food",
+    "price": 8,
+    "sprite": "/items/english-breakfast.png"
+  },
+  {
+    "id": "escargot",
+    "name": "escargot",
+    "category": "food",
+    "price": 12,
+    "sprite": "/items/escargot.png"
+  },
+  {
+    "id": "espresso",
+    "name": "espresso",
+    "category": "food",
+    "price": 5.5,
+    "sprite": "/items/espresso.png"
+  },
+  {
+    "id": "falafel",
+    "name": "falafel",
+    "category": "food",
+    "price": 7.8,
+    "sprite": "/items/falafel.png"
+  },
+  {
+    "id": "fancy-cupcake",
+    "name": "fancy cupcake",
+    "category": "food",
+    "price": 5,
+    "sprite": "/items/fancy-cupcake.png"
+  },
+  {
+    "id": "filet-mignon",
+    "name": "filet mignon",
+    "category": "food",
+    "price": 50,
+    "sprite": "/items/filet-mignon.png"
+  },
+  {
+    "id": "fishcake",
+    "name": "fish cakes",
+    "category": "food",
+    "price": 7.8,
+    "sprite": "/items/fishcake.png"
+  },
+  {
+    "id": "pudding",
+    "name": "flan",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/pudding.png"
+  },
+  {
+    "id": "fried-potato",
+    "name": "french fries",
+    "category": "food",
+    "price": 2.8,
+    "sprite": "/items/fried-potato.png"
+  },
+  {
+    "id": "onion-gratin-soup",
+    "name": "French onion soup",
+    "category": "food",
+    "price": 4.1,
+    "sprite": "/items/onion-gratin-soup.png"
+  },
+  {
+    "id": "french-toast",
+    "name": "French toast",
+    "category": "food",
+    "price": 3.8,
+    "sprite": "/items/french-toast.png"
+  },
+  {
+    "id": "namaharumaki",
+    "name": "fresh spring rolls",
+    "category": "food",
+    "price": 5.9,
+    "sprite": "/items/namaharumaki.png"
+  },
+  {
+    "id": "karaage",
+    "name": "fried chicken",
+    "category": "food",
+    "price": 4.5,
+    "sprite": "/items/karaage.png"
+  },
+  {
+    "id": "medama-yaki",
+    "name": "fried egg",
+    "category": "food",
+    "price": 3.8,
+    "sprite": "/items/medama-yaki.png"
+  },
+  {
+    "id": "fried-plantains",
+    "name": "fried plantains",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/fried-plantains.png"
+  },
+  {
+    "id": "cha-han",
+    "name": "fried rice",
+    "category": "food",
+    "price": 4.8,
+    "sprite": "/items/cha-han.png"
+  },
+  {
+    "id": "fried-sardines",
+    "name": "fried sardines",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/fried-sardines.png"
+  },
+  {
+    "id": "ebifurai",
+    "name": "fried shrimp",
+    "category": "food",
+    "price": 3.7,
+    "sprite": "/items/ebifurai.png"
+  },
+  {
+    "id": "harumaki",
+    "name": "fried spring rolls",
+    "category": "food",
+    "price": 6.3,
+    "sprite": "/items/harumaki.png"
+  },
+  {
+    "id": "fried-tofu",
+    "name": "fried tofu",
+    "category": "food",
+    "price": 2.5,
+    "sprite": "/items/fried-tofu.png"
+  },
+  {
+    "id": "icy-pop",
+    "name": "frozen treat",
+    "category": "food",
+    "price": 1,
+    "sprite": "/items/icy-pop.png"
+  },
+  {
+    "id": "frozen-yogurt",
+    "name": "frozen yogurt",
+    "category": "food",
+    "price": 1.8,
+    "sprite": "/items/frozen-yogurt.png"
+  },
+  {
+    "id": "oatmeal",
+    "name": "fruity granola",
+    "category": "food",
+    "price": 2.5,
+    "sprite": "/items/oatmeal.png"
+  },
+  {
+    "id": "fudge",
+    "name": "fudge",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/fudge.png"
+  },
+  {
+    "id": "hugusashi",
+    "name": "fugu sashimi",
+    "category": "food",
+    "price": 29,
+    "sprite": "/items/hugusashi.png"
+  },
+  {
+    "id": "hukumame",
+    "name": "fukumame",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/hukumame.png"
+  },
+  {
+    "id": "kamujyatan",
+    "name": "gamja-tang",
+    "category": "food",
+    "price": 22,
+    "sprite": "/items/kamujyatan.png"
+  },
+  {
+    "id": "kanjyankejyan",
+    "name": "ganjang-gejang",
+    "category": "food",
+    "price": 19,
+    "sprite": "/items/kanjyankejyan.png"
+  },
+  {
+    "id": "garlic",
+    "name": "garlic",
+    "category": "food",
+    "price": 1.1,
+    "sprite": "/items/garlic.png"
+  },
+  {
+    "id": "gazpacho",
+    "name": "gazpacho",
+    "category": "food",
+    "price": 4.9,
+    "sprite": "/items/gazpacho.png"
+  },
+  {
+    "id": "jelly",
+    "name": "gelatin snack",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/jelly.png"
+  },
+  {
+    "id": "kr-nori",
+    "name": "gim",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/kr-nori.png"
+  },
+  {
+    "id": "gingerbread",
+    "name": "gingerbread",
+    "category": "food",
+    "price": 4.5,
+    "sprite": "/items/gingerbread.png"
+  },
+  {
+    "id": "ginger-cookies",
+    "name": "gingersnap",
+    "category": "food",
+    "price": 2.3,
+    "sprite": "/items/ginger-cookies.png"
+  },
+  {
+    "id": "kourai-ninjin",
+    "name": "ginseng",
+    "category": "food",
+    "price": 50,
+    "sprite": "/items/kourai-ninjin.png"
+  },
+  {
+    "id": "gnocchi",
+    "name": "gnocchi",
+    "category": "food",
+    "price": 5.6,
+    "sprite": "/items/gnocchi.png"
+  },
+  {
+    "id": "kotyujyan",
+    "name": "gochujang",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/kotyujyan.png"
+  },
+  {
+    "id": "granola-parfait",
+    "name": "granola parfait",
+    "category": "food",
+    "price": 6,
+    "sprite": "/items/granola-parfait.png"
+  },
+  {
+    "id": "grapefruits",
+    "name": "grapefruit",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/grapefruits.png"
+  },
+  {
+    "id": "grape",
+    "name": "grapes",
+    "category": "food",
+    "price": 4.9,
+    "sprite": "/items/grape.png"
+  },
+  {
+    "id": "carrot",
+    "name": "grated carrot",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/carrot.png"
+  },
+  {
+    "id": "guratan",
+    "name": "gratin",
+    "category": "food",
+    "price": 9.8,
+    "sprite": "/items/guratan.png"
+  },
+  {
+    "id": "greek-style-salad",
+    "name": "Greek salad",
+    "category": "food",
+    "price": 6.8,
+    "sprite": "/items/greek-style-salad.png"
+  },
+  {
+    "id": "green-curry",
+    "name": "green curry",
+    "category": "food",
+    "price": 9.5,
+    "sprite": "/items/green-curry.png"
+  },
+  {
+    "id": "aoziru",
+    "name": "green juice",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/aoziru.png"
+  },
+  {
+    "id": "piman",
+    "name": "green pepper",
+    "category": "food",
+    "price": 1.1,
+    "sprite": "/items/piman.png"
+  },
+  {
+    "id": "japanese-tea",
+    "name": "green tea",
+    "category": "food",
+    "price": 1,
+    "sprite": "/items/japanese-tea.png"
+  },
+  {
+    "id": "grilled-cheese",
+    "name": "grilled cheese",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/grilled-cheese.png"
+  },
+  {
+    "id": "tatiuo-yaki",
+    "name": "grilled cutlassfish",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/tatiuo-yaki.png"
+  },
+  {
+    "id": "sanma",
+    "name": "grilled pacific saury",
+    "category": "food",
+    "price": 4.8,
+    "sprite": "/items/sanma.png"
+  },
+  {
+    "id": "ayu-sioyaki",
+    "name": "grilled sweetfish",
+    "category": "food",
+    "price": 4.5,
+    "sprite": "/items/ayu-sioyaki.png"
+  },
+  {
+    "id": "sazae",
+    "name": "grilled turban shell",
+    "category": "food",
+    "price": 6.5,
+    "sprite": "/items/sazae.png"
+  },
+  {
+    "id": "una-zyu",
+    "name": "grilled-eel rice bowl",
+    "category": "food",
+    "price": 28,
+    "sprite": "/items/una-zyu.png"
+  },
+  {
+    "id": "grits",
+    "name": "grits",
+    "category": "food",
+    "price": 5,
+    "sprite": "/items/grits.png"
+  },
+  {
+    "id": "gumi",
+    "name": "gummy candy",
+    "category": "food",
+    "price": 1,
+    "sprite": "/items/gumi.png"
+  },
+  {
+    "id": "tyawanmushi",
+    "name": "gyeran-jjim",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/tyawanmushi.png"
+  },
+  {
+    "id": "gyu-don",
+    "name": "gyudon",
+    "category": "food",
+    "price": 6,
+    "sprite": "/items/gyu-don.png"
+  },
+  {
+    "id": "habanero",
+    "name": "habanero",
+    "category": "food",
+    "price": 1,
+    "sprite": "/items/habanero.png"
+  },
+  {
+    "id": "haggis",
+    "name": "haggis",
+    "category": "food",
+    "price": 6.5,
+    "sprite": "/items/haggis.png"
+  },
+  {
+    "id": "hake-fillets",
+    "name": "hake fillet",
+    "category": "food",
+    "price": 7,
+    "sprite": "/items/hake-fillets.png"
+  },
+  {
+    "id": "asparagus-boiled-ham-sauce",
+    "name": "ham and asparagus",
+    "category": "food",
+    "price": 6,
+    "sprite": "/items/asparagus-boiled-ham-sauce.png"
+  },
+  {
+    "id": "handmade-choco",
+    "name": "handmade chocolates",
+    "category": "food",
+    "price": 30,
+    "sprite": "/items/handmade-choco.png"
+  },
+  {
+    "id": "hard-candy",
+    "name": "hard candy",
+    "category": "food",
+    "price": 0.5,
+    "sprite": "/items/hard-candy.png"
+  },
+  {
+    "id": "boiled-egg",
+    "name": "hard-boiled egg",
+    "category": "food",
+    "price": 1,
+    "sprite": "/items/boiled-egg.png"
+  },
+  {
+    "id": "hash-browns",
+    "name": "hash browns",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/hash-browns.png"
+  },
+  {
+    "id": "hayashi-rice",
+    "name": "hayashi rice",
+    "category": "food",
+    "price": 7.8,
+    "sprite": "/items/hayashi-rice.png"
+  },
+  {
+    "id": "herring",
+    "name": "herring",
+    "category": "food",
+    "price": 4.5,
+    "sprite": "/items/herring.png"
+  },
+  {
+    "id": "hiyashi-tyuka",
+    "name": "hiyashi-chuka noodles",
+    "category": "food",
+    "price": 6,
+    "sprite": "/items/hiyashi-tyuka.png"
+  },
+  {
+    "id": "zukkini-no-tijimi",
+    "name": "hobak-buchimgae",
+    "category": "food",
+    "price": 4.5,
+    "sprite": "/items/zukkini-no-tijimi.png"
+  },
+  {
+    "id": "honey",
+    "name": "honey",
+    "category": "food",
+    "price": 4.5,
+    "sprite": "/items/honey.png"
+  },
+  {
+    "id": "sanratan",
+    "name": "hot and sour soup",
+    "category": "food",
+    "price": 14,
+    "sprite": "/items/sanratan.png"
+  },
+  {
+    "id": "hot-chocolate",
+    "name": "hot chocolate",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/hot-chocolate.png"
+  },
+  {
+    "id": "hot-dog",
+    "name": "hot dog",
+    "category": "food",
+    "price": 2.8,
+    "sprite": "/items/hot-dog.png"
+  },
+  {
+    "id": "hot-pot",
+    "name": "hot pot",
+    "category": "food",
+    "price": 16,
+    "sprite": "/items/hot-pot.png"
+  },
+  {
+    "id": "hummus",
+    "name": "hummus",
+    "category": "food",
+    "price": 5.3,
+    "sprite": "/items/hummus.png"
+  },
+  {
+    "id": "jamon-iberico",
+    "name": "Iberian ham",
+    "category": "food",
+    "price": 12,
+    "sprite": "/items/jamon-iberico.png"
+  },
+  {
+    "id": "icecream",
+    "name": "ice-cream cone",
+    "category": "food",
+    "price": 2.5,
+    "sprite": "/items/icecream.png"
+  },
+  {
+    "id": "ice-cream-sandwich",
+    "name": "ice-cream sandwich",
+    "category": "food",
+    "price": 3.1,
+    "sprite": "/items/ice-cream-sandwich.png"
+  },
+  {
+    "id": "aisu-kaferate",
+    "name": "iced latte",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/aisu-kaferate.png"
+  },
+  {
+    "id": "inarizushi",
+    "name": "inari sushi",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/inarizushi.png"
+  },
+  {
+    "id": "cup-nudle",
+    "name": "instant noodles",
+    "category": "food",
+    "price": 1.9,
+    "sprite": "/items/cup-nudle.png"
+  },
+  {
+    "id": "jyajyamen",
+    "name": "jajangmyeon",
+    "category": "food",
+    "price": 4.5,
+    "sprite": "/items/jyajyamen.png"
+  },
+  {
+    "id": "kr-soumen",
+    "name": "janchi-guksu",
+    "category": "food",
+    "price": 3.5,
+    "sprite": "/items/kr-soumen.png"
+  },
+  {
+    "id": "chapuche",
+    "name": "japchae",
+    "category": "food",
+    "price": 5,
+    "sprite": "/items/chapuche.png"
+  },
+  {
+    "id": "awabi-gayu",
+    "name": "jeonbok-juk",
+    "category": "food",
+    "price": 8,
+    "sprite": "/items/awabi-gayu.png"
+  },
+  {
+    "id": "kasuziru",
+    "name": "kasujiru",
+    "category": "food",
+    "price": 2.5,
+    "sprite": "/items/kasuziru.png"
+  },
+  {
+    "id": "katudon",
+    "name": "katsudon",
+    "category": "food",
+    "price": 6.8,
+    "sprite": "/items/katudon.png"
+  },
+  {
+    "id": "key-lime-pie",
+    "name": "key lime pie",
+    "category": "food",
+    "price": 4.6,
+    "sprite": "/items/key-lime-pie.png"
+  },
+  {
+    "id": "khao-man-gai",
+    "name": "khao man gai",
+    "category": "food",
+    "price": 11,
+    "sprite": "/items/khao-man-gai.png"
+  },
+  {
+    "id": "child-lunch",
+    "name": "kid's meal",
+    "category": "food",
+    "price": 7,
+    "sprite": "/items/child-lunch.png"
+  },
+  {
+    "id": "kimuchi",
+    "name": "kimchi",
+    "category": "food",
+    "price": 2.8,
+    "sprite": "/items/kimuchi.png"
+  },
+  {
+    "id": "kimuti-chahan",
+    "name": "kimchi-bokkeum-bap",
+    "category": "food",
+    "price": 6,
+    "sprite": "/items/kimuti-chahan.png"
+  },
+  {
+    "id": "kimuti-tige",
+    "name": "kimchi-jjigae",
+    "category": "food",
+    "price": 5,
+    "sprite": "/items/kimuti-tige.png"
+  },
+  {
+    "id": "kimuti-tijimi",
+    "name": "kimchijeon",
+    "category": "food",
+    "price": 8,
+    "sprite": "/items/kimuti-tijimi.png"
+  },
+  {
+    "id": "galette-des-rois",
+    "name": "king cake",
+    "category": "food",
+    "price": 5.2,
+    "sprite": "/items/galette-des-rois.png"
+  },
+  {
+    "id": "kitsune-udon",
+    "name": "kitsune udon",
+    "category": "food",
+    "price": 6.5,
+    "sprite": "/items/kitsune-udon.png"
+  },
+  {
+    "id": "kiwi",
+    "name": "kiwi",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/kiwi.png"
+  },
+  {
+    "id": "kakuteki",
+    "name": "kkakdugi",
+    "category": "food",
+    "price": 2.5,
+    "sprite": "/items/kakuteki.png"
+  },
+  {
+    "id": "konnyaku",
+    "name": "konnyaku",
+    "category": "food",
+    "price": 1,
+    "sprite": "/items/konnyaku.png"
+  },
+  {
+    "id": "kr-tougarashi",
+    "name": "Korean chili pepper",
+    "category": "food",
+    "price": 0.5,
+    "sprite": "/items/kr-tougarashi.png"
+  },
+  {
+    "id": "sundepokku",
+    "name": "Korean sausage",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/sundepokku.png"
+  },
+  {
+    "id": "lasagna",
+    "name": "lasagna",
+    "category": "food",
+    "price": 6.5,
+    "sprite": "/items/lasagna.png"
+  },
+  {
+    "id": "lemonade",
+    "name": "lemonade",
+    "category": "food",
+    "price": 2.5,
+    "sprite": "/items/lemonade.png"
+  },
+  {
+    "id": "licorice",
+    "name": "licorice",
+    "category": "food",
+    "price": 0.7,
+    "sprite": "/items/licorice.png"
+  },
+  {
+    "id": "reba",
+    "name": "liver",
+    "category": "food",
+    "price": 4.8,
+    "sprite": "/items/reba.png"
+  },
+  {
+    "id": "lobster",
+    "name": "lobster",
+    "category": "food",
+    "price": 9.8,
+    "sprite": "/items/lobster.png"
+  },
+  {
+    "id": "lobster-roll",
+    "name": "lobster roll",
+    "category": "food",
+    "price": 18,
+    "sprite": "/items/lobster-roll.png"
+  },
+  {
+    "id": "loco-moco",
+    "name": "loco moco",
+    "category": "food",
+    "price": 8.1,
+    "sprite": "/items/loco-moco.png"
+  },
+  {
+    "id": "candy",
+    "name": "lollipop",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/candy.png"
+  },
+  {
+    "id": "makadamia-nuts",
+    "name": "macadamia nuts",
+    "category": "food",
+    "price": 5,
+    "sprite": "/items/makadamia-nuts.png"
+  },
+  {
+    "id": "macaron",
+    "name": "macaron",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/macaron.png"
+  },
+  {
+    "id": "macaroni-and-cheese",
+    "name": "macaroni and cheese",
+    "category": "food",
+    "price": 5.8,
+    "sprite": "/items/macaroni-and-cheese.png"
+  },
+  {
+    "id": "mango",
+    "name": "mango",
+    "category": "food",
+    "price": 9,
+    "sprite": "/items/mango.png"
+  },
+  {
+    "id": "maple-taffy",
+    "name": "maple taffy",
+    "category": "food",
+    "price": 3.4,
+    "sprite": "/items/maple-taffy.png"
+  },
+  {
+    "id": "mabo-tofu",
+    "name": "mapo tofu",
+    "category": "food",
+    "price": 6.7,
+    "sprite": "/items/mabo-tofu.png"
+  },
+  {
+    "id": "marzipan-fruit",
+    "name": "marzipan fruit",
+    "category": "food",
+    "price": 7,
+    "sprite": "/items/marzipan-fruit.png"
+  },
+  {
+    "id": "mashed-potato",
+    "name": "mashed potatoes",
+    "category": "food",
+    "price": 3.5,
+    "sprite": "/items/mashed-potato.png"
+  },
+  {
+    "id": "matsutake",
+    "name": "matsutake mushroom",
+    "category": "food",
+    "price": 78,
+    "sprite": "/items/matsutake.png"
+  },
+  {
+    "id": "nikujaga",
+    "name": "meat-and-potato stew",
+    "category": "food",
+    "price": 6,
+    "sprite": "/items/nikujaga.png"
+  },
+  {
+    "id": "meatball",
+    "name": "meatballs",
+    "category": "food",
+    "price": 5,
+    "sprite": "/items/meatball.png"
+  },
+  {
+    "id": "melon",
+    "name": "melon",
+    "category": "food",
+    "price": 10,
+    "sprite": "/items/melon.png"
+  },
+  {
+    "id": "milk",
+    "name": "milk",
+    "category": "food",
+    "price": 1.8,
+    "sprite": "/items/milk.png"
+  },
+  {
+    "id": "milkshake",
+    "name": "milkshake",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/milkshake.png"
+  },
+  {
+    "id": "mince-pie",
+    "name": "mince pie",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/mince-pie.png"
+  },
+  {
+    "id": "minestrone",
+    "name": "minestrone soup",
+    "category": "food",
+    "price": 7,
+    "sprite": "/items/minestrone.png"
+  },
+  {
+    "id": "mint-candy",
+    "name": "mint candy",
+    "category": "food",
+    "price": 0.2,
+    "sprite": "/items/mint-candy.png"
+  },
+  {
+    "id": "miso-soup",
+    "name": "miso soup",
+    "category": "food",
+    "price": 2.8,
+    "sprite": "/items/miso-soup.png"
+  },
+  {
+    "id": "wakame-suupu",
+    "name": "miyeok-guk",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/wakame-suupu.png"
+  },
+  {
+    "id": "mochi",
+    "name": "mochi",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/mochi.png"
+  },
+  {
+    "id": "kabi-pan",
+    "name": "moldy bread",
+    "category": "food",
+    "price": 0.2,
+    "sprite": "/items/kabi-pan.png"
+  },
+  {
+    "id": "monzya-yaki",
+    "name": "monjayaki",
+    "category": "food",
+    "price": 6.2,
+    "sprite": "/items/monzya-yaki.png"
+  },
+  {
+    "id": "geppei",
+    "name": "mooncakes",
+    "category": "food",
+    "price": 9.5,
+    "sprite": "/items/geppei.png"
+  },
+  {
+    "id": "mozzarella",
+    "name": "mozzarella",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/mozzarella.png"
+  },
+  {
+    "id": "muffin",
+    "name": "muffin",
+    "category": "food",
+    "price": 3.3,
+    "sprite": "/items/muffin.png"
+  },
+  {
+    "id": "kankoku-reimen",
+    "name": "mul naengmyeon",
+    "category": "food",
+    "price": 6.7,
+    "sprite": "/items/kankoku-reimen.png"
+  },
+  {
+    "id": "mushroom",
+    "name": "mushroom",
+    "category": "food",
+    "price": 1.3,
+    "sprite": "/items/mushroom.png"
+  },
+  {
+    "id": "moule",
+    "name": "mussels",
+    "category": "food",
+    "price": 7.9,
+    "sprite": "/items/moule.png"
+  },
+  {
+    "id": "myouga",
+    "name": "myoga ginger",
+    "category": "food",
+    "price": 1,
+    "sprite": "/items/myouga.png"
+  },
+  {
+    "id": "nachos",
+    "name": "nachos",
+    "category": "food",
+    "price": 7.5,
+    "sprite": "/items/nachos.png"
+  },
+  {
+    "id": "namuru",
+    "name": "namul",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/namuru.png"
+  },
+  {
+    "id": "shinsen-na-hakusai",
+    "name": "napa cabbage",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/shinsen-na-hakusai.png"
+  },
+  {
+    "id": "millefeuille",
+    "name": "napoleon cake",
+    "category": "food",
+    "price": 6.2,
+    "sprite": "/items/millefeuille.png"
+  },
+  {
+    "id": "natillas",
+    "name": "natillas",
+    "category": "food",
+    "price": 2.5,
+    "sprite": "/items/natillas.png"
+  },
+  {
+    "id": "natto",
+    "name": "natto",
+    "category": "food",
+    "price": 1,
+    "sprite": "/items/natto.png"
+  },
+  {
+    "id": "oatmeal-cookies",
+    "name": "oatmeal cookie",
+    "category": "food",
+    "price": 2.2,
+    "sprite": "/items/oatmeal-cookies.png"
+  },
+  {
+    "id": "ocha-duke",
+    "name": "ochazuke",
+    "category": "food",
+    "price": 4.8,
+    "sprite": "/items/ocha-duke.png"
+  },
+  {
+    "id": "oden",
+    "name": "oden",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/oden.png"
+  },
+  {
+    "id": "kyuri-no-kimuti",
+    "name": "oi kimchi",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/kyuri-no-kimuti.png"
+  },
+  {
+    "id": "okonomi-yaki",
+    "name": "okonomiyaki",
+    "category": "food",
+    "price": 7.8,
+    "sprite": "/items/okonomi-yaki.png"
+  },
+  {
+    "id": "olive",
+    "name": "olives",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/olive.png"
+  },
+  {
+    "id": "salad-olivier",
+    "name": "Olivier salad",
+    "category": "food",
+    "price": 6,
+    "sprite": "/items/salad-olivier.png"
+  },
+  {
+    "id": "omelet",
+    "name": "omelet",
+    "category": "food",
+    "price": 6.5,
+    "sprite": "/items/omelet.png"
+  },
+  {
+    "id": "omijya-cha",
+    "name": "omija-cha",
+    "category": "food",
+    "price": 4.5,
+    "sprite": "/items/omijya-cha.png"
+  },
+  {
+    "id": "omurice",
+    "name": "omurice",
+    "category": "food",
+    "price": 6.8,
+    "sprite": "/items/omurice.png"
+  },
+  {
+    "id": "onion-rings",
+    "name": "onion rings",
+    "category": "food",
+    "price": 5.4,
+    "sprite": "/items/onion-rings.png"
+  },
+  {
+    "id": "mikan",
+    "name": "orange",
+    "category": "food",
+    "price": 1,
+    "sprite": "/items/mikan.png"
+  },
+  {
+    "id": "orange-juice",
+    "name": "orange juice",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/orange-juice.png"
+  },
+  {
+    "id": "makuwauri",
+    "name": "oriental melon",
+    "category": "food",
+    "price": 1,
+    "sprite": "/items/makuwauri.png"
+  },
+  {
+    "id": "osechi",
+    "name": "osechi",
+    "category": "food",
+    "price": 100,
+    "sprite": "/items/osechi.png"
+  },
+  {
+    "id": "oyako-don",
+    "name": "oyakodon",
+    "category": "food",
+    "price": 6,
+    "sprite": "/items/oyako-don.png"
+  },
+  {
+    "id": "oyster",
+    "name": "oyster",
+    "category": "food",
+    "price": 6.8,
+    "sprite": "/items/oyster.png"
+  },
+  {
+    "id": "zouni",
+    "name": "ozoni",
+    "category": "food",
+    "price": 3.3,
+    "sprite": "/items/zouni.png"
+  },
+  {
+    "id": "gapao-rice",
+    "name": "pad krapow",
+    "category": "food",
+    "price": 9.5,
+    "sprite": "/items/gapao-rice.png"
+  },
+  {
+    "id": "paella",
+    "name": "paella",
+    "category": "food",
+    "price": 8.8,
+    "sprite": "/items/paella.png"
+  },
+  {
+    "id": "chocolate-bread",
+    "name": "pain au chocolat",
+    "category": "food",
+    "price": 1.2,
+    "sprite": "/items/chocolate-bread.png"
+  },
+  {
+    "id": "pain-aux-raisins",
+    "name": "pain aux raisins",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/pain-aux-raisins.png"
+  },
+  {
+    "id": "pancake",
+    "name": "pancakes",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/pancake.png"
+  },
+  {
+    "id": "pandoro",
+    "name": "pandoro",
+    "category": "food",
+    "price": 5.5,
+    "sprite": "/items/pandoro.png"
+  },
+  {
+    "id": "panettone",
+    "name": "panettone",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/panettone.png"
+  },
+  {
+    "id": "panini",
+    "name": "panini",
+    "category": "food",
+    "price": 4.5,
+    "sprite": "/items/panini.png"
+  },
+  {
+    "id": "pannacotta",
+    "name": "panna cotta",
+    "category": "food",
+    "price": 2.8,
+    "sprite": "/items/pannacotta.png"
+  },
+  {
+    "id": "cheese-bread",
+    "name": "pão de queijo",
+    "category": "food",
+    "price": 2.5,
+    "sprite": "/items/cheese-bread.png"
+  },
+  {
+    "id": "custard-pastry",
+    "name": "pastel de nata",
+    "category": "food",
+    "price": 2.8,
+    "sprite": "/items/custard-pastry.png"
+  },
+  {
+    "id": "tapa",
+    "name": "patatas bravas",
+    "category": "food",
+    "price": 4.5,
+    "sprite": "/items/tapa.png"
+  },
+  {
+    "id": "peanut-butter-jelly-sandwich",
+    "name": "PB&J",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/peanut-butter-jelly-sandwich.png"
+  },
+  {
+    "id": "peach",
+    "name": "peach",
+    "category": "food",
+    "price": 4.8,
+    "sprite": "/items/peach.png"
+  },
+  {
+    "id": "peanut",
+    "name": "peanuts",
+    "category": "food",
+    "price": 3.7,
+    "sprite": "/items/peanut.png"
+  },
+  {
+    "id": "pear",
+    "name": "pear",
+    "category": "food",
+    "price": 4.6,
+    "sprite": "/items/pear.png"
+  },
+  {
+    "id": "pekin-duck",
+    "name": "Peking duck",
+    "category": "food",
+    "price": 50,
+    "sprite": "/items/pekin-duck.png"
+  },
+  {
+    "id": "kaki",
+    "name": "persimmon",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/kaki.png"
+  },
+  {
+    "id": "pesto-pasta",
+    "name": "pesto pasta",
+    "category": "food",
+    "price": 7.3,
+    "sprite": "/items/pesto-pasta.png"
+  },
+  {
+    "id": "umeboshi",
+    "name": "pickled plum",
+    "category": "food",
+    "price": 1,
+    "sprite": "/items/umeboshi.png"
+  },
+  {
+    "id": "pickles",
+    "name": "pickles",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/pickles.png"
+  },
+  {
+    "id": "pineapple",
+    "name": "pineapple",
+    "category": "food",
+    "price": 9.8,
+    "sprite": "/items/pineapple.png"
+  },
+  {
+    "id": "pineapple-cake",
+    "name": "pineapple cakes",
+    "category": "food",
+    "price": 7.6,
+    "sprite": "/items/pineapple-cake.png"
+  },
+  {
+    "id": "pistachio",
+    "name": "pistachios",
+    "category": "food",
+    "price": 3.5,
+    "sprite": "/items/pistachio.png"
+  },
+  {
+    "id": "pizza",
+    "name": "pizza",
+    "category": "food",
+    "price": 3.9,
+    "sprite": "/items/pizza.png"
+  },
+  {
+    "id": "plum-pudding",
+    "name": "plum pudding",
+    "category": "food",
+    "price": 4.8,
+    "sprite": "/items/plum-pudding.png"
+  },
+  {
+    "id": "poke",
+    "name": "poke",
+    "category": "food",
+    "price": 15,
+    "sprite": "/items/poke.png"
+  },
+  {
+    "id": "polenta",
+    "name": "polenta",
+    "category": "food",
+    "price": 5.8,
+    "sprite": "/items/polenta.png"
+  },
+  {
+    "id": "pop-corn",
+    "name": "popcorn",
+    "category": "food",
+    "price": 2.5,
+    "sprite": "/items/pop-corn.png"
+  },
+  {
+    "id": "popcorn-shrimp",
+    "name": "popcorn shrimp",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/popcorn-shrimp.png"
+  },
+  {
+    "id": "nikuman",
+    "name": "pork bun",
+    "category": "food",
+    "price": 1.2,
+    "sprite": "/items/nikuman.png"
+  },
+  {
+    "id": "cutlet",
+    "name": "pork cutlet",
+    "category": "food",
+    "price": 8,
+    "sprite": "/items/cutlet.png"
+  },
+  {
+    "id": "pork-pie",
+    "name": "pork pie",
+    "category": "food",
+    "price": 4.5,
+    "sprite": "/items/pork-pie.png"
+  },
+  {
+    "id": "porridge",
+    "name": "porridge",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/porridge.png"
+  },
+  {
+    "id": "gyoza",
+    "name": "pot stickers",
+    "category": "food",
+    "price": 2.8,
+    "sprite": "/items/gyoza.png"
+  },
+  {
+    "id": "potof",
+    "name": "pot-au-feu",
+    "category": "food",
+    "price": 7,
+    "sprite": "/items/potof.png"
+  },
+  {
+    "id": "potato-chips",
+    "name": "potato chips",
+    "category": "food",
+    "price": 1.3,
+    "sprite": "/items/potato-chips.png"
+  },
+  {
+    "id": "prawn-salad",
+    "name": "prawn salad",
+    "category": "food",
+    "price": 7.5,
+    "sprite": "/items/prawn-salad.png"
+  },
+  {
+    "id": "pretzel",
+    "name": "pretzel",
+    "category": "food",
+    "price": 1.3,
+    "sprite": "/items/pretzel.png"
+  },
+  {
+    "id": "profiteroles",
+    "name": "profiteroles",
+    "category": "food",
+    "price": 6.9,
+    "sprite": "/items/profiteroles.png"
+  },
+  {
+    "id": "namahamu",
+    "name": "prosciutto",
+    "category": "food",
+    "price": 6.9,
+    "sprite": "/items/namahamu.png"
+  },
+  {
+    "id": "protein",
+    "name": "protein shake",
+    "category": "food",
+    "price": 10,
+    "sprite": "/items/protein.png"
+  },
+  {
+    "id": "pumpkin-pie",
+    "name": "pumpkin pie",
+    "category": "food",
+    "price": 4.6,
+    "sprite": "/items/pumpkin-pie.png"
+  },
+  {
+    "id": "kissyu",
+    "name": "quiche",
+    "category": "food",
+    "price": 5.5,
+    "sprite": "/items/kissyu.png"
+  },
+  {
+    "id": "raclette",
+    "name": "raclette",
+    "category": "food",
+    "price": 11,
+    "sprite": "/items/raclette.png"
+  },
+  {
+    "id": "nudle",
+    "name": "ramen",
+    "category": "food",
+    "price": 6.8,
+    "sprite": "/items/nudle.png"
+  },
+  {
+    "id": "kr-ramen",
+    "name": "ramyeon",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/kr-ramen.png"
+  },
+  {
+    "id": "ratatouille",
+    "name": "ratatouille",
+    "category": "food",
+    "price": 6.9,
+    "sprite": "/items/ratatouille.png"
+  },
+  {
+    "id": "ravioli",
+    "name": "ravioli",
+    "category": "food",
+    "price": 6.4,
+    "sprite": "/items/ravioli.png"
+  },
+  {
+    "id": "togarashi",
+    "name": "red chili pepper",
+    "category": "food",
+    "price": 0.5,
+    "sprite": "/items/togarashi.png"
+  },
+  {
+    "id": "red-velvet-cake",
+    "name": "red velvet cake",
+    "category": "food",
+    "price": 4.5,
+    "sprite": "/items/red-velvet-cake.png"
+  },
+  {
+    "id": "rice",
+    "name": "rice",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/rice.png"
+  },
+  {
+    "id": "onigiri",
+    "name": "rice ball",
+    "category": "food",
+    "price": 1.1,
+    "sprite": "/items/onigiri.png"
+  },
+  {
+    "id": "senbei",
+    "name": "rice cracker",
+    "category": "food",
+    "price": 1,
+    "sprite": "/items/senbei.png"
+  },
+  {
+    "id": "okayu",
+    "name": "rice porridge",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/okayu.png"
+  },
+  {
+    "id": "rice-pudding",
+    "name": "rice pudding",
+    "category": "food",
+    "price": 4.5,
+    "sprite": "/items/rice-pudding.png"
+  },
+  {
+    "id": "risotto",
+    "name": "risotto",
+    "category": "food",
+    "price": 7.8,
+    "sprite": "/items/risotto.png"
+  },
+  {
+    "id": "roast-beef",
+    "name": "roast beef",
+    "category": "food",
+    "price": 15,
+    "sprite": "/items/roast-beef.png"
+  },
+  {
+    "id": "roast-chicken",
+    "name": "roast chicken",
+    "category": "food",
+    "price": 20,
+    "sprite": "/items/roast-chicken.png"
+  },
+  {
+    "id": "magret-de-canard",
+    "name": "roast duck",
+    "category": "food",
+    "price": 16,
+    "sprite": "/items/magret-de-canard.png"
+  },
+  {
+    "id": "roasted-goose",
+    "name": "roast goose",
+    "category": "food",
+    "price": 15,
+    "sprite": "/items/roasted-goose.png"
+  },
+  {
+    "id": "cordero-asado",
+    "name": "roast lamb",
+    "category": "food",
+    "price": 12,
+    "sprite": "/items/cordero-asado.png"
+  },
+  {
+    "id": "turkey",
+    "name": "roast turkey",
+    "category": "food",
+    "price": 33,
+    "sprite": "/items/turkey.png"
+  },
+  {
+    "id": "yaki-guri",
+    "name": "roasted chestnuts",
+    "category": "food",
+    "price": 5.8,
+    "sprite": "/items/yaki-guri.png"
+  },
+  {
+    "id": "lamb-leg",
+    "name": "roasted leg of lamb",
+    "category": "food",
+    "price": 17,
+    "sprite": "/items/lamb-leg.png"
+  },
+  {
+    "id": "rollmop",
+    "name": "rollmop herrings",
+    "category": "food",
+    "price": 5.4,
+    "sprite": "/items/rollmop.png"
+  },
+  {
+    "id": "rootbeer-float",
+    "name": "root-beer float",
+    "category": "food",
+    "price": 2.5,
+    "sprite": "/items/rootbeer-float.png"
+  },
+  {
+    "id": "sippai-ryouri",
+    "name": "ruined meal",
+    "category": "food",
+    "price": 0.2,
+    "sprite": "/items/sippai-ryouri.png"
+  },
+  {
+    "id": "smores",
+    "name": "s'more",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/smores.png"
+  },
+  {
+    "id": "salad",
+    "name": "salad",
+    "category": "food",
+    "price": 5.6,
+    "sprite": "/items/salad.png"
+  },
+  {
+    "id": "salami",
+    "name": "salami",
+    "category": "food",
+    "price": 3.9,
+    "sprite": "/items/salami.png"
+  },
+  {
+    "id": "hamburg",
+    "name": "Salisbury steak",
+    "category": "food",
+    "price": 7,
+    "sprite": "/items/hamburg.png"
+  },
+  {
+    "id": "salmon-munieru",
+    "name": "salmon meunière",
+    "category": "food",
+    "price": 7.5,
+    "sprite": "/items/salmon-munieru.png"
+  },
+  {
+    "id": "ikura",
+    "name": "salmon roe",
+    "category": "food",
+    "price": 9.8,
+    "sprite": "/items/ikura.png"
+  },
+  {
+    "id": "saltimbocca",
+    "name": "saltimbocca",
+    "category": "food",
+    "price": 11.9,
+    "sprite": "/items/saltimbocca.png"
+  },
+  {
+    "id": "saltine-crackers",
+    "name": "saltine crackers",
+    "category": "food",
+    "price": 1,
+    "sprite": "/items/saltine-crackers.png"
+  },
+  {
+    "id": "samugetan",
+    "name": "samgye-tang",
+    "category": "food",
+    "price": 9,
+    "sprite": "/items/samugetan.png"
+  },
+  {
+    "id": "samugyopusaru",
+    "name": "samgyeopsal",
+    "category": "food",
+    "price": 8,
+    "sprite": "/items/samugyopusaru.png"
+  },
+  {
+    "id": "sandwich",
+    "name": "sandwich",
+    "category": "food",
+    "price": 3.3,
+    "sprite": "/items/sandwich.png"
+  },
+  {
+    "id": "canned-sardines",
+    "name": "sardines",
+    "category": "food",
+    "price": 1.4,
+    "sprite": "/items/canned-sardines.png"
+  },
+  {
+    "id": "sashimi",
+    "name": "sashimi",
+    "category": "food",
+    "price": 12.8,
+    "sprite": "/items/sashimi.png"
+  },
+  {
+    "id": "sauerkraut",
+    "name": "sauerkraut",
+    "category": "food",
+    "price": 4.5,
+    "sprite": "/items/sauerkraut.png"
+  },
+  {
+    "id": "sousage",
+    "name": "sausage",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/sousage.png"
+  },
+  {
+    "id": "yaki-nasu",
+    "name": "sautéed zucchini",
+    "category": "food",
+    "price": 4.8,
+    "sprite": "/items/yaki-nasu.png"
+  },
+  {
+    "id": "schnitzel",
+    "name": "schnitzel",
+    "category": "food",
+    "price": 13,
+    "sprite": "/items/schnitzel.png"
+  },
+  {
+    "id": "tamago-yaki",
+    "name": "scrambled eggs",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/tamago-yaki.png"
+  },
+  {
+    "id": "uni",
+    "name": "sea urchin",
+    "category": "food",
+    "price": 10,
+    "sprite": "/items/uni.png"
+  },
+  {
+    "id": "fried-seafood-mix",
+    "name": "seafood platter",
+    "category": "food",
+    "price": 8.2,
+    "sprite": "/items/fried-seafood-mix.png"
+  },
+  {
+    "id": "sekihan",
+    "name": "sekihan",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/sekihan.png"
+  },
+  {
+    "id": "sorurontan",
+    "name": "seolleongtang",
+    "category": "food",
+    "price": 6,
+    "sprite": "/items/sorurontan.png"
+  },
+  {
+    "id": "kakigori",
+    "name": "shaved ice",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/kakigori.png"
+  },
+  {
+    "id": "ebi-pirafu",
+    "name": "shrimp pilaf",
+    "category": "food",
+    "price": 7,
+    "sprite": "/items/ebi-pirafu.png"
+  },
+  {
+    "id": "syumai",
+    "name": "shumai",
+    "category": "food",
+    "price": 1.2,
+    "sprite": "/items/syumai.png"
+  },
+  {
+    "id": "tai-ikedukuri",
+    "name": "sliced sea bream",
+    "category": "food",
+    "price": 38,
+    "sprite": "/items/tai-ikedukuri.png"
+  },
+  {
+    "id": "smoked-salmon",
+    "name": "smoked salmon",
+    "category": "food",
+    "price": 9,
+    "sprite": "/items/smoked-salmon.png"
+  },
+  {
+    "id": "mix-juice",
+    "name": "smoothie",
+    "category": "food",
+    "price": 2.5,
+    "sprite": "/items/mix-juice.png"
+  },
+  {
+    "id": "cola",
+    "name": "soda",
+    "category": "food",
+    "price": 1.8,
+    "sprite": "/items/cola.png"
+  },
+  {
+    "id": "softcream",
+    "name": "soft-serve ice cream",
+    "category": "food",
+    "price": 2.5,
+    "sprite": "/items/softcream.png"
+  },
+  {
+    "id": "songpyeon",
+    "name": "songpyeon",
+    "category": "food",
+    "price": 6,
+    "sprite": "/items/songpyeon.png"
+  },
+  {
+    "id": "sotteok-sotteok",
+    "name": "sotteok sotteok",
+    "category": "food",
+    "price": 7.8,
+    "sprite": "/items/sotteok-sotteok.png"
+  },
+  {
+    "id": "souffle",
+    "name": "soufflé",
+    "category": "food",
+    "price": 5,
+    "sprite": "/items/souffle.png"
+  },
+  {
+    "id": "space-food",
+    "name": "space food",
+    "category": "food",
+    "price": 20,
+    "sprite": "/items/space-food.png"
+  },
+  {
+    "id": "meatsource",
+    "name": "spaghetti",
+    "category": "food",
+    "price": 7.8,
+    "sprite": "/items/meatsource.png"
+  },
+  {
+    "id": "peperoncino",
+    "name": "spaghetti aglio e olio",
+    "category": "food",
+    "price": 7.8,
+    "sprite": "/items/peperoncino.png"
+  },
+  {
+    "id": "sparkling-water",
+    "name": "sparkling water",
+    "category": "food",
+    "price": 1.2,
+    "sprite": "/items/sparkling-water.png"
+  },
+  {
+    "id": "mentaiko",
+    "name": "spicy pollack roe",
+    "category": "food",
+    "price": 7.8,
+    "sprite": "/items/mentaiko.png"
+  },
+  {
+    "id": "spinach",
+    "name": "spinach",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/spinach.png"
+  },
+  {
+    "id": "split-pea-soup",
+    "name": "split-pea soup",
+    "category": "food",
+    "price": 4.7,
+    "sprite": "/items/split-pea-soup.png"
+  },
+  {
+    "id": "old-milk",
+    "name": "spoiled milk",
+    "category": "food",
+    "price": 0.2,
+    "sprite": "/items/old-milk.png"
+  },
+  {
+    "id": "sports-drink",
+    "name": "sports drink",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/sports-drink.png"
+  },
+  {
+    "id": "ikasumi-pasta",
+    "name": "squid-ink spaghetti",
+    "category": "food",
+    "price": 7.8,
+    "sprite": "/items/ikasumi-pasta.png"
+  },
+  {
+    "id": "steak",
+    "name": "steak",
+    "category": "food",
+    "price": 19.8,
+    "sprite": "/items/steak.png"
+  },
+  {
+    "id": "beef-stew",
+    "name": "stewed beef",
+    "category": "food",
+    "price": 8.8,
+    "sprite": "/items/beef-stew.png"
+  },
+  {
+    "id": "eggs-and-tomatoes",
+    "name": "stir-fried tomato and eggs",
+    "category": "food",
+    "price": 8.9,
+    "sprite": "/items/eggs-and-tomatoes.png"
+  },
+  {
+    "id": "stollen",
+    "name": "stollen",
+    "category": "food",
+    "price": 8,
+    "sprite": "/items/stollen.png"
+  },
+  {
+    "id": "conbini-bento",
+    "name": "store-bought lunch",
+    "category": "food",
+    "price": 5,
+    "sprite": "/items/conbini-bento.png"
+  },
+  {
+    "id": "strawberry",
+    "name": "strawberry",
+    "category": "food",
+    "price": 4.8,
+    "sprite": "/items/strawberry.png"
+  },
+  {
+    "id": "cake",
+    "name": "strawberry shortcake",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/cake.png"
+  },
+  {
+    "id": "string-cheese",
+    "name": "string cheese",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/string-cheese.png"
+  },
+  {
+    "id": "roll-cabbage",
+    "name": "stuffed cabbage roll",
+    "category": "food",
+    "price": 7,
+    "sprite": "/items/roll-cabbage.png"
+  },
+  {
+    "id": "paprika-with-meat",
+    "name": "stuffed peppers",
+    "category": "food",
+    "price": 13,
+    "sprite": "/items/paprika-with-meat.png"
+  },
+  {
+    "id": "stuffing",
+    "name": "stuffing",
+    "category": "food",
+    "price": 6.7,
+    "sprite": "/items/stuffing.png"
+  },
+  {
+    "id": "sukiyaki",
+    "name": "sukiyaki",
+    "category": "food",
+    "price": 17.8,
+    "sprite": "/items/sukiyaki.png"
+  },
+  {
+    "id": "sundobu-tige",
+    "name": "sundubu-jjigae",
+    "category": "food",
+    "price": 6,
+    "sprite": "/items/sundobu-tige.png"
+  },
+  {
+    "id": "sunflower-seeds",
+    "name": "sunflower seeds",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/sunflower-seeds.png"
+  },
+  {
+    "id": "sushi",
+    "name": "sushi",
+    "category": "food",
+    "price": 15.8,
+    "sprite": "/items/sushi.png"
+  },
+  {
+    "id": "suyuku",
+    "name": "suyuk",
+    "category": "food",
+    "price": 15,
+    "sprite": "/items/suyuku.png"
+  },
+  {
+    "id": "sweet-potato",
+    "name": "sweet potato",
+    "category": "food",
+    "price": 3.8,
+    "sprite": "/items/sweet-potato.png"
+  },
+  {
+    "id": "subuta",
+    "name": "sweet-and-sour pork",
+    "category": "food",
+    "price": 7.8,
+    "sprite": "/items/subuta.png"
+  },
+  {
+    "id": "tacos",
+    "name": "tacos",
+    "category": "food",
+    "price": 4.8,
+    "sprite": "/items/tacos.png"
+  },
+  {
+    "id": "taiyaki",
+    "name": "taiyaki",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/taiyaki.png"
+  },
+  {
+    "id": "takoyaki",
+    "name": "takoyaki",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/takoyaki.png"
+  },
+  {
+    "id": "tamale",
+    "name": "tamale",
+    "category": "food",
+    "price": 5,
+    "sprite": "/items/tamale.png"
+  },
+  {
+    "id": "tangyuan",
+    "name": "tangyuan",
+    "category": "food",
+    "price": 7.6,
+    "sprite": "/items/tangyuan.png"
+  },
+  {
+    "id": "water",
+    "name": "tap water",
+    "category": "food",
+    "price": 0.9,
+    "sprite": "/items/water.png"
+  },
+  {
+    "id": "tea",
+    "name": "tea",
+    "category": "food",
+    "price": 5.5,
+    "sprite": "/items/tea.png"
+  },
+  {
+    "id": "tenpura",
+    "name": "tempura",
+    "category": "food",
+    "price": 8.8,
+    "sprite": "/items/tenpura.png"
+  },
+  {
+    "id": "tendon",
+    "name": "tempura rice bowl",
+    "category": "food",
+    "price": 8.5,
+    "sprite": "/items/tendon.png"
+  },
+  {
+    "id": "tiramisu",
+    "name": "tiramisu",
+    "category": "food",
+    "price": 5,
+    "sprite": "/items/tiramisu.png"
+  },
+  {
+    "id": "tofu",
+    "name": "tofu",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/tofu.png"
+  },
+  {
+    "id": "tomato",
+    "name": "tomato",
+    "category": "food",
+    "price": 1.4,
+    "sprite": "/items/tomato.png"
+  },
+  {
+    "id": "tomato-juice",
+    "name": "tomato juice",
+    "category": "food",
+    "price": 1.5,
+    "sprite": "/items/tomato-juice.png"
+  },
+  {
+    "id": "tompoes",
+    "name": "tompouce",
+    "category": "food",
+    "price": 5,
+    "sprite": "/items/tompoes.png"
+  },
+  {
+    "id": "tonkatsu",
+    "name": "tonkatsu",
+    "category": "food",
+    "price": 8,
+    "sprite": "/items/tonkatsu.png"
+  },
+  {
+    "id": "torrijas",
+    "name": "torrijas",
+    "category": "food",
+    "price": 7,
+    "sprite": "/items/torrijas.png"
+  },
+  {
+    "id": "dango",
+    "name": "tricolor dango",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/dango.png"
+  },
+  {
+    "id": "truffle",
+    "name": "truffle mushroom",
+    "category": "food",
+    "price": 60,
+    "sprite": "/items/truffle.png"
+  },
+  {
+    "id": "toppogi",
+    "name": "tteokbokki",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/toppogi.png"
+  },
+  {
+    "id": "tokku",
+    "name": "tteokguk",
+    "category": "food",
+    "price": 6,
+    "sprite": "/items/tokku.png"
+  },
+  {
+    "id": "turron",
+    "name": "turrones",
+    "category": "food",
+    "price": 5.2,
+    "sprite": "/items/turron.png"
+  },
+  {
+    "id": "veggie-burger",
+    "name": "veggie burger",
+    "category": "food",
+    "price": 4.8,
+    "sprite": "/items/veggie-burger.png"
+  },
+  {
+    "id": "waffle",
+    "name": "waffle",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/waffle.png"
+  },
+  {
+    "id": "walnut",
+    "name": "walnuts",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/walnut.png"
+  },
+  {
+    "id": "suika",
+    "name": "watermelon",
+    "category": "food",
+    "price": 2,
+    "sprite": "/items/suika.png"
+  },
+  {
+    "id": "syokupan",
+    "name": "white bread",
+    "category": "food",
+    "price": 1,
+    "sprite": "/items/syokupan.png"
+  },
+  {
+    "id": "xiao-long-bao",
+    "name": "xiaolongbao",
+    "category": "food",
+    "price": 7.8,
+    "sprite": "/items/xiao-long-bao.png"
+  },
+  {
+    "id": "yakisoba",
+    "name": "yakisoba",
+    "category": "food",
+    "price": 4,
+    "sprite": "/items/yakisoba.png"
+  },
+  {
+    "id": "yakitori",
+    "name": "yakitori",
+    "category": "food",
+    "price": 3.5,
+    "sprite": "/items/yakitori.png"
+  },
+  {
+    "id": "yangnyeom-chicken",
+    "name": "yangnyeom chikin",
+    "category": "food",
+    "price": 10,
+    "sprite": "/items/yangnyeom-chicken.png"
+  },
+  {
+    "id": "yongebessuku",
+    "name": "yeonggye-baeksuk",
+    "category": "food",
+    "price": 14,
+    "sprite": "/items/yongebessuku.png"
+  },
+  {
+    "id": "yerba-mate",
+    "name": "yerba maté",
+    "category": "food",
+    "price": 5.4,
+    "sprite": "/items/yerba-mate.png"
+  },
+  {
+    "id": "yoghourt",
+    "name": "yogurt",
+    "category": "food",
+    "price": 1.9,
+    "sprite": "/items/yoghourt.png"
+  },
+  {
+    "id": "youkan",
+    "name": "yokan",
+    "category": "food",
+    "price": 5.8,
+    "sprite": "/items/youkan.png"
+  },
+  {
+    "id": "youtiao",
+    "name": "youtiao",
+    "category": "food",
+    "price": 6,
+    "sprite": "/items/youtiao.png"
+  },
+  {
+    "id": "yukke",
+    "name": "yukhoe",
+    "category": "food",
+    "price": 11,
+    "sprite": "/items/yukke.png"
+  },
+  {
+    "id": "buche-de-noel",
+    "name": "Yule log",
+    "category": "food",
+    "price": 9,
+    "sprite": "/items/buche-de-noel.png"
+  },
+  {
+    "id": "zampone",
+    "name": "zampone sausage",
+    "category": "food",
+    "price": 9.7,
+    "sprite": "/items/zampone.png"
+  },
+  {
+    "id": "zenzai",
+    "name": "zenzai",
+    "category": "food",
+    "price": 5,
+    "sprite": "/items/zenzai.png"
+  },
+  {
+    "id": "chimaki",
+    "name": "zongzi",
+    "category": "food",
+    "price": 7,
+    "sprite": "/items/chimaki.png"
+  },
+  {
+    "id": "zucchini",
+    "name": "zucchini",
+    "category": "food",
+    "price": 3,
+    "sprite": "/items/zucchini.png"
+  },
+  {
+    "id": "base-ball",
+    "name": "baseball",
+    "category": "goods",
+    "price": 20,
+    "sprite": "/items/base-ball.png"
+  },
+  {
+    "id": "bubbles-set",
+    "name": "bubble blower",
+    "category": "goods",
+    "price": 3.5,
+    "sprite": "/items/bubbles-set.png"
+  },
+  {
+    "id": "guitar",
+    "name": "guitar",
+    "category": "goods",
+    "price": 5,
+    "sprite": "/items/guitar.png"
+  },
+  {
+    "id": "jogging-set",
+    "name": "Jogging 101 DVD",
+    "category": "goods",
+    "price": 5,
+    "sprite": "/items/jogging-set.png"
+  },
+  {
+    "id": "knitting-set",
+    "name": "knitting set",
+    "category": "goods",
+    "price": 5,
+    "sprite": "/items/knitting-set.png"
+  },
+  {
+    "id": "maracas",
+    "name": "maracas",
+    "category": "goods",
+    "price": 20,
+    "sprite": "/items/maracas.png"
+  },
+  {
+    "id": "workout-set",
+    "name": "Muscle Building 101 DVD",
+    "category": "goods",
+    "price": 5,
+    "sprite": "/items/workout-set.png"
+  },
+  {
+    "id": "soccer-ball",
+    "name": "soccer ball",
+    "category": "goods",
+    "price": 20,
+    "sprite": "/items/soccer-ball.png"
+  },
+  {
+    "id": "street-dance-set",
+    "name": "Street Dancing 101 DVD",
+    "category": "goods",
+    "price": 3.5,
+    "sprite": "/items/street-dance-set.png"
+  },
+  {
+    "id": "yoga-set",
+    "name": "Yoga 101 DVD",
+    "category": "goods",
+    "price": 5,
+    "sprite": "/items/yoga-set.png"
+  },
+  {
+    "id": "tissue",
+    "name": "box of tissues",
+    "category": "treasure",
+    "price": 1.2,
+    "sprite": "/items/tissue.png"
+  },
+  {
+    "id": "game-dance",
+    "name": "dancing game",
+    "category": "treasure",
+    "price": 38,
+    "sprite": "/items/game-dance.png"
+  },
+  {
+    "id": "game-love-simulation",
+    "name": "dating-sim game",
+    "category": "treasure",
+    "price": 53,
+    "sprite": "/items/game-love-simulation.png"
+  },
+  {
+    "id": "hedgehog",
+    "name": "hedgehog",
+    "category": "treasure",
+    "price": 20,
+    "sprite": "/items/hedgehog.png"
+  },
+  {
+    "id": "cdidol",
+    "name": "J-pop album",
+    "category": "treasure",
+    "price": 30,
+    "sprite": "/items/cdidol.png"
+  },
+  {
+    "id": "jellyfish",
+    "name": "jellyfish",
+    "category": "treasure",
+    "price": 3,
+    "sprite": "/items/jellyfish.png"
+  },
+  {
+    "id": "cdpop-music",
+    "name": "pop album",
+    "category": "treasure",
+    "price": 25,
+    "sprite": "/items/cdpop-music.png"
+  },
+  {
+    "id": "game-puzzle",
+    "name": "puzzle game",
+    "category": "treasure",
+    "price": 38,
+    "sprite": "/items/game-puzzle.png"
+  },
+  {
+    "id": "rabbit",
+    "name": "rabbit",
+    "category": "treasure",
+    "price": 45,
+    "sprite": "/items/rabbit.png"
+  },
+  {
+    "id": "cdrock",
+    "name": "rock album",
+    "category": "treasure",
+    "price": 25,
+    "sprite": "/items/cdrock.png"
+  },
+  {
+    "id": "toilet-paper",
+    "name": "toilet paper",
+    "category": "treasure",
+    "price": 1,
+    "sprite": "/items/toilet-paper.png"
+  },
+  {
+    "id": "rubber-string",
+    "name": "weak-looking elastic rope",
+    "category": "treasure",
+    "price": 1,
+    "sprite": "/items/rubber-string.png"
+  }
+]

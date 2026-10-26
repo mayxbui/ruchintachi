@@ -28,7 +28,7 @@ Thumbs.db
 CLAUDE.md
 
 # local SQLite data
-data/
+/data/
 
 # TypeScript / Next generated
 *.tsbuildinfo
