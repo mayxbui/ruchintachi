@@ -3,9 +3,9 @@
 import { IconCheck } from "@tabler/icons-react";
 import Image from "next/image";
 import { useState, useTransition } from "react";
-import { previewBackground } from "@/components/page-background";
+import { setBackgroundAction } from "@/app/background-actions";
 import { backgrounds, type BackgroundId } from "@/lib/backgrounds";
-import { setBackgroundAction } from "./actions";
+import { previewBackground } from "./page-background";
 
 const PUFFS = 8;
 
@@ -35,7 +35,7 @@ export function BackgroundPicker({ background }: { background: BackgroundId }) {
 
   return (
     <div>
-      <ul className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5">
+      <ul className="grid grid-cols-4 gap-2.5">
         {backgrounds.map((bg) => {
           const current = bg.id === selected;
           return (
@@ -45,7 +45,7 @@ export function BackgroundPicker({ background }: { background: BackgroundId }) {
                 onClick={() => pick(bg.id)}
                 aria-pressed={current}
                 aria-label={bg.label}
-                className={`group relative block aspect-square w-full rounded-2xl shadow-pop transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sunny ${
+                className={`group relative block aspect-square w-full min-w-0 rounded-2xl shadow-pop transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sunny ${
                   current ? "ring-4 ring-tangerine" : ""
                 }`}
               >
@@ -59,16 +59,16 @@ export function BackgroundPicker({ background }: { background: BackgroundId }) {
                       src={bg.file}
                       alt=""
                       fill
-                      sizes="(min-width: 768px) 10rem, (min-width: 640px) 25vw, 33vw"
+                      sizes="6rem"
                       className="object-cover"
                     />
                   </span>
-                  <span className="absolute inset-x-1.5 bottom-1.5 truncate rounded-full bg-white/85 px-2 py-0.5 text-center text-sm">
+                  <span className="absolute inset-x-1 bottom-1 truncate rounded-full bg-white/85 px-1.5 text-center text-xs">
                     {bg.label}
                   </span>
                 </span>
                 {current && (
-                  <span className="absolute -top-2 -right-2 flex size-7 items-center justify-center rounded-full bg-tangerine text-white shadow-pop">
+                  <span className="absolute top-1 right-1 flex size-6 items-center justify-center rounded-full bg-tangerine text-white shadow-pop">
                     <IconCheck className="size-4" stroke={3} />
                   </span>
                 )}

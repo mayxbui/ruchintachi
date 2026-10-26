@@ -11,7 +11,6 @@ import { allowAttempt, clearAttempts, TOO_MANY_ATTEMPTS } from "@/lib/auth/limit
 import { hashSecret, verifySecret } from "@/lib/auth/password";
 import { endSession, requireUser, type CurrentUser } from "@/lib/auth/session";
 import { generateRecoveryCode, normalizeRecoveryCode } from "@/lib/auth/tokens";
-import { isBackgroundId } from "@/lib/backgrounds";
 
 export type SettingsState = {
   error?: string;
@@ -49,15 +48,6 @@ export async function updatePreferences(
   db.update(users).set({ timeZone, weekStart }).where(eq(users.id, user.id)).run();
   revalidatePath("/", "layout");
   return { saved: true };
-}
-
-/** Saves the page background picked in Settings. Ids must come from the list. */
-export async function setBackgroundAction(background: string): Promise<{ error?: string }> {
-  const user = await requireUser();
-  if (!isBackgroundId(background)) return { error: "Pick one of the backgrounds." };
-  db.update(users).set({ background }).where(eq(users.id, user.id)).run();
-  revalidatePath("/", "layout");
-  return {};
 }
 
 /** Replaces the recovery code; the old one stops working. */
