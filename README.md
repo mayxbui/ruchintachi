@@ -74,7 +74,7 @@ Your Mii's mood shows as a coloured thought bubble, with five levels (names are 
 | **Calendar** | Month grid filled with the gifts you earned, plus bar charts |
 | **Town** | Your friend code, add friends, friends leaderboard with cheers, visit friends' Miis, group trackers |
 | **Mii** | Mii creator, wardrobe, inventory, mood line |
-| **Settings** | Time zone, week start (Monday/Sunday), account, recovery code, delete account, **FAQ** |
+| **Settings** | Time zone, week start (Monday/Sunday), page background, account, recovery code, delete account, **FAQ** |
 
 On phones the navbar is a bottom tab bar; on desktop it sits at the top.
 

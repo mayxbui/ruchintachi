@@ -27,15 +27,62 @@
 
   --radius-blob: 2rem;
   --shadow-pop: 0 .4rem 0 0 rgb(180 105 22 / 0.25);
+
+  /* Background picker (#43): new background fades in; picked tile pops. */
+  --animate-bg-in: bg-in 450ms ease-out both;
+  --animate-tile-pop: tile-pop 400ms ease-out;
+
+  @keyframes bg-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes tile-pop {
+    40% {
+      transform: scale(0.9);
+    }
+    70% {
+      transform: scale(1.06);
+    }
+  }
+}
+
+/* "Poof": puffs burst out from the picked tile and fade (#43). */
+.poof > i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1rem;
+  height: 1rem;
+  margin: -0.5rem;
+  border-radius: 9999px;
+  background: white;
+  box-shadow: 0 0 0 3px var(--color-sunny);
+  animation: poof 550ms ease-out forwards;
+}
+@keyframes poof {
+  from {
+    transform: rotate(var(--angle)) translateY(0) scale(0.4);
+    opacity: 1;
+  }
+  to {
+    transform: rotate(var(--angle)) translateY(-3.25rem) scale(0);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-bg-in,
+  .animate-tile-pop {
+    animation: none;
+  }
+  .poof {
+    display: none;
+  }
 }
 
 body {
-  /* Default background (#43). Sand shows while the image loads. */
+  /* Sand shows while the picked background loads (PageBackground, #43). */
   background-color: var(--color-sand);
-  background-image: url("/bg-og.png");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
   color: var(--color-ink);
 }
 

@@ -8,6 +8,7 @@ import {
   text,
   uniqueIndex,
 } from "drizzle-orm/sqlite-core";
+import { backgroundIds } from "../lib/backgrounds";
 
 // Dates the user sees ("today", a habit's day) are local calendar dates
 // stored as "YYYY-MM-DD" text. Instants are unix-ms integers.
@@ -34,6 +35,8 @@ export const users = sqliteTable("users", {
     .notNull()
     .default("next"),
   doneLast: integer("done_last", { mode: "boolean" }).notNull().default(true),
+  // Page background picked in Settings (#43); see src/lib/backgrounds.ts.
+  background: text("background", { enum: backgroundIds }).notNull().default("og"),
   createdAt: createdAt(),
 });
 

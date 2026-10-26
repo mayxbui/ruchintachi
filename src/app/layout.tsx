@@ -3,7 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Nunito } from "next/font/google";
 import { NavBar } from "@/components/nav-bar";
+import { PageBackground } from "@/components/page-background";
 import { getCurrentUser } from "@/lib/auth/session";
+import { DEFAULT_BACKGROUND } from "@/lib/backgrounds";
 import "./globals.css";
 
 // Self-hosted by next/font, so no request to Google from visitors.
@@ -29,6 +31,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className={nunito.variable}>
       <body className="flex min-h-dvh flex-col font-sans antialiased">
+        <PageBackground background={user?.background ?? DEFAULT_BACKGROUND} />
         {/* Logo left, nav centred on one line; on phones the nav drops below. */}
         <header className="mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-3 px-4 pt-4 md:grid-cols-[1fr_auto_1fr]">
           <Link

@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `background` text DEFAULT 'og' NOT NULL;
