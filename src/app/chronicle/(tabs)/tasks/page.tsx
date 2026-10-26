@@ -98,6 +98,7 @@ export default async function TasksPage({
       {activeList && <ListMenu key={activeList.id} listId={activeList.id} name={activeList.name} />}
 
       <div className="mb-4 flex flex-wrap items-center justify-end gap-3">
+      <div className="mb-4 flex flex-wrap items-center justify-end gap-3 py-2">
         <Link
           href={activeList ? `/chronicle/new?list=${activeList.id}` : "/chronicle/new"}
           className="rounded-full bg-tangerine px-5 py-2 font-bold text-white shadow-pop transition hover:brightness-105"
@@ -109,8 +110,8 @@ export default async function TasksPage({
       {shown.length === 0 ? (
         <p className="text-caption">{empty}</p>
       ) : (
-        <ul className="space-y-3">
-          {shown.map((habit) => (
+        <ul className="space-y-5">
+          {current.map((habit) => (
             <li
               key={habit.id}
               className="flex items-start gap-3 rounded-2xl bg-white px-4 py-3 shadow-pop"
