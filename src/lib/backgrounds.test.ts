@@ -3,9 +3,9 @@ import { describe, expect, it } from "vitest";
 import { backgroundFor, backgrounds, DEFAULT_BACKGROUND, isBackgroundId } from "./backgrounds";
 
 describe("backgrounds", () => {
-  it("has 15 unique ids with the original first and as default", () => {
-    expect(backgrounds).toHaveLength(15);
-    expect(new Set(backgrounds.map((b) => b.id)).size).toBe(15);
+  it("has 22 unique ids with the original first and as default", () => {
+    expect(backgrounds).toHaveLength(22);
+    expect(new Set(backgrounds.map((b) => b.id)).size).toBe(22);
     expect(backgrounds[0].id).toBe(DEFAULT_BACKGROUND);
   });
 
