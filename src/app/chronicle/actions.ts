@@ -3,13 +3,15 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
-import { listExceptions, setCompletion } from "@/db/completions";
+import { completedHabitIds, listExceptions, setCompletion } from "@/db/completions";
+import { awardDailyGift, dailyGiftOn } from "@/db/gifts";
 import {
   clearException,
   createHabit,
   deleteHabit,
   endHabit,
   getHabit,
+  listHabits,
   renameHabit,
   setException,
   setHabitIcon,
@@ -21,7 +23,9 @@ import {
 import { setSortSettings } from "@/db/accounts";
 import { createTaskList, setHabitList } from "@/db/task-lists";
 import { requireUser } from "@/lib/auth/session";
+import { dailyGiftPool, earnsDailyGift } from "@/lib/daily-gift";
 import { todayIn } from "@/lib/dates";
+import { rollGift } from "@/lib/gift-roll";
 import {
   isEditableDay,
   nextOccurrence,
@@ -33,9 +37,11 @@ import {
 } from "@/lib/habit-edit";
 import { HABIT_NAME_MAX, HABIT_NOTE_MAX, readHabitForm, validateHabit } from "@/lib/habit-form";
 import { isHabitIcon } from "@/lib/habit-icons";
+import type { Item } from "@/lib/items";
 import { occurrenceOn } from "@/lib/repeat-rule";
 import { isHabitSort, type HabitSort } from "@/lib/sort-habits";
 import { LISTS_MAX, NEW_LIST, validateListName } from "@/lib/task-lists";
+import { itemsOn } from "@/lib/today";
 
 export type HabitFormState = { error?: string };
 
@@ -86,7 +92,7 @@ export async function createHabitAction(
 export async function toggleCompletionAction(
   habitId: string,
   done: boolean,
-): Promise<{ error?: string }> {
+): Promise<{ error?: string; gift?: DailyGift }> {
   const user = await requireUser();
   const today = todayIn(user.timeZone);
   const habit = getHabit(db, user.id, habitId);
@@ -98,8 +104,26 @@ export async function toggleCompletionAction(
   }
 
   setCompletion(db, user.id, habitId, today, done);
+  const gift = done ? awardDailyGiftIfEarned(user.id, today) : undefined;
   revalidatePath("/chronicle", "layout");
-  return {};
+  return gift ? { gift } : {};
+}
+
+export type DailyGift = Pick<Item, "id" | "name" | "sprite">;
+
+/**
+ * Awards today's gift once every task scheduled today is done. Returns the
+ * gift only when this call awarded it; unticking later never takes it back,
+ * and ticking again never rolls a second one.
+ */
+function awardDailyGiftIfEarned(userId: string, today: string): DailyGift | undefined {
+  if (dailyGiftOn(db, userId, today)) return undefined;
+  const items = itemsOn(listHabits(db, userId), listExceptions(db, userId), completedHabitIds(db, userId, today), today);
+  if (!earnsDailyGift(items)) return undefined;
+
+  const item = rollGift(dailyGiftPool());
+  if (!item || !awardDailyGift(db, userId, today, item.id)) return undefined;
+  return { id: item.id, name: item.name, sprite: item.sprite };
 }
 
 /** Saves the sort menu: the order and whether done tasks drop to the bottom. */
