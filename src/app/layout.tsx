@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Nunito } from "next/font/google";
 import { BackgroundButton } from "@/components/background-button";
+import { FieldWarning } from "@/components/field-warning";
 import { NavBar } from "@/components/nav-bar";
 import { PageBackground } from "@/components/page-background";
 import { getCurrentUser } from "@/lib/auth/session";
@@ -63,6 +64,7 @@ export default async function RootLayout({
         </main>
 
         <WaveFooter />
+        <FieldWarning />
       </body>
     </html>
   );

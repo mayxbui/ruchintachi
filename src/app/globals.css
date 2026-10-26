@@ -31,10 +31,19 @@
   /* Background picker (#43): new background fades in; picked tile pops. */
   --animate-bg-in: bg-in 450ms ease-out both;
   --animate-tile-pop: tile-pop 400ms ease-out;
+  /* Themed form warning (FieldWarning) and a ticked task's check. */
+  --animate-warning-in: warning-in 220ms ease-out both;
+  --animate-check-pop: tile-pop 380ms ease-out;
 
   @keyframes bg-in {
     from {
       opacity: 0;
+    }
+  }
+  @keyframes warning-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px) scale(0.96);
     }
   }
   @keyframes tile-pop {
@@ -70,12 +79,40 @@
     opacity: 0;
   }
 }
+/* A ticked task: small green and yellow sparks around the check. */
+.sparkle > i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin: -0.225rem;
+  border-radius: 9999px;
+  background: var(--color-leaf);
+  animation: sparkle 500ms ease-out forwards;
+}
+.sparkle > i:nth-child(even) {
+  background: var(--color-sunny-deep);
+}
+@keyframes sparkle {
+  from {
+    transform: rotate(var(--angle)) translateY(-1.15rem) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: rotate(var(--angle)) translateY(-1.9rem) scale(0);
+    opacity: 0;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .animate-bg-in,
-  .animate-tile-pop {
+  .animate-tile-pop,
+  .animate-check-pop,
+  .animate-warning-in {
     animation: none;
   }
-  .poof {
+  .poof,
+  .sparkle {
     display: none;
   }
 }
@@ -112,6 +149,12 @@ body {
   table,
   dialog {
     border-radius: 1rem;
+  }
+
+  /* The field a FieldWarning bubble points at. */
+  [aria-invalid="true"] {
+    outline: 3px solid var(--color-cherry);
+    outline-offset: 2px;
   }
 
   /* Buttons: no border, a soft drop shadow instead, and never too short

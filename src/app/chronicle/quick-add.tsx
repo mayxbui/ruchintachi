@@ -13,7 +13,7 @@ export function QuickAdd() {
   const [state, formAction, pending] = useActionState(quickAddTaskAction, {});
   return (
     <form action={formAction} className="mb-3">
-      <div className="flex items-center gap-2 rounded-full bg-white py-1 pr-1 pl-4 shadow-pop focus-within:ring-4 focus-within:ring-sunny">
+      <div className="flex items-center gap-2 rounded-full bg-white py-1 pr-2 pl-4 shadow-pop focus-within:ring-4 focus-within:ring-sunny">
         <input
           name="name"
           aria-label="Add a task for today"
