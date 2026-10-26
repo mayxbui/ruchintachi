@@ -44,7 +44,7 @@ Your Mii's mood shows as a coloured thought bubble, with five levels (names are 
 |---|---|
 | 🩷 Pink | **Lovestruck** |
 | 🧡 Orange | **Overjoyed** |
-| 💛 Yellow | **Content** — every Mii starts here |
+| 💛 Yellow | **Content** |
 | 💙 Blue | **Gloomy** |
 | ❤️ Red | **Fuming** |
 
@@ -107,7 +107,6 @@ Everything is free and open source, and runs on one Azure VM.
 
 - Item sprites: [The Spriters Resource — Tomodachi Life: Living the Dream](https://www.spriters-resource.com/nintendo_switch/tomodachilifelivingthedream/)
 - Item prices: [community price sheet](https://docs.google.com/spreadsheets/d/1iPb1freZ57gP7tBDMbvIUi3cDvIE979COqlDsRTYu3Y)
-- Visual/UX reference: [tomoboard.com](https://www.tomoboard.com/) — the UI should feel close to it
 
 ## Disclaimer
 

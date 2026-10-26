@@ -26,7 +26,7 @@ export default async function TasksPage() {
 
   return (
     <section>
-      <div className="mb-4 flex flex-wrap items-center justify-end gap-3">
+      <div className="mb-4 flex flex-wrap items-center justify-end gap-3 py-2">
         <Link
           href="/chronicle/new"
           className="rounded-full bg-tangerine px-5 py-2 font-bold text-white shadow-pop transition hover:brightness-105"
@@ -38,7 +38,7 @@ export default async function TasksPage() {
       {current.length === 0 ? (
         <p className="text-caption">No tasks yet. Add one to start filling your calendar!</p>
       ) : (
-        <ul className="space-y-3">
+        <ul className="space-y-5">
           {current.map((habit) => (
             <li
               key={habit.id}
