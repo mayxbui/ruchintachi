@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Nunito } from "next/font/google";
+import { BackgroundButton } from "@/components/background-button";
 import { NavBar } from "@/components/nav-bar";
 import { PageBackground } from "@/components/page-background";
 import { getCurrentUser } from "@/lib/auth/session";
@@ -33,7 +34,7 @@ export default async function RootLayout({
       <body className="flex min-h-dvh flex-col font-sans antialiased">
         <PageBackground background={user?.background ?? DEFAULT_BACKGROUND} />
         {/* Logo left, nav centred on one line; on phones the nav drops below. */}
-        <header className="mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-3 px-4 pt-4 md:grid-cols-[1fr_auto_1fr]">
+        <header className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-3 px-4 pt-4 md:grid-cols-[1fr_auto_1fr]">
           <Link
             href="/chronicle"
             aria-label="Ruchintachi home"
@@ -49,6 +50,12 @@ export default async function RootLayout({
             />
           </Link>
           {user && <NavBar />}
+          {user && (
+            // Right of the navbar on desktop; top-right corner, beside the logo, on phones.
+            <div className="absolute top-4 right-4 md:static md:justify-self-end">
+              <BackgroundButton background={user.background} />
+            </div>
+          )}
         </header>
 
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 pt-6 pb-12">

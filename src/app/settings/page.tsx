@@ -1,7 +1,6 @@
 import { PageCard } from "@/components/page-card";
 import { signOut } from "@/lib/auth/actions";
 import { requireUser } from "@/lib/auth/session";
-import { BackgroundPicker } from "./background-picker";
 import {
   DeleteAccountForm,
   PreferencesForm,
@@ -44,11 +43,6 @@ export default async function SettingsPage() {
           weekStart={user.weekStart}
           timeZones={timeZones}
         />
-      </PageCard>
-
-      <PageCard title="Background">
-        <p className="mb-4 text-caption">Tap a picture to change the background on every page.</p>
-        <BackgroundPicker background={user.background} />
       </PageCard>
 
       <PageCard title="Account">
