@@ -15,6 +15,7 @@ import {
   normalizeRecoveryCode,
 } from "./tokens";
 
+import type { BackgroundId } from "@/lib/backgrounds";
 import type { HabitSort } from "@/lib/sort-habits";
 
 const COOKIE = "ruchi_session";
@@ -28,6 +29,7 @@ export type CurrentUser = {
   weekStart: "monday" | "sunday";
   taskSort: HabitSort;
   doneLast: boolean;
+  background: BackgroundId;
 };
 
 /** Starts a session for `userId` and sets the cookie. Call from a server action. */
@@ -67,6 +69,7 @@ const userFields = {
   weekStart: users.weekStart,
   taskSort: users.taskSort,
   doneLast: users.doneLast,
+  background: users.background,
 };
 
 export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
