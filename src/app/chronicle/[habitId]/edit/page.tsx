@@ -4,10 +4,11 @@ import { PageCard } from "@/components/page-card";
 import { db } from "@/db";
 import { listExceptions } from "@/db/completions";
 import { getHabit } from "@/db/habits";
+import { listTaskLists } from "@/db/task-lists";
 import { requireUser } from "@/lib/auth/session";
 import { todayIn } from "@/lib/dates";
 import { formatDate } from "@/lib/describe-rule";
-import { isEditableDay, nextOccurrence, remainingCount } from "@/lib/habit-edit";
+import { isEditableDay, nextOccurrence, seriesFrom } from "@/lib/habit-edit";
 import { isHabitIcon } from "@/lib/habit-icons";
 import { occurrenceOn } from "@/lib/repeat-rule";
 import { deleteHabitAction, editHabitAction, type ReturnTo } from "../../actions";
@@ -18,12 +19,18 @@ export default async function EditHabitPage({
   searchParams,
 }: {
   params: Promise<{ habitId: string }>;
-  searchParams: Promise<{ date?: string; from?: string }>;
+  searchParams: Promise<{ date?: string; from?: string; list?: string }>;
 }) {
   const user = await requireUser();
   const { habitId } = await params;
-  const { date: asked, from } = await searchParams;
-  const returnTo: ReturnTo = from === "tasks" ? "/chronicle/tasks" : "/chronicle";
+  const { date: asked, from, list } = await searchParams;
+  // Back to the Tasks filter they came from (the action re-checks this path).
+  const returnTo: ReturnTo =
+    from === "tasks"
+      ? list && /^[\w-]+$/.test(list)
+        ? `/chronicle/tasks?list=${list}`
+        : "/chronicle/tasks"
+      : "/chronicle";
   const habit = getHabit(db, user.id, habitId);
   if (!habit) notFound();
 
@@ -61,12 +68,11 @@ export default async function EditHabitPage({
         today={today}
         weekStart={user.weekStart}
         initial={{
-          ...habit,
-          icon: habit.icon && isHabitIcon(habit.icon) ? habit.icon : null,
           // "This day and future" starts on the chosen day, with what's left of a count.
-          startDate: repeating ? date : habit.startDate,
-          endCount: remainingCount(habit, date) ?? habit.endCount,
+          ...seriesFrom(habit, date),
+          icon: habit.icon && isHabitIcon(habit.icon) ? habit.icon : null,
         }}
+        lists={listTaskLists(db, user.id)}
         editDay={editHabitAction.bind(null, habitId, date, "day", returnTo)}
         editFuture={editHabitAction.bind(null, habitId, date, "future", returnTo)}
         deleteDay={deleteHabitAction.bind(null, habitId, date, "day", returnTo)}

@@ -21,6 +21,7 @@ const habitFields = {
   endType: habits.endType,
   endDate: habits.endDate,
   endCount: habits.endCount,
+  listId: habits.listId,
 };
 
 /** The user's own habits, oldest first. Never returns another user's rows. */
@@ -74,8 +75,8 @@ export function updateHabit(db: Db, userId: string, habitId: string, habit: NewH
 /**
  * "This day and future" edit of a series with past days: ends the old
  * series on `oldEndDate` and starts `next` (which starts the day after) as
- * a new habit linked to it. Exceptions and completions from the new start
- * on move to the new habit. Returns the new habit's id.
+ * a new habit linked to it, in the same list. Exceptions and completions
+ * from the new start on move to the new habit. Returns the new habit's id.
  */
 export function splitHabit(
   db: Db,
@@ -85,13 +86,16 @@ export function splitHabit(
   next: NewHabit,
 ): string | null {
   return db.transaction((tx) => {
-    if (!getHabit(tx, userId, habitId)) return null;
+    const old = getHabit(tx, userId, habitId);
+    if (!old) return null;
     const newId = crypto.randomUUID();
     tx.update(habits)
       .set({ endType: "on_date", endDate: oldEndDate, endCount: null })
       .where(and(eq(habits.id, habitId), eq(habits.userId, userId)))
       .run();
-    tx.insert(habits).values({ id: newId, userId, previousHabitId: habitId, ...next }).run();
+    tx.insert(habits)
+      .values({ id: newId, userId, previousHabitId: habitId, listId: old.listId, ...next })
+      .run();
     tx.update(habitExceptions)
       .set({ habitId: newId })
       .where(and(eq(habitExceptions.habitId, habitId), gte(habitExceptions.date, next.startDate)))

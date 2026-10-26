@@ -29,8 +29,10 @@ function fillEverything(
   db.insert(schema.miis)
     .values({ userId, name: "Mii", appearance: {} })
     .run();
+  const listId = `list-${userId}`;
+  db.insert(schema.taskLists).values({ id: listId, userId, name: "Health", position: 0 }).run();
   db.insert(schema.habits)
-    .values({ id: habitId, userId, name: "Water", startDate: "2026-10-01", frequency: "daily" })
+    .values({ id: habitId, userId, name: "Water", startDate: "2026-10-01", frequency: "daily", listId })
     .run();
   db.insert(schema.habitExceptions).values({ habitId, date: "2026-10-02" }).run();
   db.insert(schema.completions).values({ habitId, userId, date: "2026-10-01" }).run();
@@ -98,6 +100,7 @@ describe("deleteAccount", () => {
     // kai's data is untouched, apart from the friend link to may.
     expect(rowsMentioning(db, kai)).toMatchObject({
       users: 1,
+      task_lists: 1,
       habits: 1,
       habit_exceptions: 1,
       completions: 1,

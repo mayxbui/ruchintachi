@@ -130,6 +130,7 @@ export interface HabitFormInitial {
   endType: EndType;
   endDate: string | null;
   endCount: number | null;
+  listId?: string | null;
 }
 
 /**
@@ -141,6 +142,8 @@ export function HabitForm({
   weekStart,
   action,
   initial,
+  lists = [],
+  defaultListId,
   lockStartDate = false,
   cancelHref = "/chronicle",
   submitLabel,
@@ -150,6 +153,10 @@ export function HabitForm({
   weekStart: WeekStart;
   action: (prev: HabitFormState, formData: FormData) => Promise<HabitFormState>;
   initial?: HabitFormInitial;
+  /** The user's own lists; the List field only shows once they have one. */
+  lists?: { id: string; name: string }[];
+  /** List picked to start with when creating (opened from that list). */
+  defaultListId?: string;
   lockStartDate?: boolean;
   cancelHref?: string;
   submitLabel: string;
@@ -166,6 +173,7 @@ export function HabitForm({
   const [endDate, setEndDate] = useState(initial?.endDate ?? "");
   const [endCount, setEndCount] = useState(String(initial?.endCount ?? 10));
   const [note, setNote] = useState(initial?.note ?? "");
+  const [listId, setListId] = useState(initial?.listId ?? defaultListId ?? "");
 
   const weekOrder = weekStart === "monday" ? [1, 2, 3, 4, 5, 6, 0] : [0, 1, 2, 3, 4, 5, 6];
   const startWeekday = new Date(`${startDate || today}T00:00:00Z`).getUTCDay();
@@ -300,6 +308,21 @@ export function HabitForm({
               />
             </label>
           )}
+        </div>
+      )}
+
+      {lists.length > 0 && (
+        <div className="grid grid-cols-2 gap-2 sm:gap-3">
+          <Dropdown
+            label="List"
+            name="listId"
+            value={listId}
+            options={[
+              { value: "", label: "No list" },
+              ...lists.map((l) => ({ value: l.id, label: l.name })),
+            ]}
+            onChange={setListId}
+          />
         </div>
       )}
 

@@ -45,6 +45,37 @@ export function remainingCount(rule: RepeatRule, date: string): number | null {
   return Math.max(rule.endCount - before, 0);
 }
 
+/**
+ * The series as it stands from `date` on: what a "this day and future" edit
+ * starts from. A one-off habit is edited whole, so it stays as it is.
+ */
+export function seriesFrom<T extends RepeatRule>(habit: T, date: string): T {
+  if (habit.frequency === "none") return habit;
+  return { ...habit, startDate: date, endCount: remainingCount(habit, date) ?? habit.endCount };
+}
+
+const SERIES_FIELDS = [
+  "name",
+  "icon",
+  "note",
+  "startDate",
+  "frequency",
+  "endType",
+  "endDate",
+  "endCount",
+] as const;
+type SeriesFields = { [K in (typeof SERIES_FIELDS)[number]]?: unknown } & {
+  weekdays?: readonly number[] | null;
+};
+
+/** True when nothing about the series differs, e.g. only its list changed. */
+export function sameSeries(a: SeriesFields, b: SeriesFields): boolean {
+  return (
+    SERIES_FIELDS.every((k) => (a[k] ?? null) === (b[k] ?? null)) &&
+    (a.weekdays ?? []).join() === (b.weekdays ?? []).join()
+  );
+}
+
 export type FuturePlan =
   | { kind: "replace" } // no days before `date`: change the series in place
   | { kind: "split"; oldEndDate: string }; // end the old series, start a new one on `date`

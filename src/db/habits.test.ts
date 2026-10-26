@@ -32,7 +32,7 @@ describe("habits", () => {
     const db = createTestDb();
     const may = addUser(db, "may");
     const id = createHabit(db, may, water);
-    expect(listHabits(db, may)).toEqual([{ id, ...water }]);
+    expect(listHabits(db, may)).toEqual([{ id, ...water, listId: null }]);
   });
 
   it("lists only the user's own habits", () => {
