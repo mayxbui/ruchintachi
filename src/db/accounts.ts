@@ -1,6 +1,7 @@
 import { eq } from "drizzle-orm";
 import type { BetterSQLite3Database } from "drizzle-orm/better-sqlite3";
 import { generateFriendCode } from "@/lib/auth/tokens";
+import type { HabitSort } from "@/lib/sort-habits";
 import * as schema from "./schema";
 import { users } from "./schema";
 
@@ -45,6 +46,11 @@ export function createAccount(
  * tables reference users.id with ON DELETE CASCADE (friend links on both
  * sides included), so removing the user row removes everything.
  */
+/** Saves how My Chronicle sorts tasks and whether done tasks drop to the bottom. */
+export function setSortSettings(db: Db, userId: string, taskSort: HabitSort, doneLast: boolean): void {
+  db.update(users).set({ taskSort, doneLast }).where(eq(users.id, userId)).run();
+}
+
 export function deleteAccount(db: Db, userId: string): void {
   db.delete(users).where(eq(users.id, userId)).run();
 }

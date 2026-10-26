@@ -15,7 +15,9 @@ import {
   setHabitNote,
   splitHabit,
   updateHabit,
+  reorderHabits,
 } from "@/db/habits";
+import { setSortSettings } from "@/db/accounts";
 import { createTaskList, setHabitList } from "@/db/task-lists";
 import { requireUser } from "@/lib/auth/session";
 import { todayIn } from "@/lib/dates";
@@ -31,6 +33,7 @@ import {
 import { HABIT_NAME_MAX, HABIT_NOTE_MAX, readHabitForm, validateHabit } from "@/lib/habit-form";
 import { isHabitIcon } from "@/lib/habit-icons";
 import { occurrenceOn } from "@/lib/repeat-rule";
+import { isHabitSort, type HabitSort } from "@/lib/sort-habits";
 import { LISTS_MAX, NEW_LIST, validateListName } from "@/lib/task-lists";
 
 export type HabitFormState = { error?: string };
@@ -94,6 +97,27 @@ export async function toggleCompletionAction(
   }
 
   setCompletion(db, user.id, habitId, today, done);
+  revalidatePath("/chronicle", "layout");
+  return {};
+}
+
+/** Saves the sort menu: the order and whether done tasks drop to the bottom. */
+export async function setSortAction(sort: HabitSort, doneLast: boolean): Promise<{ error?: string }> {
+  const user = await requireUser();
+  if (!isHabitSort(sort) || typeof doneLast !== "boolean") return { error: "Pick a sort order." };
+  setSortSettings(db, user.id, sort, doneLast);
+  revalidatePath("/chronicle", "layout");
+  return {};
+}
+
+/** Saves a dragged custom order. Ids that aren't all the user's are rejected. */
+export async function reorderHabitsAction(orderedIds: string[]): Promise<{ error?: string }> {
+  const user = await requireUser();
+  const valid =
+    Array.isArray(orderedIds) && orderedIds.length <= 1000 && orderedIds.every((id) => typeof id === "string");
+  if (!valid || !reorderHabits(db, user.id, orderedIds)) {
+    return { error: "Couldn't save that order. Try again." };
+  }
   revalidatePath("/chronicle", "layout");
   return {};
 }

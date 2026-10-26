@@ -38,8 +38,8 @@ export function filterParam(filter: TaskFilter): string | null {
 }
 
 /**
- * The tasks a filter shows. "Up next" is tasks coming up in the next
- * UP_NEXT_DAYS days, soonest first; the others keep the given order.
+ * The tasks a filter shows, in the given (already sorted) order. "Up next"
+ * is tasks coming up in the next UP_NEXT_DAYS days.
  */
 export function filterTasks<T extends { next: string; listId: string | null }>(
   tasks: readonly T[],
@@ -53,7 +53,7 @@ export function filterTasks<T extends { next: string; listId: string | null }>(
       return tasks.filter((t) => t.listId === filter.listId);
     case "next": {
       const last = addDays(today, UP_NEXT_DAYS - 1);
-      return tasks.filter((t) => t.next <= last).sort((a, b) => a.next.localeCompare(b.next));
+      return tasks.filter((t) => t.next <= last);
     }
   }
 }

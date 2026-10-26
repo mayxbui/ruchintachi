@@ -18,8 +18,8 @@ const tasks = [
 const ids = (list: { id: string }[]) => list.map((t) => t.id);
 
 describe("filterTasks", () => {
-  it("Up next is the coming 7 days, soonest first", () => {
-    expect(ids(filterTasks(tasks, { kind: "next" }, today))).toEqual(["b", "a", "c"]);
+  it("Up next is the coming 7 days, in the given order", () => {
+    expect(ids(filterTasks(tasks, { kind: "next" }, today))).toEqual(["a", "b", "c"]);
     // A day later, "d" comes into range (b's next date would have moved on too).
     const later = tasks.filter((t) => t.id !== "b");
     expect(ids(filterTasks(later, { kind: "next" }, "2026-10-27"))).toEqual(["a", "c", "d"]);

@@ -2,17 +2,56 @@
 
 import { IconCheck, IconHourglassHigh, IconPencil } from "@tabler/icons-react";
 import Link from "next/link";
-import { useOptimistic, useState, useTransition } from "react";
+import { useLayoutEffect, useOptimistic, useRef, useState, useTransition } from "react";
 import { FormMessage } from "@/components/form";
 import { iconEmoji } from "@/lib/habit-icons";
 import { formatClock, parseMinutes, remainingMs, TIMER_MAX_MINUTES, TIMER_PRESETS } from "@/lib/timer";
+import { doneLast as moveDoneLast } from "@/lib/sort-habits";
 import { dayProgress, type DayItem } from "@/lib/today";
 import { toggleCompletionAction } from "./actions";
 import { TaskText } from "./task-text";
 import { useTimer } from "./timer";
 
-/** Today's tasks as big round yes/no checkboxes. Ticks show at once and roll back on error. */
-export function TodayList({ items, today }: { items: DayItem[]; today: string }) {
+/**
+ * Slides list rows from where they were to where they are now (FLIP), so a
+ * ticked task glides to the bottom instead of jumping. Skipped for users
+ * who prefer reduced motion.
+ */
+function useSlideOnReorder(order: string) {
+  const els = useRef(new Map<string, HTMLElement>());
+  const tops = useRef(new Map<string, number>());
+  useLayoutEffect(() => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    els.current.forEach((el, id) => {
+      const top = el.getBoundingClientRect().top;
+      const before = tops.current.get(id);
+      tops.current.set(id, top);
+      if (reduce || before === undefined || before === top) return;
+      el.animate([{ transform: `translateY(${before - top}px)` }, { transform: "translateY(0)" }], {
+        duration: 350,
+        easing: "cubic-bezier(0.2, 0.8, 0.2, 1)",
+      });
+    });
+  }, [order]);
+  return (id: string) => (el: HTMLElement | null) => {
+    if (el) els.current.set(id, el);
+    else els.current.delete(id);
+  };
+}
+
+/**
+ * Today's tasks as big round yes/no checkboxes. Ticks show at once and roll
+ * back on error. With `doneLast`, ticked tasks move below the rest.
+ */
+export function TodayList({
+  items,
+  today,
+  doneLast,
+}: {
+  items: DayItem[];
+  today: string;
+  doneLast: boolean;
+}) {
   const [shown, change] = useOptimistic(
     items,
     (current, update: { habitId: string; done: boolean }) =>
@@ -22,6 +61,8 @@ export function TodayList({ items, today }: { items: DayItem[]; today: string })
   const [error, setError] = useState<string>();
   const [timerFor, setTimerFor] = useState<string | null>(null); // task whose timer picker is open
   const timer = useTimer();
+  const ordered = doneLast ? moveDoneLast(shown) : shown;
+  const slideRef = useSlideOnReorder(ordered.map((i) => i.habitId).join());
 
   if (shown.length === 0) {
     return <p className="text-caption">No tasks today. Enjoy the day off! 🌴</p>;
@@ -44,8 +85,8 @@ export function TodayList({ items, today }: { items: DayItem[]; today: string })
         {done === total ? `All ${total} done! 🎉` : `${done} of ${total} done`}
       </p>
       <ul className="space-y-3">
-        {shown.map((item) => (
-          <li key={item.habitId} className="rounded-2xl bg-white shadow-pop">
+        {ordered.map((item) => (
+          <li key={item.habitId} ref={slideRef(item.habitId)} className="rounded-2xl bg-white shadow-pop">
             <div className="flex items-center gap-1 pr-2">
               <label className="flex shrink-0 cursor-pointer items-center gap-3 py-3 pl-4">
                 <input
