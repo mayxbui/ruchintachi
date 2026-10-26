@@ -114,6 +114,10 @@ export const habits = sqliteTable(
       enum: ["none", "daily", "weekly", "monthly", "annually"],
     }).notNull(),
     weekdays: text("weekdays", { mode: "json" }).$type<number[]>(), // 0=Sun..6=Sat, weekly only
+    interval: integer("interval").notNull().default(1), // every N days/weeks/months/years
+    // Monthly on the nth weekday (1..4, -1 = last; 0=Sun..6=Sat). Both null = same day of the month.
+    monthWeek: integer("month_week"),
+    monthWeekday: integer("month_weekday"),
     endType: text("end_type", { enum: ["never", "on_date", "after_count"] })
       .notNull()
       .default("never"),

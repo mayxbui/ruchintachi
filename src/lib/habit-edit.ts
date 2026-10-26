@@ -8,12 +8,15 @@
 //   occurrences and completions never change.
 
 import { addDays } from "./dates";
-import { expandOccurrences, occurrenceOn, type HabitException, type RepeatRule } from "./repeat-rule";
+import {
+  expandOccurrences,
+  firstOccurrenceFrom,
+  occurrenceOn,
+  type HabitException,
+  type RepeatRule,
+} from "./repeat-rule";
 
 export type EditScope = "day" | "future";
-
-// Long enough to reach the next Feb 29 of a yearly habit.
-const LOOKAHEAD_DAYS = 4 * 366;
 
 /** The first scheduled day on or after `from`, or null if the series is over. */
 export function nextOccurrence(
@@ -21,7 +24,7 @@ export function nextOccurrence(
   exceptions: HabitException[],
   from: string,
 ): string | null {
-  return expandOccurrences(rule, from, addDays(from, LOOKAHEAD_DAYS), exceptions)[0]?.date ?? null;
+  return firstOccurrenceFrom(rule, from, exceptions)?.date ?? null;
 }
 
 /** A day can be edited if it is scheduled and not in the past. */
@@ -60,6 +63,9 @@ const SERIES_FIELDS = [
   "note",
   "startDate",
   "frequency",
+  "interval",
+  "monthWeek",
+  "monthWeekday",
   "endType",
   "endDate",
   "endCount",

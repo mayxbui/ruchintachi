@@ -10,6 +10,9 @@ const form: HabitFormValues = {
   startDate: today,
   frequency: "daily",
   weekdays: [],
+  interval: "",
+  monthWeek: "",
+  monthWeekday: "",
   endType: "never",
   endDate: "",
   endCount: "",
@@ -47,17 +50,39 @@ describe("isIsoDate", () => {
 
 describe("validateHabit", () => {
   it("accepts a plain daily habit and nulls fields that don't apply", () => {
-    expect(habitOf({ weekdays: ["1"], endDate: "2026-12-01", endCount: "5" })).toEqual({
+    expect(
+      habitOf({ weekdays: ["1"], monthWeek: "2", monthWeekday: "3", endDate: "2026-12-01", endCount: "5" }),
+    ).toEqual({
       name: "Drink water",
       icon: "water",
       note: null,
       startDate: today,
       frequency: "daily",
       weekdays: null,
+      interval: 1,
+      monthWeek: null,
+      monthWeekday: null,
       endType: "never",
       endDate: null,
       endCount: null,
     });
+  });
+
+  it("reads every N, 1–99, ignored for a one-off", () => {
+    expect(habitOf({ interval: "3" }).interval).toBe(3);
+    expect(habitOf({ interval: "" }).interval).toBe(1);
+    expect(habitOf({ frequency: "none", interval: "5" }).interval).toBe(1);
+    for (const bad of ["0", "100", "2.5", "x"]) expect(errorOf({ interval: bad })).toMatch(/1–99/);
+  });
+
+  it("reads monthly on the nth weekday", () => {
+    expect(habitOf({ frequency: "monthly", monthWeek: "-1", monthWeekday: "0" })).toMatchObject({
+      monthWeek: -1,
+      monthWeekday: 0,
+    });
+    expect(habitOf({ frequency: "monthly" })).toMatchObject({ monthWeek: null, monthWeekday: null });
+    expect(errorOf({ frequency: "monthly", monthWeek: "5", monthWeekday: "0" })).toMatch(/week of the month/);
+    expect(errorOf({ frequency: "monthly", monthWeek: "1", monthWeekday: "7" })).toMatch(/day of the week/);
   });
 
   it("tidies the name and limits its length", () => {
