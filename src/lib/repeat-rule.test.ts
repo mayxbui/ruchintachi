@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
   expandOccurrences,
+  firstOccurrenceFrom,
+  nthWeekdayOfMonth,
   occurrenceOn,
   type HabitException,
   type RepeatRule,
@@ -201,5 +203,126 @@ describe("occurrenceOn", () => {
     const rule = { ...base, frequency: "weekly" as const, weekdays: [1] };
     expect(occurrenceOn(rule, "2026-10-26")).toEqual({ date: "2026-10-26", name: "Drink water" });
     expect(occurrenceOn(rule, "2026-10-27")).toBeNull();
+  });
+});
+
+describe("intervals", () => {
+  it("every 3 days", () => {
+    const rule = { ...base, interval: 3 };
+    expect(dates(rule, "2026-10-25", "2026-11-05")).toEqual([
+      "2026-10-25",
+      "2026-10-28",
+      "2026-10-31",
+      "2026-11-03",
+    ]);
+  });
+
+  it("every 2 weeks on Mon and Thu, counting weeks from the start's Monday", () => {
+    // Starts Wed 28 Oct: that week's Thu counts, the next week is skipped.
+    const rule = { ...base, startDate: "2026-10-28", frequency: "weekly" as const, weekdays: [1, 4], interval: 2 };
+    expect(dates(rule, "2026-10-01", "2026-11-30")).toEqual([
+      "2026-10-29",
+      "2026-11-09",
+      "2026-11-12",
+      "2026-11-23",
+      "2026-11-26",
+    ]);
+  });
+
+  it("every 2 weeks on a Sunday start (the week runs Mon–Sun)", () => {
+    const rule = { ...base, frequency: "weekly" as const, weekdays: [0], interval: 2 }; // Sun 25 Oct
+    expect(dates(rule, "2026-10-25", "2026-11-30")).toEqual(["2026-10-25", "2026-11-08", "2026-11-22"]);
+  });
+
+  it("every 2 months on the 31st skips the months without one", () => {
+    const rule = { ...base, startDate: "2026-01-31", frequency: "monthly" as const, interval: 2 };
+    // Jan, Mar, May, Jul, Sep, Nov: all have a 31st except Sep and Nov.
+    expect(dates(rule, "2026-01-01", "2026-12-31")).toEqual([
+      "2026-01-31",
+      "2026-03-31",
+      "2026-05-31",
+      "2026-07-31",
+    ]);
+  });
+
+  it("every 3 months across a year end", () => {
+    const rule = { ...base, startDate: "2026-11-14", frequency: "monthly" as const, interval: 3 };
+    expect(dates(rule, "2026-01-01", "2027-12-31")).toEqual([
+      "2026-11-14",
+      "2027-02-14",
+      "2027-05-14",
+      "2027-08-14",
+      "2027-11-14",
+    ]);
+  });
+
+  it("every 2 years on Feb 29 only lands on leap years", () => {
+    const rule = { ...base, startDate: "2024-02-29", frequency: "annually" as const, interval: 2 };
+    expect(dates(rule, "2024-01-01", "2033-12-31")).toEqual(["2024-02-29", "2028-02-29", "2032-02-29"]);
+  });
+
+  it("after N counts every instance, skipped invalid dates excluded (RRULE)", () => {
+    const rule = { ...base, interval: 2, endType: "after_count" as const, endCount: 3 };
+    expect(dates(rule, "2026-10-01", "2026-12-31")).toEqual(["2026-10-25", "2026-10-27", "2026-10-29"]);
+  });
+});
+
+describe("monthly on the nth weekday", () => {
+  it("finds the 1st–4th and last weekday", () => {
+    // Nov 2026 starts on a Sunday and has 5 Sundays and 4 Saturdays.
+    expect(nthWeekdayOfMonth(2026, 11, 1, 0)).toBe(1);
+    expect(nthWeekdayOfMonth(2026, 11, 4, 0)).toBe(22);
+    expect(nthWeekdayOfMonth(2026, 11, -1, 0)).toBe(29); // a 5th Sunday is the last
+    expect(nthWeekdayOfMonth(2026, 11, -1, 6)).toBe(28);
+    expect(nthWeekdayOfMonth(2028, 2, -1, 2)).toBe(29); // leap-year February
+  });
+
+  it("monthly on the last Sunday", () => {
+    const rule = { ...base, frequency: "monthly" as const, monthWeek: -1, monthWeekday: 0 }; // starts 25 Oct
+    expect(dates(rule, "2026-10-01", "2027-01-31")).toEqual([
+      "2026-10-25",
+      "2026-11-29",
+      "2026-12-27",
+      "2027-01-31",
+    ]);
+  });
+
+  it("skips the start month when its day has passed, and doesn't count it", () => {
+    // 2nd Tuesday of Oct 2026 is the 13th, before the 25 Oct start.
+    const rule = {
+      ...base,
+      frequency: "monthly" as const,
+      monthWeek: 2,
+      monthWeekday: 2,
+      endType: "after_count" as const,
+      endCount: 2,
+    };
+    expect(dates(rule, "2026-10-01", "2027-12-31")).toEqual(["2026-11-10", "2026-12-08"]);
+  });
+
+  it("every 2 months on the 1st Monday", () => {
+    const rule = { ...base, startDate: "2026-01-05", frequency: "monthly" as const, interval: 2, monthWeek: 1, monthWeekday: 1 };
+    expect(dates(rule, "2026-01-01", "2026-07-31")).toEqual(["2026-01-05", "2026-03-02", "2026-05-04", "2026-07-06"]);
+  });
+});
+
+describe("firstOccurrenceFrom", () => {
+  it("finds a day years away", () => {
+    const rule = { ...base, frequency: "annually" as const, interval: 5 };
+    expect(firstOccurrenceFrom(rule, "2026-10-26")?.date).toBe("2031-10-25");
+  });
+
+  it("skips skipped days and stops at the end", () => {
+    const rule = { ...base, endType: "on_date" as const, endDate: "2026-10-26" };
+    expect(firstOccurrenceFrom(rule, "2026-10-25", [{ date: "2026-10-25", overrideName: null }])?.date).toBe(
+      "2026-10-26",
+    );
+    expect(firstOccurrenceFrom(rule, "2026-10-27")).toBeNull();
+  });
+
+  it("reaches far-off days but stops after year 9999", () => {
+    const leap = { ...base, startDate: "2024-02-29", frequency: "annually" as const, interval: 400 };
+    expect(firstOccurrenceFrom(leap, "2025-01-01")?.date).toBe("2424-02-29");
+    expect(firstOccurrenceFrom({ ...leap, startDate: "9600-02-29" }, "9601-01-01")).toBeNull();
   });
 });

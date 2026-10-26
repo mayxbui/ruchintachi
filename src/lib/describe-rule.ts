@@ -4,6 +4,15 @@ import type { WeekStart } from "./dates";
 import type { RepeatRule } from "./repeat-rule";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const WEEKDAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+/** "the 2nd Tuesday", "the last Sunday". */
+export function nthWeekdayLabel(week: number, weekday: number): string {
+  return `the ${week === -1 ? "last" : ordinal(week)} ${WEEKDAY_NAMES[weekday]}`;
+}
+
+/** "Every month" / "Every 3 months". */
+const every = (n: number, unit: string) => (n === 1 ? `Every ${unit}` : `Every ${n} ${unit}s`);
 
 const dayMonth = new Intl.DateTimeFormat("en-GB", {
   day: "numeric",
@@ -32,31 +41,47 @@ function ordinal(n: number): string {
 
 type Describable = Pick<
   RepeatRule,
-  "startDate" | "frequency" | "weekdays" | "endType" | "endDate" | "endCount"
+  | "startDate"
+  | "frequency"
+  | "weekdays"
+  | "interval"
+  | "monthWeek"
+  | "monthWeekday"
+  | "endType"
+  | "endDate"
+  | "endCount"
 >;
 
 export function describeRule(rule: Describable, weekStart: WeekStart = "monday"): string {
   const day = Number(rule.startDate.slice(8, 10));
+  const n = Math.max(1, rule.interval ?? 1);
   let repeat: string;
   switch (rule.frequency) {
     case "none":
       return `Once, on ${formatDate(rule.startDate)}`;
     case "daily":
-      repeat = "Every day";
+      repeat = every(n, "day");
       break;
     case "weekly": {
       const days = rule.weekdays?.length ? rule.weekdays : [utc(rule.startDate).getUTCDay()];
       // List days in the user's week order.
       const key = (d: number) => (weekStart === "monday" ? (d + 6) % 7 : d);
       const sorted = [...new Set(days)].sort((a, b) => key(a) - key(b));
-      repeat = sorted.length === 7 ? "Every day" : `Every ${sorted.map((d) => WEEKDAYS[d]).join(", ")}`;
+      const list = sorted.map((d) => WEEKDAYS[d]).join(", ");
+      if (n === 1) repeat = sorted.length === 7 ? "Every day" : `Every ${list}`;
+      else repeat = `Every ${n} weeks on ${sorted.length === 7 ? "every day" : list}`;
       break;
     }
-    case "monthly":
-      repeat = `Every month on the ${ordinal(day)}`;
+    case "monthly": {
+      const on =
+        rule.monthWeek != null && rule.monthWeekday != null
+          ? nthWeekdayLabel(rule.monthWeek, rule.monthWeekday)
+          : `the ${ordinal(day)}`;
+      repeat = `${every(n, "month")} on ${on}`;
       break;
+    }
     case "annually":
-      repeat = `Every year on ${dayMonth.format(utc(rule.startDate))}`;
+      repeat = `${every(n, "year")} on ${dayMonth.format(utc(rule.startDate))}`;
       break;
   }
 

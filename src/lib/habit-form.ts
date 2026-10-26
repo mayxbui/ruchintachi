@@ -8,6 +8,9 @@ import { expandOccurrences, type EndType, type Frequency } from "./repeat-rule";
 export const HABIT_NAME_MAX = 40;
 export const END_COUNT_MAX = 999;
 export const HABIT_NOTE_MAX = 300;
+export const INTERVAL_MAX = 99;
+/** Monthly "on the nth weekday" positions: 1st–4th, or -1 for the last. */
+export const MONTH_WEEKS = [1, 2, 3, 4, -1] as const;
 
 const FREQUENCIES: Frequency[] = ["none", "daily", "weekly", "monthly", "annually"];
 const END_TYPES: EndType[] = ["never", "on_date", "after_count"];
@@ -20,6 +23,9 @@ export interface HabitFormValues {
   startDate: string;
   frequency: string;
   weekdays: string[];
+  interval: string; // "" = 1
+  monthWeek: string; // "" = monthly on the same day
+  monthWeekday: string;
   endType: string;
   endDate: string;
   endCount: string;
@@ -33,6 +39,9 @@ export interface NewHabit {
   startDate: string;
   frequency: Frequency;
   weekdays: number[] | null;
+  interval: number;
+  monthWeek: number | null;
+  monthWeekday: number | null;
   endType: EndType;
   endDate: string | null;
   endCount: number | null;
@@ -47,6 +56,9 @@ export function readHabitForm(formData: FormData): HabitFormValues {
     startDate: text("startDate"),
     frequency: text("frequency"),
     weekdays: formData.getAll("weekdays").map(String),
+    interval: text("interval"),
+    monthWeek: text("monthWeek"),
+    monthWeekday: text("monthWeekday"),
     endType: text("endType"),
     endDate: text("endDate"),
     endCount: text("endCount"),
@@ -98,6 +110,29 @@ export function validateHabit(
     if (weekdays.length === 0) return { error: "Pick at least one day of the week." };
   }
 
+  // Every N periods. A one-off has no period.
+  let interval = 1;
+  if (frequency !== "none" && values.interval !== "") {
+    interval = Number(values.interval);
+    if (!Number.isInteger(interval) || interval < 1 || interval > INTERVAL_MAX) {
+      return { error: `Repeat every 1–${INTERVAL_MAX}.` };
+    }
+  }
+
+  // Monthly on the nth weekday, or (both null) on the same day each month.
+  let monthWeek: number | null = null;
+  let monthWeekday: number | null = null;
+  if (frequency === "monthly" && values.monthWeek !== "") {
+    monthWeek = Number(values.monthWeek);
+    monthWeekday = Number(values.monthWeekday);
+    if (!(MONTH_WEEKS as readonly number[]).includes(monthWeek)) {
+      return { error: "Pick which week of the month." };
+    }
+    if (!Number.isInteger(monthWeekday) || monthWeekday < 0 || monthWeekday > 6) {
+      return { error: "Pick a day of the week." };
+    }
+  }
+
   // A one-off habit has nothing to end.
   const endType = frequency === "none" ? "never" : (values.endType as EndType);
   if (!END_TYPES.includes(endType)) return { error: "Pick when it ends." };
@@ -124,6 +159,9 @@ export function validateHabit(
     startDate: values.startDate,
     frequency,
     weekdays,
+    interval,
+    monthWeek,
+    monthWeekday,
     endType,
     endDate,
     endCount,

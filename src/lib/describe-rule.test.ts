@@ -44,6 +44,24 @@ describe("describeRule", () => {
     );
   });
 
+  it("custom: every N periods", () => {
+    expect(describeRule(rule({ interval: 3 }))).toBe("Every 3 days");
+    expect(describeRule(rule({ frequency: "weekly", weekdays: [4, 1], interval: 2 }))).toBe(
+      "Every 2 weeks on Mon, Thu",
+    );
+    expect(describeRule(rule({ frequency: "monthly", interval: 2 }))).toBe("Every 2 months on the 25th");
+    expect(describeRule(rule({ frequency: "annually", interval: 2 }))).toBe("Every 2 years on 25 Oct");
+  });
+
+  it("custom: monthly on the nth weekday", () => {
+    expect(describeRule(rule({ frequency: "monthly", monthWeek: -1, monthWeekday: 0 }))).toBe(
+      "Every month on the last Sunday",
+    );
+    expect(describeRule(rule({ frequency: "monthly", interval: 3, monthWeek: 2, monthWeekday: 2 }))).toBe(
+      "Every 3 months on the 2nd Tuesday",
+    );
+  });
+
   it("adds the end condition", () => {
     expect(describeRule(rule({ endType: "on_date", endDate: "2026-12-01" }))).toBe(
       "Every day · until 1 Dec 2026",

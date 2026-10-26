@@ -107,3 +107,24 @@ describe("sameSeries", () => {
     expect(sameSeries(habit, { ...habit, endCount: 3 })).toBe(false);
   });
 });
+
+describe("custom repeats", () => {
+  it("counts what's left of an every-N series", () => {
+    // Every 2 days from 20 Oct, 5 times: 20, 22, 24, 26, 28.
+    const rule = { ...daily, interval: 2, endType: "after_count" as const, endCount: 5 };
+    expect(remainingCount(rule, "2026-10-25")).toBe(2);
+    expect(seriesFrom(rule, "2026-10-26")).toMatchObject({ startDate: "2026-10-26", interval: 2, endCount: 2 });
+  });
+
+  it("finds the next day of a monthly nth-weekday series", () => {
+    const lastSunday = { ...daily, frequency: "monthly" as const, monthWeek: -1, monthWeekday: 0 };
+    expect(nextOccurrence(lastSunday, [], "2026-10-26")).toBe("2026-11-29");
+  });
+
+  it("treats a changed interval or weekday position as a different series", () => {
+    const base = { ...daily, interval: 2, monthWeek: null, monthWeekday: null };
+    expect(sameSeries(base, { ...base })).toBe(true);
+    expect(sameSeries(base, { ...base, interval: 3 })).toBe(false);
+    expect(sameSeries(base, { ...base, monthWeek: -1 })).toBe(false);
+  });
+});

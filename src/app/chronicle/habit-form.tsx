@@ -13,19 +13,30 @@ import { FormMessage, SubmitButton } from "@/components/form";
 import { IconPicker } from "@/components/icon-picker";
 import type { WeekStart } from "@/lib/dates";
 import { describeRule, formatDate } from "@/lib/describe-rule";
-import { END_COUNT_MAX, HABIT_NAME_MAX, HABIT_NOTE_MAX } from "@/lib/habit-form";
+import { END_COUNT_MAX, HABIT_NAME_MAX, HABIT_NOTE_MAX, INTERVAL_MAX } from "@/lib/habit-form";
 import { HABIT_ICONS, type HabitIcon } from "@/lib/habit-icons";
 import { LIST_NAME_MAX, NEW_LIST } from "@/lib/task-lists";
 import type { EndType, Frequency } from "@/lib/repeat-rule";
 import type { HabitFormState } from "./actions";
 
-const FREQUENCIES: { value: Frequency; label: string }[] = [
+/** The Repeats menu: the presets, or Custom (every N, nth weekday). */
+type RepeatChoice = Frequency | "custom";
+type Unit = Exclude<Frequency, "none">;
+
+const REPEATS: { value: RepeatChoice; label: string }[] = [
   { value: "none", label: "Just once" },
   { value: "daily", label: "Daily" },
   { value: "weekly", label: "Weekly" },
   { value: "monthly", label: "Monthly" },
   { value: "annually", label: "Yearly" },
+  { value: "custom", label: "Custom" },
 ];
+
+const UNIT_NAMES: Record<Unit, string> = { daily: "day", weekly: "week", monthly: "month", annually: "year" };
+
+// Monthly on: the same day ("day"), or the 1st–4th / last weekday.
+type MonthPosition = "day" | "1" | "2" | "3" | "4" | "-1";
+const WEEKDAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 const END_TYPES: { value: EndType; label: string }[] = [
   { value: "never", label: "Never" },
@@ -63,6 +74,9 @@ export interface HabitFormInitial {
   startDate: string;
   frequency: Frequency;
   weekdays: number[] | null;
+  interval: number;
+  monthWeek: number | null;
+  monthWeekday: number | null;
   endType: EndType;
   endDate: string | null;
   endCount: number | null;
@@ -103,7 +117,13 @@ export function HabitForm({
   const [name, setName] = useState(initial?.name ?? "");
   const [icon, setIcon] = useState<HabitIcon | null>(initial?.icon ?? null);
   const [startDate, setStartDate] = useState(initial?.startDate ?? today);
-  const [frequency, setFrequency] = useState<Frequency>(initial?.frequency ?? "daily");
+  // A saved habit opens on Custom when a preset can't show it.
+  const isCustom = !!initial && (initial.interval > 1 || initial.monthWeek != null);
+  const [repeat, setRepeat] = useState<RepeatChoice>(isCustom ? "custom" : (initial?.frequency ?? "daily"));
+  const [unit, setUnit] = useState<Unit>(
+    initial && initial.frequency !== "none" ? initial.frequency : "weekly",
+  );
+  const [everyText, setEveryText] = useState(String(initial?.interval ?? 1));
   const [weekdays, setWeekdays] = useState<number[]>(initial?.weekdays ?? []);
   const [endType, setEndType] = useState<EndType>(initial?.endType ?? "never");
   const [endDate, setEndDate] = useState(initial?.endDate ?? "");
@@ -114,11 +134,39 @@ export function HabitForm({
 
   const weekOrder = weekStart === "monday" ? [1, 2, 3, 4, 5, 6, 0] : [0, 1, 2, 3, 4, 5, 6];
   const startWeekday = new Date(`${startDate || today}T00:00:00Z`).getUTCDay();
+  const startDay = Number((startDate || today).slice(8, 10));
 
-  function chooseFrequency(value: Frequency) {
-    setFrequency(value);
-    // Weekly starts with the start date's weekday ticked.
-    if (value === "weekly" && weekdays.length === 0) setWeekdays([startWeekday]);
+  // Monthly on the nth weekday; by default the start date's own (e.g. "4th Sunday").
+  const [monthPosition, setMonthPosition] = useState<MonthPosition>(
+    initial?.monthWeek != null ? (String(initial.monthWeek) as MonthPosition) : "day",
+  );
+  const [monthWeekday, setMonthWeekday] = useState(initial?.monthWeekday ?? startWeekday);
+
+  // What gets saved: Custom posts its unit and every-N; presets are every 1.
+  const custom = repeat === "custom";
+  const frequency: Frequency = custom ? unit : repeat;
+  const every = custom ? Number(everyText) || 1 : 1;
+  const byWeekday = custom && unit === "monthly" && monthPosition !== "day";
+  const plural = every === 1 ? "" : "s";
+
+  // Weekly starts with the start date's weekday ticked.
+  function startWeekly(next: Frequency) {
+    if (next === "weekly" && weekdays.length === 0) setWeekdays([startWeekday]);
+  }
+
+  function chooseRepeat(value: RepeatChoice) {
+    setRepeat(value);
+    startWeekly(value === "custom" ? unit : value);
+  }
+
+  function chooseUnit(value: Unit) {
+    setUnit(value);
+    startWeekly(value);
+  }
+
+  function chooseMonthPosition(value: MonthPosition) {
+    setMonthPosition(value);
+    if (value !== "day") setMonthWeekday(startWeekday);
   }
 
   function toggleWeekday(day: number) {
@@ -132,6 +180,9 @@ export function HabitForm({
         startDate,
         frequency,
         weekdays,
+        interval: every,
+        monthWeek: byWeekday ? Number(monthPosition) : null,
+        monthWeekday: byWeekday ? monthWeekday : null,
         endType,
         endDate: endDate || null,
         endCount: Number(endCount) || null,
@@ -180,14 +231,69 @@ export function HabitForm({
             weekStart={weekStart}
           />
         )}
-        <Dropdown
-          label="Repeats"
-          name="frequency"
-          value={frequency}
-          options={FREQUENCIES}
-          onChange={chooseFrequency}
-        />
+        <Dropdown label="Repeats" name="repeat" value={repeat} options={REPEATS} onChange={chooseRepeat} />
       </div>
+      <input type="hidden" name="frequency" value={frequency} />
+      <input type="hidden" name="interval" value={every} />
+      <input type="hidden" name="monthWeek" value={byWeekday ? monthPosition : ""} />
+      <input type="hidden" name="monthWeekday" value={byWeekday ? monthWeekday : ""} />
+
+      {custom && (
+        <div className="grid grid-cols-2 gap-2 sm:gap-3">
+          <label className="block min-w-0">
+            <span className="mb-1 block font-bold">Every</span>
+            <input
+              type="number"
+              value={everyText}
+              min={1}
+              max={INTERVAL_MAX}
+              step={1}
+              inputMode="numeric"
+              onChange={(e) => setEveryText(e.target.value)}
+              required
+              className={pairedClass}
+            />
+          </label>
+          <Dropdown
+            label="Unit"
+            name="unit"
+            value={unit}
+            options={(Object.keys(UNIT_NAMES) as Unit[]).map((u) => ({
+              value: u,
+              label: `${UNIT_NAMES[u]}${plural}`,
+            }))}
+            onChange={chooseUnit}
+          />
+        </div>
+      )}
+
+      {custom && unit === "monthly" && (
+        <div className="grid grid-cols-2 gap-2 sm:gap-3">
+          <Dropdown
+            label="On"
+            name="monthPosition"
+            value={monthPosition}
+            options={[
+              { value: "day", label: `Day ${startDay}` },
+              { value: "1", label: "The 1st" },
+              { value: "2", label: "The 2nd" },
+              { value: "3", label: "The 3rd" },
+              { value: "4", label: "The 4th" },
+              { value: "-1", label: "The last" },
+            ]}
+            onChange={chooseMonthPosition}
+          />
+          {byWeekday && (
+            <Dropdown
+              label="Weekday"
+              name="monthWeekdayPick"
+              value={String(monthWeekday)}
+              options={WEEKDAY_NAMES.map((label, i) => ({ value: String(i), label }))}
+              onChange={(v) => setMonthWeekday(Number(v))}
+            />
+          )}
+        </div>
+      )}
 
       {frequency === "weekly" && (
         <fieldset>
