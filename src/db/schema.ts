@@ -27,6 +27,13 @@ export const users = sqliteTable("users", {
   weekStart: text("week_start", { enum: ["monday", "sunday"] })
     .notNull()
     .default("monday"),
+  // How My Chronicle orders tasks (see src/lib/sort-habits.ts).
+  taskSort: text("task_sort", {
+    enum: ["next", "name-asc", "name-desc", "newest", "oldest", "repeat", "custom"],
+  })
+    .notNull()
+    .default("next"),
+  doneLast: integer("done_last", { mode: "boolean" }).notNull().default(true),
   createdAt: createdAt(),
 });
 
@@ -116,6 +123,8 @@ export const habits = sqliteTable(
     // At most one list. Deleting a list unlists its tasks (done in code:
     // SQLite's ADD COLUMN migration can't carry ON DELETE SET NULL).
     listId: text("list_id").references(() => taskLists.id),
+    // The user's own order (the Custom sort). Ties fall back to created date.
+    position: integer("position").notNull().default(0),
     createdAt: createdAt(),
   },
   (t) => [index("habits_user_idx").on(t.userId)],

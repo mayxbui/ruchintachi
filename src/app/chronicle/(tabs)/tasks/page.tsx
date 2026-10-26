@@ -1,4 +1,3 @@
-import { IconPencil } from "@tabler/icons-react";
 import Link from "next/link";
 import { db } from "@/db";
 import { listExceptions } from "@/db/completions";
@@ -9,6 +8,7 @@ import { todayIn } from "@/lib/dates";
 import { describeRule } from "@/lib/describe-rule";
 import { nextOccurrence } from "@/lib/habit-edit";
 import { iconEmoji } from "@/lib/habit-icons";
+import { sortHabits } from "@/lib/sort-habits";
 import {
   filterParam,
   filterTasks,
@@ -17,8 +17,9 @@ import {
   UP_NEXT_DAYS,
   type TaskFilter,
 } from "@/lib/task-lists";
-import { TaskText } from "../../task-text";
+import { SortMenu } from "../../sort-menu";
 import { ListMenu, NewList } from "./list-controls";
+import { TaskRows } from "./task-rows";
 
 const tasksHref = (filter: TaskFilter) => {
   const param = filterParam(filter);
@@ -63,7 +64,7 @@ export default async function TasksPage({
     );
     return next ? [{ ...habit, next }] : [];
   });
-  const shown = filterTasks(current, filter, today);
+  const shown = filterTasks(sortHabits(current, user.taskSort), filter, today);
   const param = filterParam(filter);
 
   const empty =
@@ -105,43 +106,28 @@ export default async function TasksPage({
         />
       )}
 
+      <div className="mb-3 flex justify-end">
+        <SortMenu sort={user.taskSort} doneLast={user.doneLast} />
+      </div>
+
       {shown.length === 0 ? (
         <p className="text-caption">{empty}</p>
       ) : (
-        <ul className="space-y-5">
-          {shown.map((habit) => (
-            <li
-              key={habit.id}
-              className="flex items-start gap-3 rounded-2xl bg-white px-4 py-3 shadow-pop"
-            >
-              <span className="w-8 shrink-0 text-center text-2xl" aria-hidden>
-                {iconEmoji(habit.icon) ?? "•"}
-              </span>
-              <div className="min-w-0 flex-1">
-                <TaskText habitId={habit.id} name={habit.name} note={habit.note} scope="series">
-                  <span className="block text-caption text-sm">
-                    {filter.kind === "next"
-                      ? nextDateLabel(habit.next, today)
-                      : describeRule(habit, user.weekStart)}
-                    {/* Which list it's in, unless we're looking at that list. */}
-                    {habit.listId && !activeList && (
-                      <span className="ml-2 inline-block rounded-full bg-sky/15 px-2 font-bold text-sky">
-                        {listName.get(habit.listId)}
-                      </span>
-                    )}
-                  </span>
-                </TaskText>
-              </div>
-              <Link
-                href={`/chronicle/${habit.id}/edit?date=${habit.next}&from=tasks${param ? `&list=${param}` : ""}`}
-                aria-label={`Edit ${habit.name}`}
-                className="shrink-0 rounded-full p-2 text-caption transition hover:bg-sand hover:text-ink"
-              >
-                <IconPencil className="size-5" stroke={2.25} />
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <TaskRows
+          // Remount on a new filter or sort, so a drag never mixes views.
+          key={`${param ?? "next"}-${user.taskSort}`}
+          reorderable={user.taskSort === "custom"}
+          rows={shown.map((habit) => ({
+            id: habit.id,
+            name: habit.name,
+            note: habit.note,
+            emoji: iconEmoji(habit.icon) ?? "•",
+            subtitle:
+              filter.kind === "next" ? nextDateLabel(habit.next, today) : describeRule(habit, user.weekStart),
+            listTag: habit.listId && !activeList ? (listName.get(habit.listId) ?? null) : null,
+            editHref: `/chronicle/${habit.id}/edit?date=${habit.next}&from=tasks${param ? `&list=${param}` : ""}`,
+          }))}
+        />
       )}
     </section>
   );

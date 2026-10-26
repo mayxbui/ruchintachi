@@ -29,6 +29,13 @@
       "when": 1792979068700,
       "tag": "0003_task_lists",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1792983162865,
+      "tag": "0004_sort_and_order",
+      "breakpoints": true
     }
   ]
 }

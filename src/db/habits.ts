@@ -1,12 +1,20 @@
-import { and, asc, eq, gt, gte } from "drizzle-orm";
+import { and, asc, eq, gt, gte, max } from "drizzle-orm";
 import type { NewHabit } from "@/lib/habit-form";
+import { placeInSlots } from "@/lib/sort-habits";
 import type { Db } from "./accounts";
 import { completions, habitExceptions, habits } from "./schema";
 
-/** Stores a validated habit for `userId`. Returns its id. */
+/** Stores a validated habit for `userId`, at the end of their custom order. Returns its id. */
 export function createHabit(db: Db, userId: string, habit: NewHabit): string {
   const id = crypto.randomUUID();
-  db.insert(habits).values({ id, userId, ...habit }).run();
+  const last = db
+    .select({ position: max(habits.position) })
+    .from(habits)
+    .where(eq(habits.userId, userId))
+    .get();
+  db.insert(habits)
+    .values({ id, userId, position: (last?.position ?? -1) + 1, ...habit })
+    .run();
   return id;
 }
 
@@ -22,6 +30,8 @@ const habitFields = {
   endDate: habits.endDate,
   endCount: habits.endCount,
   listId: habits.listId,
+  position: habits.position,
+  createdAt: habits.createdAt,
 };
 
 /** The user's own habits, oldest first. Never returns another user's rows. */
@@ -91,7 +101,7 @@ export function updateHabit(db: Db, userId: string, habitId: string, habit: NewH
 /**
  * "This day and future" edit of a series with past days: ends the old
  * series on `oldEndDate` and starts `next` (which starts the day after) as
- * a new habit linked to it, in the same list. Exceptions and completions
+ * a new habit linked to it, in the same list and custom-order spot. Exceptions and completions
  * from the new start on move to the new habit. Returns the new habit's id.
  */
 export function splitHabit(
@@ -110,7 +120,14 @@ export function splitHabit(
       .where(and(eq(habits.id, habitId), eq(habits.userId, userId)))
       .run();
     tx.insert(habits)
-      .values({ id: newId, userId, previousHabitId: habitId, listId: old.listId, ...next })
+      .values({
+        id: newId,
+        userId,
+        previousHabitId: habitId,
+        listId: old.listId,
+        position: old.position,
+        ...next,
+      })
       .run();
     tx.update(habitExceptions)
       .set({ habitId: newId })
@@ -153,6 +170,30 @@ export function deleteHabit(db: Db, userId: string, habitId: string): void {
   db.delete(habits)
     .where(and(eq(habits.id, habitId), eq(habits.userId, userId)))
     .run();
+}
+
+/**
+ * Saves a custom order: `orderedIds` (some or all of the user's habits) take
+ * the slots they held in the current custom order, in the given order, so
+ * reordering one list leaves the others in place. False, and nothing saved,
+ * if any id isn't the user's.
+ */
+export function reorderHabits(db: Db, userId: string, orderedIds: string[]): boolean {
+  return db.transaction((tx) => {
+    const current = tx
+      .select({ id: habits.id })
+      .from(habits)
+      .where(eq(habits.userId, userId))
+      .orderBy(asc(habits.position), asc(habits.createdAt), asc(habits.id))
+      .all()
+      .map((h) => h.id);
+    const next = placeInSlots(current, orderedIds);
+    if (!next) return false;
+    next.forEach((id, position) => {
+      tx.update(habits).set({ position }).where(eq(habits.id, id)).run();
+    });
+    return true;
+  });
 }
 
 /** Removes the "only this day" change on `date`, so the day follows the series again. */
