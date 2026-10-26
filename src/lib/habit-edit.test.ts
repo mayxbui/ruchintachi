@@ -5,6 +5,8 @@ import {
   planFutureDelete,
   planFutureEdit,
   remainingCount,
+  sameSeries,
+  seriesFrom,
 } from "./habit-edit";
 import type { RepeatRule } from "./repeat-rule";
 
@@ -72,5 +74,36 @@ describe("planFutureEdit / planFutureDelete", () => {
   it("otherwise ends the old series the day before", () => {
     expect(planFutureEdit(daily, "2026-10-26")).toEqual({ kind: "split", oldEndDate: "2026-10-25" });
     expect(planFutureDelete(daily, "2026-11-01")).toEqual({ kind: "end", endDate: "2026-10-31" });
+  });
+});
+
+describe("seriesFrom", () => {
+  it("starts a repeating series on the day, with what's left of a count", () => {
+    const counted = { ...daily, endType: "after_count" as const, endCount: 10 };
+    expect(seriesFrom(counted, "2026-10-23")).toEqual({
+      ...counted,
+      startDate: "2026-10-23",
+      endCount: 7,
+    });
+    expect(seriesFrom(daily, "2026-10-23")).toMatchObject({ startDate: "2026-10-23" });
+  });
+
+  it("leaves a one-off as it is", () => {
+    const once = { ...daily, frequency: "none" as const };
+    expect(seriesFrom(once, "2026-10-20")).toBe(once);
+  });
+});
+
+describe("sameSeries", () => {
+  const habit = { ...mondays, name: "Run", icon: null, note: null, weekdays: [1, 3] };
+  it("ignores missing-vs-null and compares weekdays by value", () => {
+    expect(sameSeries({ ...habit, weekdays: [1, 3] }, { ...habit, weekdays: [1, 3] })).toBe(true);
+    expect(sameSeries({ ...daily, weekdays: null }, { ...daily })).toBe(true);
+  });
+
+  it("spots any changed field", () => {
+    expect(sameSeries(habit, { ...habit, weekdays: [1] })).toBe(false);
+    expect(sameSeries(habit, { ...habit, note: "Early" })).toBe(false);
+    expect(sameSeries(habit, { ...habit, endCount: 3 })).toBe(false);
   });
 });

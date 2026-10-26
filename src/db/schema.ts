@@ -75,6 +75,21 @@ export const miis = sqliteTable("miis", {
   mood: integer("mood").notNull().default(50), // 0–100; 50 = Content
 });
 
+// The user's own named task lists (e.g. Health, Study). Private to the owner.
+export const taskLists = sqliteTable(
+  "task_lists",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    position: integer("position").notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [index("task_lists_user_idx").on(t.userId)],
+);
+
 // A habit series. "This day and future" edits end one series and start
 // a new one linked by previousHabitId.
 export const habits = sqliteTable(
@@ -98,6 +113,9 @@ export const habits = sqliteTable(
     endDate: text("end_date"),
     endCount: integer("end_count"),
     previousHabitId: text("previous_habit_id"),
+    // At most one list. Deleting a list unlists its tasks (done in code:
+    // SQLite's ADD COLUMN migration can't carry ON DELETE SET NULL).
+    listId: text("list_id").references(() => taskLists.id),
     createdAt: createdAt(),
   },
   (t) => [index("habits_user_idx").on(t.userId)],

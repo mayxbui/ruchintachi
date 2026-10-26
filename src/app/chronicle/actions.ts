@@ -14,19 +14,35 @@ import {
   splitHabit,
   updateHabit,
 } from "@/db/habits";
+import { setHabitList } from "@/db/task-lists";
 import { requireUser } from "@/lib/auth/session";
 import { todayIn } from "@/lib/dates";
-import { isEditableDay, planFutureDelete, planFutureEdit, type EditScope } from "@/lib/habit-edit";
+import {
+  isEditableDay,
+  planFutureDelete,
+  planFutureEdit,
+  sameSeries,
+  seriesFrom,
+  type EditScope,
+} from "@/lib/habit-edit";
 import { HABIT_NAME_MAX, readHabitForm, validateHabit } from "@/lib/habit-form";
 import { occurrenceOn } from "@/lib/repeat-rule";
 
 export type HabitFormState = { error?: string };
 
-/** Where edit/delete send the user afterwards: the tab they came from. */
-export type ReturnTo = "/chronicle" | "/chronicle/tasks";
-const backTo = (path: string): ReturnTo => (path === "/chronicle/tasks" ? path : "/chronicle");
+/**
+ * Where create/edit/delete send the user afterwards: the tab (and Tasks
+ * filter) they came from. Anything else goes to Today.
+ */
+export type ReturnTo = string;
+const backTo = (path: string): ReturnTo =>
+  /^\/chronicle(\/tasks(\?list=[\w-]+)?)?$/.test(path) ? path : "/chronicle";
+
+/** The form's list choice; "" is no list. Ownership is checked when it's saved. */
+const readListId = (formData: FormData) => String(formData.get("listId") ?? "") || null;
 
 export async function createHabitAction(
+  returnTo: ReturnTo,
   _prev: HabitFormState,
   formData: FormData,
 ): Promise<HabitFormState> {
@@ -34,9 +50,11 @@ export async function createHabitAction(
   const result = validateHabit(readHabitForm(formData), todayIn(user.timeZone));
   if ("error" in result) return { error: result.error };
 
-  createHabit(db, user.id, result.habit);
+  const id = createHabit(db, user.id, result.habit);
+  const listId = readListId(formData);
+  if (listId) setHabitList(db, user.id, id, listId);
   revalidatePath("/chronicle", "layout");
-  redirect("/chronicle");
+  redirect(backTo(returnTo));
 }
 
 /**
@@ -108,12 +126,17 @@ export async function editHabitAction(
     const result = validateHabit(values, today);
     if ("error" in result) return { error: result.error };
 
-    const plan = planFutureEdit(habit, result.habit.startDate);
-    if (!repeating || plan.kind === "replace") {
-      updateHabit(db, user.id, habitId, result.habit);
-    } else {
-      splitHabit(db, user.id, habitId, plan.oldEndDate, result.habit);
+    // Only the list changed (or nothing): no need to touch, or split, the series.
+    let savedId: string | null = habitId;
+    if (!sameSeries(result.habit, seriesFrom(habit, date))) {
+      const plan = planFutureEdit(habit, result.habit.startDate);
+      if (!repeating || plan.kind === "replace") {
+        updateHabit(db, user.id, habitId, result.habit);
+      } else {
+        savedId = splitHabit(db, user.id, habitId, plan.oldEndDate, result.habit);
+      }
     }
+    if (savedId) setHabitList(db, user.id, savedId, readListId(formData));
   }
 
   revalidatePath("/chronicle", "layout");

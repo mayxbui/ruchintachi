@@ -30,6 +30,7 @@ export function EditHabit({
   today,
   weekStart,
   initial,
+  lists,
   editDay,
   editFuture,
   deleteDay,
@@ -42,6 +43,7 @@ export function EditHabit({
   today: string;
   weekStart: WeekStart;
   initial: HabitFormInitial;
+  lists: { id: string; name: string }[];
   editDay: FormAction;
   editFuture: FormAction;
   deleteDay: DeleteAction;
@@ -93,6 +95,7 @@ export function EditHabit({
           weekStart={weekStart}
           action={editFuture}
           initial={initial}
+          lists={lists}
           lockStartDate={repeating}
           cancelHref={returnTo}
           submitLabel="Save"
