@@ -16,6 +16,7 @@ export interface DayItem {
   name: string; // the day's name, after any "only this day" rename
   icon: string | null;
   note: string | null;
+  repeats: boolean; // a repeating habit, not a one-off task; only these count for the daily gift
   done: boolean;
 }
 
@@ -39,6 +40,7 @@ export function itemsOn(
       name: occurrence.name,
       icon: habit.icon,
       note: habit.note ?? null,
+      repeats: habit.frequency !== "none",
       done: completedHabitIds.has(habit.id),
     });
   }

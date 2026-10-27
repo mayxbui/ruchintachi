@@ -43,13 +43,13 @@ A habit tracker inspired by **Tomodachi Life: Living the Dream**. Create a Mii, 
 - You can only check off **today**. No backfilling past days, no vacation mode.
 
 ### 3. Progress tracking
-- **Calendar view** — every day you finished all your tasks shows the gift you got that day, so keeping a habit fills the calendar with items.
+- **Calendar view** — every day you finished all your habits shows the gift you got that day, so keeping a habit fills the calendar with items.
 - **Bar view** — completion rate per habit and per week.
 - **Mood line** — a line chart of your Mii's happiness over time.
 
 ### 4. Daily gift
-- Finish **every task scheduled today** → your Mii gives you one random gift (custom item, food, goods/prezzie, treasure or object).
-- **A day with no tasks gives no gift**, and doesn't count as a miss either.
+- Finish **every habit scheduled today** (repeating tasks) → your Mii gives you one random gift (custom item, food, goods/prezzie, treasure or object). One-off tasks don't count towards the gift.
+- **A day with no habits gives no gift**, and doesn't count as a miss either.
 - **Rarity is based on the item's in-game price**: the more expensive the item, the less likely it drops.
 - **Duplicates are allowed** and counted (the inventory shows ×2, ×3, …).
 

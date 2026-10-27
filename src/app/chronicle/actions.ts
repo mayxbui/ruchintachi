@@ -112,7 +112,8 @@ export async function toggleCompletionAction(
 export type DailyGift = Pick<Item, "id" | "name" | "category" | "sprite">;
 
 /**
- * Awards today's gift once every task scheduled today is done. Returns the
+ * Awards today's gift once every repeating habit scheduled today is done
+ * (one-off tasks don't count; see earnsDailyGift). Returns the
  * gift only when this call awarded it; unticking later never takes it back,
  * and ticking again never rolls a second one.
  */
