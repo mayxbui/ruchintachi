@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createAccount } from "./accounts";
-import { awardDailyGift, dailyGiftOn } from "./gifts";
+import { awardDailyGift, dailyGiftOn, dailyGiftsBetween } from "./gifts";
 import { listInventory } from "./inventory";
 import * as schema from "./schema";
 import { createTestDb } from "./test-db";
@@ -62,5 +62,23 @@ describe("awardDailyGift", () => {
     expect(dailyGiftOn(db, kai, "2026-10-25")).toBeUndefined();
     expect(listInventory(db, may)).toEqual([{ itemId: "abokado", quantity: 1 }]);
     expect(listInventory(db, kai)).toEqual([{ itemId: "bacon", quantity: 1 }]);
+  });
+});
+
+describe("dailyGiftsBetween", () => {
+  it("lists only the user's gifts inside the range, oldest first", () => {
+    const db = createTestDb();
+    const may = addUser(db, "may");
+    const kai = addUser(db, "kai");
+    awardDailyGift(db, may, "2026-11-01", "bacon");
+    awardDailyGift(db, may, "2026-10-31", "abokado");
+    awardDailyGift(db, may, "2026-10-01", "bacon");
+    awardDailyGift(db, may, "2026-09-30", "bacon");
+    awardDailyGift(db, kai, "2026-10-15", "bacon");
+
+    expect(dailyGiftsBetween(db, may, "2026-10-01", "2026-10-31")).toEqual([
+      { date: "2026-10-01", itemId: "bacon" },
+      { date: "2026-10-31", itemId: "abokado" },
+    ]);
   });
 });
