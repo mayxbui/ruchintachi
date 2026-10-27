@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { createAccount } from "./accounts";
 import { awardDailyGift, dailyGiftOn } from "./gifts";
+import { listInventory } from "./inventory";
 import * as schema from "./schema";
 import { createTestDb } from "./test-db";
 
@@ -59,5 +60,7 @@ describe("awardDailyGift", () => {
     expect(dailyGiftOn(db, may, "2026-10-26")).toBe("abokado");
     expect(dailyGiftOn(db, kai, "2026-10-26")).toBe("bacon");
     expect(dailyGiftOn(db, kai, "2026-10-25")).toBeUndefined();
+    expect(listInventory(db, may)).toEqual([{ itemId: "abokado", quantity: 1 }]);
+    expect(listInventory(db, kai)).toEqual([{ itemId: "bacon", quantity: 1 }]);
   });
 });
