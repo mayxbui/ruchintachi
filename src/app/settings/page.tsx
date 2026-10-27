@@ -21,10 +21,6 @@ const faq = [
     a: "Tick every task scheduled for today and your Mii gives you a random gift. A day with no tasks gives no gift.",
   },
   {
-    q: "What's a perfect week?",
-    a: "Every task scheduled during the week is ticked. Days with no tasks don't count against you. A perfect week lets you gift your Mii a clothing item.",
-  },
-  {
     q: "What can my friends see?",
     a: "Only your Mii: its look, its clothes and its item collection. Your habits, chronicle and calendar stay private.",
   },

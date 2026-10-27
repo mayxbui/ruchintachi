@@ -1,9 +1,13 @@
+import { existsSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { clothingSlots, getItem, itemCategories, items, itemsIn } from "./items";
 
 describe("item catalogue", () => {
-  it("has items in every category", () => {
-    for (const category of itemCategories) expect(itemsIn(category).length, category).toBeGreaterThan(0);
+  it("has items in every category (clothing is paused, #29)", () => {
+    for (const category of itemCategories) {
+      if (category === "clothing") expect(itemsIn(category)).toEqual([]);
+      else expect(itemsIn(category).length, category).toBeGreaterThan(0);
+    }
   });
 
   it("has unique, url-safe ids", () => {
@@ -26,8 +30,13 @@ describe("item catalogue", () => {
     }
   });
 
-  it("points each sprite at public/items/<id>.png", () => {
-    for (const item of items) expect(item.sprite).toBe(`/items/${item.id}.png`);
+  it("gives each item its own icon, with a sprite at public/items/<icon>.webp", () => {
+    expect(new Set(items.map((i) => i.icon)).size).toBe(items.length);
+    for (const item of items) {
+      expect(item.icon, item.id).toMatch(/^[A-Za-z0-9_]+$/);
+      expect(item.sprite, item.id).toBe(`/items/${item.icon}.webp`);
+      expect(existsSync(`public${item.sprite}`), `${item.sprite} (run pnpm sprites:build)`).toBe(true);
+    }
   });
 
   it("looks items up by id", () => {

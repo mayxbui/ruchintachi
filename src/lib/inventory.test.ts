@@ -3,10 +3,10 @@ import { groupInventory, inventoryTotals } from "./inventory";
 import type { Item } from "./items";
 
 const catalogue: Item[] = [
-  { id: "bacon", name: "bacon", category: "food", price: 3.8, sprite: "/items/bacon.png" },
-  { id: "avocado", name: "avocado", category: "food", price: 1, sprite: "/items/avocado.png" },
-  { id: "cap", name: "basic cap", category: "clothing", slot: "headwear", price: 10, sprite: "/items/cap.png" },
-  { id: "album", name: "pop album", category: "treasure", price: 25, sprite: "/items/album.png" },
+  { id: "bacon", name: "bacon", category: "food", price: 3.8, icon: "bacon", sprite: "/items/bacon.webp" },
+  { id: "avocado", name: "avocado", category: "food", price: 1, icon: "avocado", sprite: "/items/avocado.webp" },
+  { id: "cap", name: "basic cap", category: "clothing", slot: "headwear", price: 10, icon: "cap", sprite: "/items/cap.webp" },
+  { id: "album", name: "pop album", category: "treasure", price: 25, icon: "album", sprite: "/items/album.webp" },
 ];
 const lookup = (id: string) => catalogue.find((i) => i.id === id);
 

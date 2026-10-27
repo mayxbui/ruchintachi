@@ -1,4 +1,4 @@
-import { IconGift } from "@tabler/icons-react";
+import Image from "next/image";
 import Link from "next/link";
 import { PageCard } from "@/components/page-card";
 import { MoodBubble, moods } from "@/components/mood-bubble";
@@ -16,7 +16,8 @@ export default async function MiiPage() {
           href="/mii/inventory"
           className="flex items-center gap-2 rounded-full bg-tangerine px-4 py-2 font-bold text-white shadow-pop transition hover:-translate-y-0.5"
         >
-          <IconGift aria-hidden className="size-5" stroke={2.25} />
+          {/* The game's paper bag icon; Next serves a resized copy. */}
+          <Image src="/ItemPaperbag.png" alt="" width={28} height={28} className="size-7" />
           My items
         </Link>
       </div>

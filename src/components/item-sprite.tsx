@@ -48,7 +48,7 @@ export function ItemSprite({
       alt={item.name}
       width={size}
       height={size}
-      // Small pixel sprites: serve as-is and keep the edges crisp.
+      // Already shrunk to 128px WebP by `pnpm sprites:build`; serve as-is.
       unoptimized
       onError={() => setMissing(true)}
       className={`object-contain [image-rendering:pixelated] ${fill ? "size-full" : ""} ${className}`}

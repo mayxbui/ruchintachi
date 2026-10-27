@@ -3,7 +3,7 @@
 
 import { items as catalogue, type Item, type ItemCategory } from "./items";
 
-/** Clothing is kept for the perfect-week reward. */
+/** Clothing is paused until the end-of-week reward is decided (#29). */
 export const DAILY_GIFT_CATEGORIES: readonly ItemCategory[] = ["food", "goods", "treasure"];
 
 /**
