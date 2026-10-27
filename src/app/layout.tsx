@@ -99,7 +99,7 @@ function WaveFooter() {
           className="stroke-tangerine-deep"
         />
       </svg>
-      <div className="bg-tangerine px-4 pt-6 pb-6">
+      <div className="bg-tangerine px-4 pb-6">
         <p className="mx-auto max-w-5xl text-center text-white">
           Crafted by <span className="text-lg font-black text-sunny">mayxbui</span>. <br></br>
           <span className="text-sm">Tomodachi Life and its assets are registered trademarks of © Nintendo Co., Ltd. Sprite rips courtesy of The Spriters Resource contributors. Item icons from tlmodding/ltd-images. Item data from the community sheet by echocolat, phil_macrocheira and superspazzy.</span>
