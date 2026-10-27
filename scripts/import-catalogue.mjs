@@ -23,15 +23,17 @@ const TABS = [
   { name: "Foods", category: "food" },
   { name: "Goods", category: "goods" },
   { name: "Treasures", category: "treasure" },
-  { name: "Clothes (Outfits)", category: "clothing", slot: "outfit" },
-  { name: "Clothes (Tops)", category: "clothing", slot: "top" },
-  { name: "Clothes (Long Tops)", category: "clothing", slot: "long-top" },
-  { name: "Clothes (Legwear)", category: "clothing", slot: "legwear" },
-  { name: "Clothes (Headwear)", category: "clothing", slot: "headwear" },
-  { name: "Clothes (Accessories)", category: "clothing", slot: "accessory" },
-  { name: "Clothes (Socks)", category: "clothing", slot: "socks" },
-  { name: "Clothes (Shoes)", category: "clothing", slot: "shoes" },
-  { name: "Clothes (Costumes)", category: "clothing", slot: "costume" },
+  // Clothing is paused until the end-of-week reward is decided (#29). To bring
+  // it back, uncomment these, then run this script and `pnpm sprites:build`.
+  // { name: "Clothes (Outfits)", category: "clothing", slot: "outfit" },
+  // { name: "Clothes (Tops)", category: "clothing", slot: "top" },
+  // { name: "Clothes (Long Tops)", category: "clothing", slot: "long-top" },
+  // { name: "Clothes (Legwear)", category: "clothing", slot: "legwear" },
+  // { name: "Clothes (Headwear)", category: "clothing", slot: "headwear" },
+  // { name: "Clothes (Accessories)", category: "clothing", slot: "accessory" },
+  // { name: "Clothes (Socks)", category: "clothing", slot: "socks" },
+  // { name: "Clothes (Shoes)", category: "clothing", slot: "shoes" },
+  // { name: "Clothes (Costumes)", category: "clothing", slot: "costume" },
 ];
 
 /** XML text → plain text: "&amp;" → "&", "&#10;" → newline. */

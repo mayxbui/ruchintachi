@@ -3,8 +3,11 @@ import { describe, expect, it } from "vitest";
 import { clothingSlots, getItem, itemCategories, items, itemsIn } from "./items";
 
 describe("item catalogue", () => {
-  it("has items in every category", () => {
-    for (const category of itemCategories) expect(itemsIn(category).length, category).toBeGreaterThan(0);
+  it("has items in every category (clothing is paused, #29)", () => {
+    for (const category of itemCategories) {
+      if (category === "clothing") expect(itemsIn(category)).toEqual([]);
+      else expect(itemsIn(category).length, category).toBeGreaterThan(0);
+    }
   });
 
   it("has unique, url-safe ids", () => {

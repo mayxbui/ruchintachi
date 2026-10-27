@@ -194,7 +194,7 @@ export const dailyGifts = sqliteTable(
   (t) => [uniqueIndex("daily_gifts_user_date_uq").on(t.userId, t.date)],
 );
 
-// One clothing reward per user per perfect week.
+// One gift per user per week (#27).
 export const weeklyRewards = sqliteTable(
   "weekly_rewards",
   {

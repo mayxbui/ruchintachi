@@ -53,9 +53,11 @@ A habit tracker inspired by **Tomodachi Life: Living the Dream**. Create a Mii, 
 - **Rarity is based on the item's in-game price**: the more expensive the item, the less likely it drops.
 - **Duplicates are allowed** and counted (the inventory shows ×2, ×3, …).
 
-### 5. Weekly clothing reward
-- A **perfect week** = every task scheduled during that week was ticked. Days with no tasks don't count against you. A week with no tasks at all gives no reward.
-- A perfect week lets you gift your Mii a **random clothing item**, also weighted by price, and the Mii wears it.
+### 5. Weekly gift, coins & streak repair (planned, M7)
+- **Weekly gift**: one gift at the end of each week, rolled once per complete day; you keep the rarest roll.
+- **Coins** for the habits you finish each day, with a bonus for complete days and streaks.
+- **Streak repair**: missed a day? Spend coins before the next day ends to keep your streak.
+- Clothing is paused for now.
 
 ### 6. Mii mood
 Your Mii's mood shows as a coloured thought bubble, with five levels (names are tentative):
@@ -68,7 +70,7 @@ Your Mii's mood shows as a coloured thought bubble, with five levels (names are 
 | 💙 Blue | **Gloomy** |
 | ❤️ Red | **Fuming** |
 
-- Mood goes up when you complete days and perfect weeks, and down when you miss scheduled tasks. Days with no tasks don't change it.
+- Mood goes up when you complete days, and down when you miss scheduled tasks. Days with no tasks don't change it.
 - A mood line chart shows how your Mii has felt over time.
 
 ### 7. Friends (Town)
@@ -111,7 +113,7 @@ Everything is free and open source, and runs on one Azure VM.
 | Auth | Username + password, hashed with **Argon2**, session cookie | No email or third-party login needed, so no personal data |
 | Dates & repeats | **date-fns** / **date-fns-tz** + **rrule** | Time zones and repeat rules with known edge-case behaviour |
 | Charts | **Recharts** | Bar and mood-line charts |
-| Tests | **Vitest** | Unit tests for repeat rules, gift rolls and perfect-week logic |
+| Tests | **Vitest** | Unit tests for repeat rules, gift rolls and streak logic |
 | Package manager | **pnpm** | Faster installs, less disk use on the VM |
 | Hosting | **Azure VM** + **Caddy** (reverse proxy, automatic free HTTPS) + **systemd** to keep the app running | |
 | Domain | Bought from **Namecheap**, A record pointing at the VM | |
