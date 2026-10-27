@@ -7,7 +7,7 @@ A habit tracker inspired by **Tomodachi Life: Living the Dream**. Create a Mii, 
 ## Progress
 
 <!-- progress:start -->
-**Overall: 54%** (25 of 46 issues closed)
+**Overall: 57%** (26 of 46 issues closed)
 
 `███████████░░░░░░░░░`
 
@@ -16,11 +16,11 @@ A habit tracker inspired by **Tomodachi Life: Living the Dream**. Create a Mii, 
 | [M1 · Project setup](https://github.com/mayxbui/ruchintachi/milestone/1) | `████████████████████` 100% | 4/4 ✅ |
 | [M2 · Accounts & Mii](https://github.com/mayxbui/ruchintachi/milestone/2) | `████████████████░░░░` 80% | 4/5 |
 | [M3 · Habits & check-off](https://github.com/mayxbui/ruchintachi/milestone/3) | `████████████████████` 100% | 11/11 ✅ |
-| [M4 · Calendar & daily gift (MVP)](https://github.com/mayxbui/ruchintachi/milestone/4) | `█████████████████░░░` 83% | 5/6 |
+| [M4 · Calendar & daily gift (MVP)](https://github.com/mayxbui/ruchintachi/milestone/4) | `████████████████████` 100% | 6/6 ✅ |
 | [M5 · Deploy to Azure](https://github.com/mayxbui/ruchintachi/milestone/5) | `░░░░░░░░░░░░░░░░░░░░` 0% | 0/4 |
 | [M6 · Charts & Mii mood](https://github.com/mayxbui/ruchintachi/milestone/6) | `░░░░░░░░░░░░░░░░░░░░` 0% | 0/5 |
-| [M7 · Perfect week & clothing](https://github.com/mayxbui/ruchintachi/milestone/7) | `░░░░░░░░░░░░░░░░░░░░` 0% | 0/3 |
-| [M8 · Friends & Town](https://github.com/mayxbui/ruchintachi/milestone/8) | `░░░░░░░░░░░░░░░░░░░░` 0% | 0/7 |
+| [M7 · Weekly gift, coins & streak repair](https://github.com/mayxbui/ruchintachi/milestone/7) | `░░░░░░░░░░░░░░░░░░░░` 0% | 0/4 |
+| [M8 · Friends & Town](https://github.com/mayxbui/ruchintachi/milestone/8) | `░░░░░░░░░░░░░░░░░░░░` 0% | 0/6 |
 | [M9 · Polish & extras](https://github.com/mayxbui/ruchintachi/milestone/9) | `████████████████████` 100% | 1/1 ✅ |
 
 <sub>Updated automatically from GitHub issues.</sub>
@@ -43,13 +43,13 @@ A habit tracker inspired by **Tomodachi Life: Living the Dream**. Create a Mii, 
 - You can only check off **today**. No backfilling past days, no vacation mode.
 
 ### 3. Progress tracking
-- **Calendar view** — every day you finished all your tasks shows the gift you got that day, so keeping a habit fills the calendar with items.
+- **Calendar view** — every day you finished all your habits shows the gift you got that day, so keeping a habit fills the calendar with items.
 - **Bar view** — completion rate per habit and per week.
 - **Mood line** — a line chart of your Mii's happiness over time.
 
 ### 4. Daily gift
-- Finish **every task scheduled today** → your Mii gives you one random gift (custom item, food, goods/prezzie, treasure or object).
-- **A day with no tasks gives no gift**, and doesn't count as a miss either.
+- Finish **every habit scheduled today** (repeating tasks) → your Mii gives you one random gift (custom item, food, goods/prezzie, treasure or object). One-off tasks don't count towards the gift.
+- **A day with no habits gives no gift**, and doesn't count as a miss either.
 - **Rarity is based on the item's in-game price**: the more expensive the item, the less likely it drops.
 - **Duplicates are allowed** and counted (the inventory shows ×2, ×3, …).
 

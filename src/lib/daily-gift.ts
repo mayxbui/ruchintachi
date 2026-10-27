@@ -7,11 +7,13 @@ import { items as catalogue, type Item, type ItemCategory } from "./items";
 export const DAILY_GIFT_CATEGORIES: readonly ItemCategory[] = ["food", "goods", "treasure"];
 
 /**
- * A day earns its gift when it has at least one scheduled task and every one
- * is done. A day with no tasks earns nothing (and isn't a miss).
+ * A day earns its gift when it has at least one repeating habit scheduled and
+ * every one of them is done. One-off tasks don't count either way. A day with
+ * no habits earns nothing (and isn't a miss). The streak uses the same rule.
  */
-export function earnsDailyGift(items: readonly { done: boolean }[]): boolean {
-  return items.length > 0 && items.every((item) => item.done);
+export function earnsDailyGift(items: readonly { repeats: boolean; done: boolean }[]): boolean {
+  const habits = items.filter((item) => item.repeats);
+  return habits.length > 0 && habits.every((item) => item.done);
 }
 
 /** The items a daily gift can be rolled from. */
