@@ -1,6 +1,7 @@
 // The item catalogue (#14). The data lives in src/data/items.json, built from
 // the community price sheet by scripts/import-catalogue.mjs; don't hand-edit it.
-// Sprites go in public/items/<id>.png (from The Spriters Resource).
+// Each item's icon is from tlmodding/ltd-images; `pnpm sprites:build` saves it
+// as public/items/<icon>.webp.
 import catalogue from "@/data/items.json";
 
 export const itemCategories = ["food", "goods", "treasure", "clothing"] as const;
@@ -25,7 +26,8 @@ export interface Item {
   category: ItemCategory;
   slot?: ClothingSlot; // clothing only
   price: number; // in-game dollars; rarity is derived from it
-  sprite: string; // public path
+  icon: string; // game icon name, e.g. "Food133"
+  sprite: string; // public path: /items/<icon>.webp
 }
 
 export const items = catalogue as Item[];

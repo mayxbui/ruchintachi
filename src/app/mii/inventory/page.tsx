@@ -25,7 +25,7 @@ export default async function InventoryPage() {
           href="/mii"
           className="flex items-center gap-1 rounded-full px-3 py-1.5 text-caption transition hover:bg-sand hover:text-ink"
         >
-          <IconArrowLeft aria-hidden className="size-5" stroke={2.25} />
+          <IconArrowLeft aria-hidden className="size-6" stroke={2.25} />
           Back to Mii
         </Link>
       </div>
@@ -45,9 +45,10 @@ export default async function InventoryPage() {
                 {group.items.map(({ item, quantity }) => (
                   <li
                     key={item.id}
-                    className="relative flex flex-col items-center gap-2 rounded-2xl bg-white p-3 text-center shadow-pop"
+                    className="relative flex flex-col items-center gap-2 rounded-2xl bg-white p-2 text-center sm:p-3 shadow-pop"
                   >
-                    <ItemSprite item={item} size={56} />
+                    {/* Shrinks to fit the narrower phone tiles. */}
+                    <ItemSprite item={item} size={80} className="h-auto max-w-full" />
                     <span className="line-clamp-2 text-sm leading-tight">{item.name}</span>
                     {quantity > 1 && (
                       <span

@@ -36,7 +36,7 @@ export function ItemSprite({
         style={{ width: size, height: size }}
         className={`flex items-center justify-center rounded-full bg-sand text-caption ${className}`}
       >
-        <Placeholder aria-hidden style={{ width: size * 0.6, height: size * 0.6 }} stroke={2} />
+        <Placeholder aria-hidden style={{ width: size * 1, height: size * 1 }} stroke={2} />
       </span>
     );
   }
@@ -46,10 +46,10 @@ export function ItemSprite({
       alt={item.name}
       width={size}
       height={size}
-      // Small pixel sprites: serve as-is and keep the edges crisp.
+      // Already shrunk to 128px WebP by `pnpm sprites:build`; serve as-is.
       unoptimized
       onError={() => setMissing(true)}
-      className={`object-contain [image-rendering:pixelated] ${className}`}
+      className={`object-contain ${className}`}
     />
   );
 }

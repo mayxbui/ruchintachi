@@ -1,65 +1,54 @@
 // Rebuilds src/data/items.json from the community price sheet (#14):
 // one entry per named, priced item in the food, goods, treasure and clothes
-// tabs. Never hand-edit the JSON; re-run this when the sheet changes.
+// tabs. Never hand-edit the JSON; re-run this when the sheet changes, then
+// `pnpm sprites:build` for any new icons.
 //
 //   pnpm catalogue:import
 //
 // Sheet: https://docs.google.com/spreadsheets/d/1iPb1freZ57gP7tBDMbvIUi3cDvIE979COqlDsRTYu3Y
 // (datamined by echocolat, with phil_macrocheira and superspazzy).
+//
+// The sheet is read as .xlsx, not CSV: each row's icon is an
+// IMAGE("…/tlmodding/ltd-images/…/Icon/<icon>.png") formula, and only the
+// .xlsx export keeps formulas. The icon name becomes the item's sprite.
 import { writeFileSync } from "node:fs";
+import { strFromU8, unzipSync } from "fflate";
 
 const SHEET = "1iPb1freZ57gP7tBDMbvIUi3cDvIE979COqlDsRTYu3Y";
 const OUT = new URL("../src/data/items.json", import.meta.url);
+const ICON_URL = /^https:\/\/raw\.githubusercontent\.com\/tlmodding\/ltd-images\/[^"]*\/Icon\/([^/"]+)\.png$/;
 
-// Tabs by gid (the gid export keeps every row; the gviz one drops some).
+// Tabs by name.
 const TABS = [
-  { gid: "415930329", category: "food" },
-  { gid: "67684898", category: "goods" },
-  { gid: "1000832652", category: "treasure" },
-  { gid: "1897844616", category: "clothing", slot: "outfit" },
-  { gid: "2107867105", category: "clothing", slot: "top" },
-  { gid: "262541168", category: "clothing", slot: "long-top" },
-  { gid: "727561529", category: "clothing", slot: "legwear" },
-  { gid: "2076444412", category: "clothing", slot: "headwear" },
-  { gid: "651732674", category: "clothing", slot: "accessory" },
-  { gid: "2103310691", category: "clothing", slot: "socks" },
-  { gid: "2050662755", category: "clothing", slot: "shoes" },
-  { gid: "1972172780", category: "clothing", slot: "costume" },
+  { name: "Foods", category: "food" },
+  { name: "Goods", category: "goods" },
+  { name: "Treasures", category: "treasure" },
+  { name: "Clothes (Outfits)", category: "clothing", slot: "outfit" },
+  { name: "Clothes (Tops)", category: "clothing", slot: "top" },
+  { name: "Clothes (Long Tops)", category: "clothing", slot: "long-top" },
+  { name: "Clothes (Legwear)", category: "clothing", slot: "legwear" },
+  { name: "Clothes (Headwear)", category: "clothing", slot: "headwear" },
+  { name: "Clothes (Accessories)", category: "clothing", slot: "accessory" },
+  { name: "Clothes (Socks)", category: "clothing", slot: "socks" },
+  { name: "Clothes (Shoes)", category: "clothing", slot: "shoes" },
+  { name: "Clothes (Costumes)", category: "clothing", slot: "costume" },
 ];
 
-/** RFC 4180 CSV: quoted fields may hold commas, quotes and newlines. */
-function parseCsv(text) {
-  const rows = [];
-  let row = [];
-  let field = "";
-  let quoted = false;
-  for (let i = 0; i < text.length; i++) {
-    const c = text[i];
-    if (quoted) {
-      if (c === '"' && text[i + 1] === '"') {
-        field += '"';
-        i++;
-      } else if (c === '"') quoted = false;
-      else field += c;
-    } else if (c === '"') quoted = true;
-    else if (c === ",") {
-      row.push(field);
-      field = "";
-    } else if (c === "\n") {
-      row.push(field);
-      rows.push(row);
-      row = [];
-      field = "";
-    } else if (c !== "\r") field += c;
-  }
-  if (field || row.length) {
-    row.push(field);
-    rows.push(row);
-  }
-  return rows;
+/** XML text → plain text: "&amp;" → "&", "&#10;" → newline. */
+function unescapeXml(text) {
+  return text.replace(/&(#x[0-9a-f]+|#\d+|amp|lt|gt|quot|apos);/gi, (_, e) => {
+    if (e[0] === "#") return String.fromCodePoint(Number.parseInt(e.slice(e[1] === "x" ? 2 : 1), e[1] === "x" ? 16 : 10));
+    return { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'" }[e.toLowerCase()];
+  });
 }
 
-/** "$7.60" → 7.6; blank or unreadable → 0. */
+/** The text of an <si> or <is> element: its <t> runs, minus phonetic hints. */
+function richText(xml) {
+  const text = xml.replace(/<rPh\b[\s\S]*?<\/rPh>/g, "");
+  return [...text.matchAll(/<t\b[^>]*>([\s\S]*?)<\/t>/g)].map((m) => unescapeXml(m[1])).join("");
+}
+
+/** "$7.60" or 7.6 → 7.6; blank or unreadable → 0. */
 function dollars(text) {
   const n = Number.parseFloat((text ?? "").replace(/[$,\s]/g, ""));
   return Number.isFinite(n) ? n : 0;
@@ -74,20 +63,67 @@ function slug(internalName) {
     .toLowerCase();
 }
 
-async function fetchTab(gid) {
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET}/export?format=csv&gid=${gid}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`Tab ${gid}: HTTP ${res.status}`);
-  const [header, ...rows] = parseCsv(await res.text());
-  const keys = header.map((h) => h.trim());
-  return rows.map((r) => Object.fromEntries(keys.map((k, i) => [k, (r[i] ?? "").trim()])));
+async function fetchWorkbook() {
+  const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET}/export?format=xlsx`);
+  if (!res.ok) throw new Error(`Sheet: HTTP ${res.status}`);
+  const files = unzipSync(new Uint8Array(await res.arrayBuffer()));
+  const read = (path) => {
+    if (!files[path]) throw new Error(`Sheet: no ${path} in the .xlsx`);
+    return strFromU8(files[path]);
+  };
+
+  const strings = [...read("xl/sharedStrings.xml").matchAll(/<si>([\s\S]*?)<\/si>/g)].map((m) => richText(m[1]));
+  const targets = Object.fromEntries(
+    [...read("xl/_rels/workbook.xml.rels").matchAll(/<Relationship\b[^>]*>/g)].map((m) => [
+      m[0].match(/Id="([^"]+)"/)[1],
+      m[0].match(/Target="([^"]+)"/)[1].replace(/^\/?(xl\/)?/, "xl/"),
+    ]),
+  );
+  const sheets = Object.fromEntries(
+    [...read("xl/workbook.xml").matchAll(/<sheet\b[^>]*>/g)].map((m) => [
+      unescapeXml(m[0].match(/name="([^"]+)"/)[1]),
+      targets[m[0].match(/r:id="([^"]+)"/)[1]],
+    ]),
+  );
+
+  /** A tab's rows as objects keyed by header, each with the row's icon name. */
+  return function tab(name) {
+    if (!sheets[name]) throw new Error(`Sheet: no tab "${name}"`);
+    const rows = [...read(sheets[name]).matchAll(/<row\b[^>]*>([\s\S]*?)<\/row>/g)].map((row) => {
+      const cells = {};
+      let icon = null;
+      for (const c of row[1].matchAll(/<c r="([A-Z]+)\d+"([^>]*?)(?:\/>|>([\s\S]*?)<\/c>)/g)) {
+        const [, column, attrs, body = ""] = c;
+        const type = attrs.match(/t="([^"]+)"/)?.[1];
+        const value = body.match(/<v>([\s\S]*?)<\/v>/)?.[1];
+        cells[column] =
+          type === "s" ? strings[Number(value)] : type === "inlineStr" ? richText(body) : unescapeXml(value ?? "");
+        const formula = body.match(/<f\b[^>]*>([\s\S]*?)<\/f>/)?.[1];
+        const url = formula && unescapeXml(formula).match(/IMAGE\("([^"]+)"/)?.[1];
+        if (url) {
+          const match = url.match(ICON_URL);
+          if (!match) throw new Error(`${name}: icon outside tlmodding/ltd-images: ${url}`);
+          icon = decodeURIComponent(match[1]);
+        }
+      }
+      return { cells, icon };
+    });
+    const [header, ...body] = rows;
+    const keys = Object.entries(header.cells).map(([column, text]) => [column, text.trim()]);
+    return body.map(({ cells, icon }) => ({
+      ...Object.fromEntries(keys.map(([column, key]) => [key, (cells[column] ?? "").trim()])),
+      icon,
+    }));
+  };
 }
 
+const tab = await fetchWorkbook();
 const items = [];
 const seen = new Set();
-for (const tab of TABS) {
+const icons = new Set();
+for (const { name: tabName, category, slot } of TABS) {
   let kept = 0;
-  for (const row of await fetchTab(tab.gid)) {
+  for (const row of tab(tabName)) {
     const name = row["Name"];
     const internal = row["Internal name"];
     // Treasures list a selling price only.
@@ -98,17 +134,21 @@ for (const tab of TABS) {
     const id = slug(internal);
     if (seen.has(id)) throw new Error(`Duplicate item id "${id}" (${name})`);
     seen.add(id);
+    if (!row.icon) throw new Error(`No icon for "${name}" (${tabName})`);
+    if (icons.has(row.icon)) throw new Error(`Icon ${row.icon} used twice (${name})`);
+    icons.add(row.icon);
     items.push({
       id,
       name,
-      category: tab.category,
-      ...(tab.slot && { slot: tab.slot }),
+      category,
+      ...(slot && { slot }),
       price,
-      sprite: `/items/${id}.png`,
+      icon: row.icon,
+      sprite: `/items/${row.icon}.webp`,
     });
     kept++;
   }
-  console.log(`${tab.category}${tab.slot ? ` (${tab.slot})` : ""}: ${kept}`);
+  console.log(`${category}${slot ? ` (${slot})` : ""}: ${kept}`);
 }
 
 items.sort((a, b) => a.category.localeCompare(b.category) || a.name.localeCompare(b.name));

@@ -126,9 +126,10 @@ Everything is free and open source, and runs on one Azure VM.
 
 ## References
 
-- Item sprites: [The Spriters Resource — Tomodachi Life: Living the Dream](https://www.spriters-resource.com/nintendo_switch/tomodachilifelivingthedream/)
-- Item names and prices: [Data Spreadsheet for Tomodachi Life: Living the Dream](https://docs.google.com/spreadsheets/d/1iPb1freZ57gP7tBDMbvIUi3cDvIE979COqlDsRTYu3Y) by echocolat, with phil_macrocheira and superspazzy. `pnpm catalogue:import` rebuilds `src/data/items.json` from it; sprites go in `public/items/<id>.png`.
+- Item icons: [tlmodding/ltd-images](https://github.com/tlmodding/ltd-images), the same icons the data sheet shows. `pnpm sprites:build` saves each catalogue item's icon as a 128px WebP in `public/items/<icon>.webp`.
+- Other sprites: [The Spriters Resource — Tomodachi Life: Living the Dream](https://www.spriters-resource.com/nintendo_switch/tomodachilifelivingthedream/)
+- Item names and prices: [Data Spreadsheet for Tomodachi Life: Living the Dream](https://docs.google.com/spreadsheets/d/1iPb1freZ57gP7tBDMbvIUi3cDvIE979COqlDsRTYu3Y) by echocolat, with phil_macrocheira and superspazzy. `pnpm catalogue:import` rebuilds `src/data/items.json` from it, including each item's icon name.
 
 ## Disclaimer
 
-Ruchintachi is an unofficial, non-commercial, personal fan project. It is not affiliated with or endorsed by Nintendo. Tomodachi Life and its sprites and assets are trademarks and copyright of Nintendo. Sprite rips courtesy of the contributors at The Spriters Resource. Item data from the community data sheet by echocolat, phil_macrocheira and superspazzy.
+Ruchintachi is an unofficial, non-commercial, personal fan project. It is not affiliated with or endorsed by Nintendo. Tomodachi Life and its sprites and assets are trademarks and copyright of Nintendo. Sprite rips courtesy of the contributors at The Spriters Resource. Item icons from tlmodding/ltd-images. Item data from the community data sheet by echocolat, phil_macrocheira and superspazzy.

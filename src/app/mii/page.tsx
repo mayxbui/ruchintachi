@@ -16,7 +16,7 @@ export default async function MiiPage() {
           href="/mii/inventory"
           className="flex items-center gap-2 rounded-full bg-tangerine px-4 py-2 font-bold text-white shadow-pop transition hover:-translate-y-0.5"
         >
-          <IconGift aria-hidden className="size-5" stroke={2.25} />
+          <IconGift aria-hidden className="size-6" stroke={2.25} />
           My items
         </Link>
       </div>
