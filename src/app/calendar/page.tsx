@@ -36,7 +36,7 @@ export default async function CalendarPage({
   const giftsThisMonth = [...gifts.keys()].filter((date) => date.startsWith(month)).length;
 
   return (
-    <PageCard title="Calendar">
+    <PageCard title="Calendar" border="sky">
       <div className="mb-4 flex items-center justify-between gap-2">
         <Link href={`/calendar?month=${addMonths(month, -1)}`} aria-label="Previous month" className={navClass}>
           <IconChevronLeft aria-hidden className="size-5" stroke={2.5} />
@@ -85,12 +85,12 @@ export default async function CalendarPage({
                     <div
                       className={`relative aspect-square rounded-xl sm:rounded-2xl ${
                         inMonth ? "bg-white shadow-pop" : "bg-white/40"
-                      } ${isToday ? "ring-3 ring-tangerine" : ""}`}
+                      } ${isToday ? "ring-3 ring-sky !bg-light-sky/80" : ""}`}
                     >
                       <span
                         aria-hidden
                         className={`absolute top-0.5 left-1 text-xs sm:top-1 sm:left-2 sm:text-sm ${
-                          isToday ? "font-black text-tangerine" : inMonth ? "text-ink" : "text-caption/60"
+                          isToday ? "font-black text-sky" : inMonth ? "text-ink" : "text-caption/60"
                         }`}
                       >
                         {Number(date.slice(8))}
