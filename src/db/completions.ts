@@ -1,4 +1,4 @@
-import { and, eq, isNotNull } from "drizzle-orm";
+import { and, between, eq, isNotNull } from "drizzle-orm";
 import type { Db } from "./accounts";
 import { completions, habitExceptions, habits } from "./schema";
 
@@ -24,6 +24,26 @@ export function completedHabitIds(db: Db, userId: string, date: string): Set<str
     .where(and(eq(completions.userId, userId), eq(completions.date, date)))
     .all();
   return new Set(rows.map((r) => r.habitId));
+}
+
+/** Ids of the user's habits completed on each day from `from` to `to` (inclusive). */
+export function completionsBetween(
+  db: Db,
+  userId: string,
+  from: string,
+  to: string,
+): Map<string, Set<string>> {
+  const rows = db
+    .select({ habitId: completions.habitId, date: completions.date })
+    .from(completions)
+    .where(and(eq(completions.userId, userId), between(completions.date, from, to)))
+    .all();
+  const byDate = new Map<string, Set<string>>();
+  for (const { habitId, date } of rows) {
+    if (!byDate.has(date)) byDate.set(date, new Set());
+    byDate.get(date)!.add(habitId);
+  }
+  return byDate;
 }
 
 /**
