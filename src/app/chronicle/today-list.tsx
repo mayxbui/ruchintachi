@@ -8,6 +8,7 @@ import { formatClock, parseMinutes, remainingMs, TIMER_MAX_MINUTES, TIMER_PRESET
 import { doneLast as moveDoneLast } from "@/lib/sort-habits";
 import { dayProgress, type DayItem } from "@/lib/today";
 import { reorderHabitsAction, toggleCompletionAction, type DailyGift } from "./actions";
+import { DueTag } from "./due-tag";
 import { GiftReveal } from "./gift-reveal";
 import { TaskIcon } from "./task-icon";
 import { TaskText } from "./task-text";
@@ -165,7 +166,13 @@ export function TodayList({
                   note={item.note}
                   done={item.done}
                   scope="today"
-                />
+                >
+                  {item.dueDate && !item.done && (
+                    <span className="block">
+                      <DueTag dueDate={item.dueDate} today={today} />
+                    </span>
+                  )}
+                </TaskText>
               </div>
               <TimerButton
                 item={item}

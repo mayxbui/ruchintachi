@@ -69,6 +69,7 @@ const SERIES_FIELDS = [
   "endType",
   "endDate",
   "endCount",
+  "dueDate",
 ] as const;
 type SeriesFields = { [K in (typeof SERIES_FIELDS)[number]]?: unknown } & {
   weekdays?: readonly number[] | null;

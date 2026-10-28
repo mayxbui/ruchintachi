@@ -16,6 +16,7 @@ const form: HabitFormValues = {
   endType: "never",
   endDate: "",
   endCount: "",
+  dueDate: "",
 };
 
 const errorOf = (values: Partial<HabitFormValues>) => {
@@ -65,6 +66,7 @@ describe("validateHabit", () => {
       endType: "never",
       endDate: null,
       endCount: null,
+      dueDate: null,
     });
   });
 
@@ -142,5 +144,21 @@ describe("validateHabit", () => {
     for (const endCount of ["0", "1000", "2.5", "", "ten"]) {
       expect(errorOf({ endType: "after_count", endCount })).toMatch(/1–999/);
     }
+  });
+  it("a due date is optional, one-off only, and not before the start", () => {
+    expect(habitOf({ frequency: "none" }).dueDate).toBeNull();
+    expect(habitOf({ frequency: "none", dueDate: "2026-10-30" }).dueDate).toBe("2026-10-30");
+    expect(habitOf({ frequency: "daily", dueDate: "2026-10-30" }).dueDate).toBeNull();
+    expect(errorOf({ frequency: "none", dueDate: "2026-02-30" })).toMatch(/due date/);
+    expect(errorOf({ frequency: "none", startDate: "2026-10-27", dueDate: "2026-10-26" })).toMatch(
+      /before the start/,
+    );
+  });
+
+  it("an overdue task can keep its passed due date when edited", () => {
+    const values = { ...form, frequency: "none", dueDate: "2026-10-20" };
+    expect("error" in validateHabit(values, today)).toBe(true);
+    const result = validateHabit(values, today, "2026-10-20");
+    expect("habit" in result && result.habit.dueDate).toBe("2026-10-20");
   });
 });

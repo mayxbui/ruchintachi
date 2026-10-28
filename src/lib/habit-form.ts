@@ -29,6 +29,7 @@ export interface HabitFormValues {
   endType: string;
   endDate: string;
   endCount: string;
+  dueDate: string; // "" = none; one-off tasks only
 }
 
 /** A valid habit, ready to insert. Fields that don't apply are null. */
@@ -45,6 +46,7 @@ export interface NewHabit {
   endType: EndType;
   endDate: string | null;
   endCount: number | null;
+  dueDate?: string | null; // one-off tasks only (see due-date.ts)
 }
 
 export function readHabitForm(formData: FormData): HabitFormValues {
@@ -62,6 +64,7 @@ export function readHabitForm(formData: FormData): HabitFormValues {
     endType: text("endType"),
     endDate: text("endDate"),
     endCount: text("endCount"),
+    dueDate: text("dueDate"),
   };
 }
 
@@ -75,11 +78,13 @@ export function isIsoDate(value: string): boolean {
 /**
  * Checks the form and returns the habit to store, or an error message.
  * `today` is the user's local date; a habit can't start before it, since
- * past days can't be ticked.
+ * past days can't be ticked. `savedDueDate` is the task's due date before
+ * this edit: it may stay as it is even once it has passed (an overdue task).
  */
 export function validateHabit(
   values: HabitFormValues,
   today: string,
+  savedDueDate: string | null = null,
 ): { habit: NewHabit } | { error: string } {
   const name = values.name.trim().replace(/\s+/g, " ");
   if (!name) return { error: "Give your habit a name." };
@@ -152,6 +157,16 @@ export function validateHabit(
     }
   }
 
+  // Only a one-off task has a due date; it can't be due before it starts.
+  let dueDate: string | null = null;
+  if (frequency === "none" && values.dueDate !== "") {
+    if (!isIsoDate(values.dueDate)) return { error: "Pick a due date." };
+    if (values.dueDate < values.startDate && values.dueDate !== savedDueDate) {
+      return { error: "The due date can't be before the start date." };
+    }
+    dueDate = values.dueDate;
+  }
+
   const habit: NewHabit = {
     name,
     icon,
@@ -165,6 +180,7 @@ export function validateHabit(
     endType,
     endDate,
     endCount,
+    dueDate,
   };
 
   // e.g. every 31st, ending on the 30th of the same month.

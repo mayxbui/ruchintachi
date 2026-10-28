@@ -36,7 +36,7 @@ describe("habits", () => {
     const may = addUser(db, "may");
     const id = createHabit(db, may, water);
     expect(listHabits(db, may)).toEqual([
-      { id, ...water, listId: null, position: 0, createdAt: expect.any(Date) },
+      { id, ...water, dueDate: null, listId: null, position: 0, createdAt: expect.any(Date) },
     ]);
   });
 

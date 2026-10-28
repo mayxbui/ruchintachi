@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { db } from "@/db";
-import { listExceptions } from "@/db/completions";
+import { carryOverDoneDates, listExceptions } from "@/db/completions";
 import { listHabits } from "@/db/habits";
 import { listTaskLists } from "@/db/task-lists";
 import { requireUser } from "@/lib/auth/session";
 import { todayIn } from "@/lib/dates";
 import { describeRule } from "@/lib/describe-rule";
+import { scheduleAll } from "@/lib/due-date";
 import { nextOccurrence } from "@/lib/habit-edit";
 import { sortHabits } from "@/lib/sort-habits";
 import {
@@ -54,8 +55,10 @@ export default async function TasksPage({
   const listName = new Map(lists.map((l) => [l.id, l.name]));
 
   const exceptions = listExceptions(db, user.id);
-  // Current tasks with the next day they come up; finished series drop off the list.
-  const current = listHabits(db, user.id).flatMap((habit) => {
+  const doneOn = carryOverDoneDates(db, user.id);
+  // Current tasks with the next day they come up; finished series drop off the
+  // list. A carry-over task's day is today until it's done.
+  const current = scheduleAll(listHabits(db, user.id), today, doneOn).flatMap((habit) => {
     const next = nextOccurrence(
       habit,
       exceptions.filter((e) => e.habitId === habit.id),
@@ -105,17 +108,21 @@ export default async function TasksPage({
         />
       )}
 
-      <div className="mb-3 flex justify-end">
-        <SortMenu sort={user.taskSort} doneLast={user.doneLast} />
-      </div>
-
       {shown.length === 0 ? (
-        <p className="text-caption">{empty}</p>
+        <>
+          <div className="mb-3 flex justify-end">
+            <SortMenu sort={user.taskSort} doneLast={user.doneLast} />
+          </div>
+          <p className="text-caption">{empty}</p>
+        </>
       ) : (
         <TaskRows
-          // Remount on a new filter or sort, so a drag never mixes views.
+          // Remount on a new filter or sort, so a drag or selection never mixes views.
           key={`${param ?? "next"}-${user.taskSort}`}
           reorderable={user.taskSort === "custom"}
+          sortMenu={<SortMenu sort={user.taskSort} doneLast={user.doneLast} />}
+          lists={lists}
+          today={today}
           rows={shown.map((habit) => ({
             id: habit.id,
             name: habit.name,
@@ -123,6 +130,8 @@ export default async function TasksPage({
             icon: habit.icon,
             subtitle:
               filter.kind === "next" ? nextDateLabel(habit.next, today) : describeRule(habit, user.weekStart),
+            // Done carry-over tasks drop off tomorrow, so they lose the tag now.
+            dueDate: habit.dueDate && !doneOn.has(habit.id) ? habit.dueDate : null,
             listTag: habit.listId && !activeList ? (listName.get(habit.listId) ?? null) : null,
             editHref: `/chronicle/${habit.id}/edit?date=${habit.next}&from=tasks${param ? `&list=${param}` : ""}`,
           }))}

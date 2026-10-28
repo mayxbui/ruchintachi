@@ -26,7 +26,8 @@ const monthOf = (date: string): [number, number] => [
 /**
  * A labelled date field that opens a month calendar in the site's style.
  * Dates are YYYY-MM-DD strings, posted through a hidden input called `name`.
- * Days before `min` can't be picked.
+ * Days before `min` can't be picked. With `onClear` the field is optional:
+ * empty shows `placeholder`, and the calendar has a Clear button.
  */
 export function DatePicker({
   label,
@@ -37,6 +38,8 @@ export function DatePicker({
   today,
   weekStart,
   align = "left",
+  onClear,
+  placeholder = "Pick a day",
 }: {
   label: string;
   name: string;
@@ -47,6 +50,8 @@ export function DatePicker({
   weekStart: WeekStart;
   /** Which edge the calendar lines up with; use "right" in a right-hand column. */
   align?: "left" | "right";
+  onClear?: () => void;
+  placeholder?: string;
 }) {
   const id = useId();
   const ref = useRef<HTMLDivElement>(null);
@@ -90,7 +95,7 @@ export function DatePicker({
         className={triggerClass}
       >
         <span id={`${id}-value`} className={`truncate ${value ? "" : "text-slate-400"}`}>
-          {value ? formatDate(value) : "Pick a day"}
+          {value ? formatDate(value) : placeholder}
         </span>
         <IconCalendar aria-hidden stroke={2.25} className="size-5 shrink-0 text-caption" />
       </button>
@@ -160,6 +165,18 @@ export function DatePicker({
                 );
               })}
             </div>
+            {onClear && value && (
+              <button
+                type="button"
+                onClick={() => {
+                  onClear();
+                  setOpen(false);
+                }}
+                className="mt-1 w-full min-w-0 rounded-full bg-transparent py-1.5 text-sm font-bold text-caption shadow-none transition hover:bg-sand hover:text-ink"
+              >
+                Clear
+              </button>
+            )}
           </div>
         </div>
       )}

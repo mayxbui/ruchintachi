@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, isNotNull } from "drizzle-orm";
 import type { Db } from "./accounts";
 import { completions, habitExceptions, habits } from "./schema";
 
@@ -24,6 +24,25 @@ export function completedHabitIds(db: Db, userId: string, date: string): Set<str
     .where(and(eq(completions.userId, userId), eq(completions.date, date)))
     .all();
   return new Set(rows.map((r) => r.habitId));
+}
+
+/**
+ * The day each of the user's carry-over tasks (one-offs with a due date) was
+ * ticked, by habit id. Undone ones are missing. See src/lib/due-date.ts.
+ */
+export function carryOverDoneDates(db: Db, userId: string): Map<string, string> {
+  const rows = db
+    .select({ habitId: completions.habitId, date: completions.date })
+    .from(completions)
+    .innerJoin(habits, eq(habits.id, completions.habitId))
+    .where(
+      and(eq(completions.userId, userId), eq(habits.frequency, "none"), isNotNull(habits.dueDate)),
+    )
+    .orderBy(completions.date)
+    .all();
+  const done = new Map<string, string>();
+  for (const r of rows) if (!done.has(r.habitId)) done.set(r.habitId, r.date);
+  return done;
 }
 
 /**

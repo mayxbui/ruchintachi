@@ -3,7 +3,13 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
-import { completedHabitIds, listExceptions, setCompletion } from "@/db/completions";
+import { bulkDeleteHabits, bulkMoveHabits } from "@/db/bulk-edit";
+import {
+  carryOverDoneDates,
+  completedHabitIds,
+  listExceptions,
+  setCompletion,
+} from "@/db/completions";
 import { awardDailyGift, dailyGiftOn } from "@/db/gifts";
 import {
   clearException,
@@ -23,8 +29,10 @@ import {
 import { setSortSettings } from "@/db/accounts";
 import { createTaskList, setHabitList } from "@/db/task-lists";
 import { requireUser } from "@/lib/auth/session";
+import { parseBulkIds } from "@/lib/bulk-edit";
 import { dailyGiftPool, earnsDailyGift } from "@/lib/daily-gift";
 import { todayIn } from "@/lib/dates";
+import { scheduleAll, scheduled } from "@/lib/due-date";
 import { rollGift } from "@/lib/gift-roll";
 import {
   isEditableDay,
@@ -86,6 +94,15 @@ export async function createHabitAction(
 }
 
 /**
+ * One of the user's habits as scheduled: a carry-over task (one-off with a
+ * due date) sits on today, or the day it was ticked. Undefined if not theirs.
+ */
+function scheduledHabit(userId: string, habitId: string, today: string) {
+  const habit = getHabit(db, userId, habitId);
+  return habit && scheduled(habit, today, carryOverDoneDates(db, userId).get(habitId));
+}
+
+/**
  * Ticks or unticks one of today's tasks. "Today" is always the server's idea
  * of the user's local date, so past or future days can't be changed.
  */
@@ -95,7 +112,7 @@ export async function toggleCompletionAction(
 ): Promise<{ error?: string; gift?: DailyGift }> {
   const user = await requireUser();
   const today = todayIn(user.timeZone);
-  const habit = getHabit(db, user.id, habitId);
+  const habit = scheduledHabit(user.id, habitId, today);
   if (!habit) return { error: "That task doesn't exist." };
 
   const exceptions = listExceptions(db, user.id).filter((e) => e.habitId === habitId);
@@ -119,7 +136,12 @@ export type DailyGift = Pick<Item, "id" | "name" | "category" | "sprite">;
  */
 function awardDailyGiftIfEarned(userId: string, today: string): DailyGift | undefined {
   if (dailyGiftOn(db, userId, today)) return undefined;
-  const items = itemsOn(listHabits(db, userId), listExceptions(db, userId), completedHabitIds(db, userId, today), today);
+  const items = itemsOn(
+    scheduleAll(listHabits(db, userId), today, carryOverDoneDates(db, userId)),
+    listExceptions(db, userId),
+    completedHabitIds(db, userId, today),
+    today,
+  );
   if (!earnsDailyGift(items)) return undefined;
 
   const item = rollGift(dailyGiftPool());
@@ -171,6 +193,7 @@ export async function quickAddTaskAction(
       endType: "never",
       endDate: "",
       endCount: "",
+      dueDate: "",
     },
     today,
   );
@@ -213,7 +236,7 @@ export async function renameTodayAction(habitId: string, rawName: string): Promi
 export async function renameSeriesAction(habitId: string, rawName: string): Promise<{ error?: string }> {
   const user = await requireUser();
   const today = todayIn(user.timeZone);
-  const habit = getHabit(db, user.id, habitId);
+  const habit = scheduledHabit(user.id, habitId, today);
   if (!habit) return { error: "That task doesn't exist." };
   const exceptions = listExceptions(db, user.id).filter((e) => e.habitId === habitId);
   const next = nextOccurrence(habit, exceptions, today);
@@ -243,6 +266,7 @@ export async function renameSeriesAction(habitId: string, rawName: string): Prom
       endType: from.endType,
       endDate: from.endDate,
       endCount: from.endCount,
+      dueDate: from.dueDate,
     });
   }
   revalidatePath("/chronicle", "layout");
@@ -276,7 +300,7 @@ export async function setNoteAction(habitId: string, rawNote: string): Promise<{
 async function editableHabit(habitId: string, date: string) {
   const user = await requireUser();
   const today = todayIn(user.timeZone);
-  const habit = getHabit(db, user.id, habitId);
+  const habit = scheduledHabit(user.id, habitId, today);
   if (!habit) return { error: "That task doesn't exist." } as const;
   const exceptions = listExceptions(db, user.id).filter((e) => e.habitId === habitId);
   if (!isEditableDay(habit, exceptions, date, today)) {
@@ -315,7 +339,8 @@ export async function editHabitAction(
     const values = readHabitForm(formData);
     // A repeating series always changes from the chosen day; a one-off can move.
     if (repeating) values.startDate = date;
-    const result = validateHabit(values, today);
+    // An overdue task may keep its passed due date.
+    const result = validateHabit(values, today, habit.dueDate);
     if ("error" in result) return { error: result.error };
     const list = resolveListId(user.id, formData);
     if ("error" in list) return { error: list.error };
@@ -359,4 +384,30 @@ export async function deleteHabitAction(
 
   revalidatePath("/chronicle", "layout");
   redirect(backTo(returnTo));
+}
+
+/**
+ * Bulk delete from the Tasks tab: each task goes from today on, like "this
+ * day and future"; past days and completions stay. All or nothing.
+ */
+export async function bulkDeleteAction(ids: string[]): Promise<{ error?: string }> {
+  const user = await requireUser();
+  const valid = parseBulkIds(ids);
+  if (!valid || !bulkDeleteHabits(db, user.id, valid, todayIn(user.timeZone))) {
+    return { error: "Couldn't delete those tasks. Try again." };
+  }
+  revalidatePath("/chronicle", "layout");
+  return {};
+}
+
+/** Bulk move from the Tasks tab into one of the user's lists (null = no list). */
+export async function bulkMoveAction(ids: string[], listId: string | null): Promise<{ error?: string }> {
+  const user = await requireUser();
+  const valid = parseBulkIds(ids);
+  const list = listId === null || typeof listId === "string" ? listId : undefined;
+  if (!valid || list === undefined || !bulkMoveHabits(db, user.id, valid, list)) {
+    return { error: "Couldn't move those tasks. Try again." };
+  }
+  revalidatePath("/chronicle", "layout");
+  return {};
 }

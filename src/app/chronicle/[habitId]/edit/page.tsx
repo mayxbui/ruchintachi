@@ -2,11 +2,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageCard } from "@/components/page-card";
 import { db } from "@/db";
-import { listExceptions } from "@/db/completions";
+import { carryOverDoneDates, listExceptions } from "@/db/completions";
 import { getHabit } from "@/db/habits";
 import { listTaskLists } from "@/db/task-lists";
 import { requireUser } from "@/lib/auth/session";
 import { todayIn } from "@/lib/dates";
+import { scheduled } from "@/lib/due-date";
 import { formatDate } from "@/lib/describe-rule";
 import { isEditableDay, nextOccurrence, seriesFrom } from "@/lib/habit-edit";
 import { isHabitIcon } from "@/lib/habit-icons";
@@ -31,10 +32,12 @@ export default async function EditHabitPage({
         ? `/chronicle/tasks?list=${list}`
         : "/chronicle/tasks"
       : "/chronicle";
-  const habit = getHabit(db, user.id, habitId);
-  if (!habit) notFound();
+  const saved = getHabit(db, user.id, habitId);
+  if (!saved) notFound();
 
   const today = todayIn(user.timeZone);
+  // A carry-over task (one-off with a due date) is edited on the day it sits on.
+  const habit = scheduled(saved, today, carryOverDoneDates(db, user.id).get(habitId));
   const exceptions = listExceptions(db, user.id).filter((e) => e.habitId === habitId);
   // The day being edited: the one asked for if it can change, else the next one.
   const date =

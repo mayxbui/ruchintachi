@@ -30,7 +30,7 @@ export const users = sqliteTable("users", {
     .default("monday"),
   // How My Chronicle orders tasks (see src/lib/sort-habits.ts).
   taskSort: text("task_sort", {
-    enum: ["next", "name-asc", "name-desc", "newest", "oldest", "repeat", "custom"],
+    enum: ["next", "due", "name-asc", "name-desc", "newest", "oldest", "repeat", "custom"],
   })
     .notNull()
     .default("next"),
@@ -126,6 +126,9 @@ export const habits = sqliteTable(
       .default("never"),
     endDate: text("end_date"),
     endCount: integer("end_count"),
+    // One-off tasks only: a deadline. Until it's ticked the task carries over
+    // to each new "today" (see src/lib/due-date.ts).
+    dueDate: text("due_date"),
     previousHabitId: text("previous_habit_id"),
     // At most one list. Deleting a list unlists its tasks (done in code:
     // SQLite's ADD COLUMN migration can't carry ON DELETE SET NULL).
