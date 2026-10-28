@@ -21,7 +21,7 @@ export function ChronicleTabs() {
   const newHref = listId ? `/chronicle/new?list=${encodeURIComponent(listId)}` : "/chronicle/new";
 
   return (
-    <div className="mb-6 flex items-center gap-2">
+    <div className="mb-4 flex items-center gap-2 sm:mb-6">
       <nav aria-label="My Chronicle" className="flex flex-1 gap-2 sm:flex-none">
         {tabs.map((tab) => {
           const active = pathname === tab.href;
@@ -30,7 +30,7 @@ export function ChronicleTabs() {
               key={tab.href}
               href={tab.href}
               aria-current={active ? "page" : undefined}
-              className={`flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 font-bold shadow-pop transition sm:flex-none sm:px-6 ${
+              className={`flex flex-1 items-center justify-center gap-1.5 rounded-full px-3 py-2 font-bold shadow-pop transition sm:flex-none sm:gap-2 sm:px-6 sm:py-2.5 ${
                 active ? "bg-tangerine text-white" : "bg-white text-slate-500 hover:text-ink"
               }`}
             >
@@ -43,10 +43,10 @@ export function ChronicleTabs() {
       <Link
         href={newHref}
         aria-label="Create a habit"
-        className="ml-auto flex shrink-0 items-center gap-1.5 rounded-full bg-tangerine p-3 font-bold text-white shadow-pop transition hover:brightness-105 sm:px-5 sm:py-2.5"
+        className="ml-auto flex shrink-0 items-center gap-1.5 rounded-full bg-tangerine p-2.5 font-bold text-white shadow-pop transition hover:brightness-105 sm:p-3 md:px-5 md:py-2.5"
       >
         <IconPlus aria-hidden className="size-5" stroke={3} />
-        <span className="hidden sm:inline">Create a habit</span>
+        <span className="hidden md:inline">Create a habit</span>
       </Link>
     </div>
   );

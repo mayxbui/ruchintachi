@@ -182,8 +182,8 @@ export function TaskRows({
               key={row.id}
               ref={drag.rowRef(row.id)}
               style={drag.rowStyle(row.id)}
-              className={`relative flex items-center gap-3 rounded-2xl bg-white py-3 pr-4 shadow-pop ${
-                canReorder ? "pl-1" : "pl-4"
+              className={`relative flex items-center gap-2 rounded-2xl bg-white py-2.5 pr-3 shadow-pop sm:gap-3 sm:py-3 sm:pr-4 ${
+                canReorder ? "pl-1" : "pl-3 sm:pl-4"
               } ${dragging ? "z-10 scale-[1.02] ring-4 ring-sunny" : ""}`}
             >
               {canReorder && (

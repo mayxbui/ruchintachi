@@ -26,6 +26,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#fcefc7",
+  // Lets the fixed background run under the notch and iOS Safari's toolbar.
+  viewportFit: "cover",
 };
 
 export default async function RootLayout({
@@ -36,8 +38,8 @@ export default async function RootLayout({
     <html lang="en" className={nunito.variable}>
       <body className="flex min-h-dvh flex-col font-sans antialiased">
         <PageBackground background={user?.background ?? DEFAULT_BACKGROUND} />
-        {/* Logo left, nav centred on one line; on phones the nav drops below. */}
-        <header className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-3 px-4 pt-4 md:grid-cols-[1fr_auto_1fr]">
+        {/* Logo left, nav centred on one line; on phones the nav floats at the bottom of the screen. */}
+        <header className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-3 px-3 pt-3 sm:px-4 sm:pt-4 md:grid-cols-[1fr_auto_1fr]">
           <Link
             href="/chronicle"
             aria-label="Ruchintachi home"
@@ -49,20 +51,20 @@ export default async function RootLayout({
               width={798}
               height={615}
               priority
-              className="h-18 w-auto md:h-28"
+              className="h-14 w-auto sm:h-18 md:h-28"
             />
           </Link>
           {user && <NavBar />}
           {user && (
             // Just right of the navbar on desktop; top-right corner, beside the logo, on phones.
-            <div className="absolute top-4 right-4 flex gap-2 md:static md:justify-self-start">
+            <div className="absolute top-3 right-3 flex gap-2 sm:top-4 sm:right-4 md:static md:justify-self-start">
               <BackgroundButton background={user.background} />
               <SignOutButton />
             </div>
           )}
         </header>
 
-        <main className="mx-auto w-full max-w-5xl flex-1 px-4 pt-6 pb-12">
+        <main className="mx-auto w-full max-w-5xl flex-1 px-3 pt-4 pb-10 sm:px-4 sm:pt-6 sm:pb-12">
           {children}
         </main>
 
@@ -103,10 +105,11 @@ function WaveFooter() {
           className="stroke-tangerine-deep"
         />
       </svg>
-      <div className="bg-tangerine px-4 pb-6">
-        <p className="mx-auto max-w-5xl text-center text-white">
-          Crafted by <span className="text-lg font-black text-sunny">mayxbui</span>. <br></br>
-          <span className="text-sm">Tomodachi Life and its assets are registered trademarks of © Nintendo Co., Ltd. Sprite rips courtesy of The Spriters Resource contributors. Item icons from tlmodding/ltd-images. Item data from the community sheet by echocolat, phil_macrocheira and superspazzy.</span>
+      {/* Extra room on phones so the floating navbar doesn't cover the text. */}
+      <div className="bg-tangerine px-4 pb-28 md:pb-6">
+        <p className="mx-auto max-w-5xl text-center text-sm text-white sm:text-lg">
+          Crafted by <span className="text-base font-black text-sunny sm:text-lg">mayxbui</span>. <br></br>
+          <span className="text-xs sm:text-sm">Tomodachi Life and its assets are registered trademarks of © Nintendo Co., Ltd. Sprite rips courtesy of The Spriters Resource contributors. Item icons from tlmodding/ltd-images. Item data from the community sheet by echocolat, phil_macrocheira and superspazzy.</span>
         </p>
       </div>
     </footer>

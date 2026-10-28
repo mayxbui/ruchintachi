@@ -2,7 +2,7 @@
 
 import { IconCheck, IconGripVertical, IconHourglassHigh, IconPencil } from "@tabler/icons-react";
 import Link from "next/link";
-import { useLayoutEffect, useOptimistic, useRef, useState, useTransition } from "react";
+import { useEffect, useLayoutEffect, useOptimistic, useRef, useState, useTransition } from "react";
 import { FormMessage } from "@/components/form";
 import { formatClock, parseMinutes, remainingMs, TIMER_MAX_MINUTES, TIMER_PRESETS } from "@/lib/timer";
 import { doneLast as moveDoneLast } from "@/lib/sort-habits";
@@ -16,6 +16,7 @@ import { useTimer } from "./timer";
 import { useDragReorder } from "./use-drag-reorder";
 
 const SPARKS = 8; // sparks around a ticked task's check
+const SETTLE_MS = 1500; // a ticked task holds its place this long before moving down
 
 /**
  * Slides list rows from where they were to where they are now (FLIP), so a
@@ -47,7 +48,8 @@ function useSlideOnReorder(order: string, draggingId: string | null) {
 
 /**
  * Today's tasks as big round yes/no checkboxes. Ticks show at once and roll
- * back on error. With `doneLast`, ticked tasks move below the rest. With
+ * back on error. With `doneLast`, ticked tasks move below the rest, after a
+ * short pause so the tick can be seen (each new tick restarts it). With
  * `reorderable` (the Custom sort) each row has a drag handle; its arrow
  * keys move the row too.
  */
@@ -75,7 +77,15 @@ export function TodayList({
   const [cheer, setCheer] = useState<{ id: string; key: number } | null>(null);
   // Today's gift, set when the tick that finished the day awarded it (#16).
   const [gift, setGift] = useState<DailyGift | null>(null);
-  const sorted = doneLast ? moveDoneLast(shown) : shown;
+  // Just-ticked tasks keep their place until the pause ends.
+  const [settling, setSettling] = useState<ReadonlySet<string>>(new Set());
+  const settleTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  useEffect(() => () => clearTimeout(settleTimer.current), []);
+  const sorted = doneLast
+    ? moveDoneLast(shown.map((i) => ({ item: i, done: i.done && !settling.has(i.habitId) }))).map(
+        (s) => s.item,
+      )
+    : shown;
   const drag = useDragReorder(
     sorted.map((i) => i.habitId),
     reorderHabitsAction,
@@ -93,6 +103,14 @@ export function TodayList({
   function toggle(item: DayItem) {
     setError(undefined);
     if (!item.done) setCheer((c) => ({ id: item.habitId, key: (c?.key ?? 0) + 1 }));
+    setSettling((s) => {
+      const next = new Set(s);
+      if (item.done) next.delete(item.habitId);
+      else next.add(item.habitId);
+      return next;
+    });
+    clearTimeout(settleTimer.current);
+    settleTimer.current = setTimeout(() => setSettling(new Set()), SETTLE_MS);
     startTransition(async () => {
       change({ habitId: item.habitId, done: !item.done });
       const result = await toggleCompletionAction(item.habitId, !item.done);
@@ -119,7 +137,7 @@ export function TodayList({
               drag.draggingId === item.habitId ? "z-10 scale-[1.02] ring-4 ring-sunny" : ""
             }`}
           >
-            <div className="flex items-center gap-1 pr-2">
+            <div className="flex items-center gap-1 pr-1 sm:pr-2">
               {reorderable && (
                 <button
                   type="button"
@@ -130,36 +148,37 @@ export function TodayList({
                   <IconGripVertical className="size-5" stroke={2.25} />
                 </button>
               )}
-              <label
-                className={`flex shrink-0 cursor-pointer items-center gap-3 py-3 ${reorderable ? "pl-1" : "pl-4"}`}
+              {/* Check above icon on phones, side by side from sm up. */}
+              <div
+                className={`flex shrink-0 flex-col items-center gap-1 py-2 sm:flex-row sm:gap-3 sm:py-0 ${reorderable ? "pl-1" : "pl-3 sm:pl-4"}`}
               >
-                <input
-                  type="checkbox"
-                  checked={item.done}
-                  onChange={() => toggle(item)}
-                  className="peer sr-only"
-                />
-                <span
-                  aria-hidden
-                  key={cheer?.id === item.habitId ? cheer.key : 0}
-                  className={`relative flex size-8 shrink-0 items-center justify-center rounded-full border-3 border-leaf bg-white text-white transition peer-checked:bg-leaf peer-focus-visible:ring-4 peer-focus-visible:ring-sky ${
-                    cheer?.id === item.habitId && item.done ? "animate-check-pop" : ""
-                  }`}
-                >
-                  {item.done && <IconCheck className="size-5" stroke={3.5} />}
-                  {cheer?.id === item.habitId && item.done && (
-                    <span className="sparkle pointer-events-none absolute inset-0">
-                      {Array.from({ length: SPARKS }, (_, i) => (
-                        <i key={i} style={{ "--angle": `${(360 / SPARKS) * i}deg` } as React.CSSProperties} />
-                      ))}
-                    </span>
-                  )}
-                </span>
-              </label>
-              <span className="ml-2">
+                <label className="flex shrink-0 cursor-pointer items-center sm:py-3">
+                  <input
+                    type="checkbox"
+                    checked={item.done}
+                    onChange={() => toggle(item)}
+                    className="peer sr-only"
+                  />
+                  <span
+                    aria-hidden
+                    key={cheer?.id === item.habitId ? cheer.key : 0}
+                    className={`relative flex size-8 shrink-0 items-center justify-center rounded-full border-3 border-leaf bg-white text-white transition peer-checked:bg-leaf peer-focus-visible:ring-4 peer-focus-visible:ring-sky ${
+                      cheer?.id === item.habitId && item.done ? "animate-check-pop" : ""
+                    }`}
+                  >
+                    {item.done && <IconCheck className="size-5" stroke={3.5} />}
+                    {cheer?.id === item.habitId && item.done && (
+                      <span className="sparkle pointer-events-none absolute inset-0">
+                        {Array.from({ length: SPARKS }, (_, i) => (
+                          <i key={i} style={{ "--angle": `${(360 / SPARKS) * i}deg` } as React.CSSProperties} />
+                        ))}
+                      </span>
+                    )}
+                  </span>
+                </label>
                 <TaskIcon habitId={item.habitId} icon={item.icon} name={item.name} />
-              </span>
-              <div className="min-w-0 flex-1 py-3 pl-2">
+              </div>
+              <div className="min-w-0 flex-1 py-2 pl-1 sm:py-3 sm:pl-2">
                 <TaskText
                   habitId={item.habitId}
                   name={item.name}
@@ -182,7 +201,7 @@ export function TodayList({
               <Link
                 href={`/chronicle/${item.habitId}/edit?date=${today}`}
                 aria-label={`Edit ${item.name}`}
-                className="shrink-0 rounded-full p-2 text-caption transition hover:bg-sand hover:text-ink"
+                className="shrink-0 rounded-full p-1.5 text-caption transition hover:bg-sand hover:text-ink sm:p-2"
               >
                 <IconPencil className="size-5" stroke={2.25} />
               </Link>
@@ -214,7 +233,7 @@ function TimerButton({ item, open, onToggle }: { item: DayItem; open: boolean; o
       onClick={onToggle}
       aria-expanded={open}
       aria-label={`Timer for ${item.name}`}
-      className={`flex min-w-0 shrink-0 items-center gap-1 p-2 shadow-none transition hover:bg-sand ${
+      className={`flex min-w-0 shrink-0 items-center gap-1 p-1.5 shadow-none transition hover:bg-sand sm:p-2 ${
         mine ? "text-tangerine" : "text-caption hover:text-ink"
       }`}
     >

@@ -31,13 +31,13 @@ export function PreferencesForm({
         <p className="mb-2 text-caption">
           Reset at your midnight.
         </p>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-2 sm:gap-3">
           <select
             id="timeZone"
             name="timeZone"
             value={zone}
             onChange={(e) => setZone(e.target.value)}
-            className="min-w-0 flex-1 bg-white px-4 py-3 shadow-pop outline-none focus:ring-4 focus:ring-sunny"
+            className="w-full min-w-0 bg-white px-4 py-2 shadow-pop outline-none focus:ring-4 focus:ring-sunny sm:w-auto sm:flex-1 sm:py-3"
           >
             {zones.map((z) => (
               <option key={z} value={z}>
@@ -48,7 +48,7 @@ export function PreferencesForm({
           <button
             type="button"
             onClick={() => setZone(Intl.DateTimeFormat().resolvedOptions().timeZone)}
-            className="bg-white px-3 py-3 font-bold"
+            className="bg-white px-4 py-2 font-bold sm:px-3 sm:py-3"
           >
             Use this device&apos;s
           </button>
@@ -67,7 +67,7 @@ export function PreferencesForm({
                 defaultChecked={weekStart === day}
                 className="peer sr-only"
               />
-              <span className="block rounded-full bg-white px-5 py-3 font-bold text-slate-500 capitalize shadow-pop transition peer-checked:bg-tangerine peer-checked:text-white peer-focus-visible:ring-4 peer-focus-visible:ring-sky">
+              <span className="block rounded-full bg-white px-4 py-2 font-bold sm:px-5 sm:py-3 text-slate-500 capitalize shadow-pop transition peer-checked:bg-tangerine peer-checked:text-white peer-focus-visible:ring-4 peer-focus-visible:ring-sky">
                 {day}
               </span>
             </label>

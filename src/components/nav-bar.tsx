@@ -25,7 +25,7 @@ const tabs = [
 // stretching, and wobbles like jelly when it lands. A short chain of small
 // droplets trails behind it; an SVG goo filter melts it all into one liquid shape.
 const DURATION = 950; // ms for the big blob's trip
-const GOO_ID = "nav-goo";
+const GOO_ID = "nav-goo"; // also spelled out in the blob layer's md:[filter:url(#nav-goo)]
 
 // Trailing droplets, biggest first: diameter (share of the blob's height),
 // how long each waits before chasing, and its trip time.
@@ -133,7 +133,11 @@ function animateDrop(
   place(el, circle(toX));
 }
 
-/** Top pill bar; the active tab sits on a coloured gel blob. Scrolls sideways on narrow phones. */
+/**
+ * Pill bar; the active tab sits on a coloured gel blob. On phones it floats
+ * at the bottom of the screen, icons only, without the goo filter (iOS
+ * Safari paints its edges as coloured slivers outside the blob).
+ */
 export function NavBar() {
   const pathname = usePathname();
   const routeIndex = tabs.findIndex((tab) => pathname.startsWith(tab.href));
@@ -205,7 +209,7 @@ export function NavBar() {
   return (
     <nav
       aria-label="Main"
-      className="w-full max-w-full overflow-x-auto rounded-full bg-cream/90 p-5 shadow-pop sm:p-3 [scrollbar-width:none] md:w-auto md:justify-self-center"
+      className="fixed inset-x-3 bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] z-40 overflow-x-auto rounded-full bg-cream/95 p-2 shadow-pop [scrollbar-width:none] sm:inset-x-4 sm:p-3 md:static md:w-auto md:justify-self-center"
     >
       <svg aria-hidden width="0" height="0" className="absolute">
         <filter id={GOO_ID}>
@@ -225,14 +229,14 @@ export function NavBar() {
       >
         {/* Shadow outside the goo filter so it follows the merged shape. */}
         <span aria-hidden className="pointer-events-none absolute inset-0 drop-shadow-md">
-          <span className="absolute inset-0" style={{ filter: `url(#${GOO_ID})` }}>
+          <span className="absolute inset-0 md:[filter:url(#nav-goo)]">
             {DROPS.map((_, i) => (
               <span
                 key={i}
                 ref={(el) => {
                   dropRefs.current[i] = el;
                 }}
-                className="absolute rounded-full opacity-0"
+                className="absolute rounded-full opacity-0 max-md:hidden"
               />
             ))}
             <span ref={blobRef} className="absolute rounded-full opacity-0" />
@@ -256,9 +260,9 @@ export function NavBar() {
                       "text-slate-500 hover:-translate-y-0.5 hover:-rotate-3 hover:text-ink motion-reduce:hover:transform-none"
                 }`}
               >
-                <tab.icon aria-hidden className="size-6 shrink-0 sm:size-5" stroke={2.25} />
+                <tab.icon aria-hidden className="size-6 shrink-0 md:size-5" stroke={2.25} />
                 {/* Icons only on phones; the label is still read out. */}
-                <span className="sr-only sm:not-sr-only">{tab.label}</span>
+                <span className="sr-only md:not-sr-only">{tab.label}</span>
               </Link>
             </li>
           );

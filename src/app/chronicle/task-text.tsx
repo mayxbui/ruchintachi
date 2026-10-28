@@ -20,9 +20,10 @@ import { renameSeriesAction, renameTodayAction, setNoteAction } from "./actions"
  * old name). Notes belong to the whole task either way. `children` sits
  * between the name and the note (the Tasks tab's repeat rule).
  *
- * `edit` says how editing starts: "click" (Today), or "double-click" (Tasks),
- * where a click instead folds or unfolds a long note. `readOnly` shows plain
- * text, e.g. while bulk edit is selecting rows.
+ * `edit` says how renaming starts: "click" (Today) or "double-click"
+ * (Tasks). Either way a click folds or unfolds a long note and a
+ * double-click edits it. `readOnly` shows plain text, e.g. while bulk edit
+ * is selecting rows.
  */
 export function TaskText({
   habitId,
@@ -87,11 +88,7 @@ export function TaskText({
     <>
       <TaskName name={shown.name} done={done} edit={edit} onRename={rename} />
       {children}
-      {edit === "click" ? (
-        <TaskNote name={shown.name} note={shown.note} onSave={saveNote} />
-      ) : (
-        <FoldingNote name={shown.name} note={shown.note} onSave={saveNote} />
-      )}
+      <FoldingNote name={shown.name} note={shown.note} onSave={saveNote} />
       {error && (
         <p role="alert" className="mt-1 text-cherry">
           {error}
@@ -198,8 +195,9 @@ function NoteEditor({
 }
 
 /**
- * The Tasks tab's note: a long one folds to two lines, and a click unfolds
- * or folds it; double-click (or F2) edits. With no note, a click writes one.
+ * A task's note: a long one folds to one line, and a click unfolds or folds
+ * it; double-click (or F2) edits. With no note, a faint "Add a note" writes
+ * one (hidden on phones to keep rows short; the edit page has the field too).
  */
 function FoldingNote({
   name,
@@ -215,13 +213,13 @@ function FoldingNote({
   const [long, setLong] = useState(false);
   const text = useRef<HTMLSpanElement>(null);
 
-  // Long = more than two lines at the current width, folded or not.
+  // Long = more than one line at the current width, folded or not.
   useEffect(() => {
     const el = text.current;
     if (!el) return;
     const measure = () => {
       const line = parseFloat(getComputedStyle(el).lineHeight) || 24;
-      setLong(el.scrollHeight > line * 2 + 1);
+      setLong(el.scrollHeight > line + 1);
     };
     const observer = new ResizeObserver(measure);
     observer.observe(el);
@@ -246,7 +244,7 @@ function FoldingNote({
       <button
         type="button"
         onClick={() => setEditing(true)}
-        className="mt-1 -ml-3 block min-w-0 max-w-full rounded-xl bg-transparent px-3 py-1.5 text-left text-base text-caption/60 shadow-none transition hover:bg-sand/60"
+        className="mt-1 -ml-3 block min-w-0 max-w-full rounded-xl bg-transparent px-3 py-1.5 text-left text-base text-caption/60 shadow-none transition hover:bg-sand/60 max-sm:hidden"
       >
         Add a note
       </button>
@@ -261,7 +259,7 @@ function FoldingNote({
       onKeyDown={(e) => isF2(e) && setEditing(true)}
       aria-expanded={long ? open : undefined}
       data-hint={`${long ? (open ? "Click to fold. " : "Click to read it all. ") : ""}Double-click (or F2) to edit the note`}
-      className="mt-1 -ml-3 flex min-w-0 max-w-full items-start gap-1.5 rounded-xl bg-transparent px-3 py-1.5 text-left text-gray-700 shadow-none transition hover:bg-sand/60"
+      className="mt-0.5 -ml-3 flex min-w-0 max-w-full items-start gap-1.5 rounded-xl bg-transparent px-3 py-1 text-left text-gray-700 sm:mt-1 sm:py-1.5 shadow-none transition hover:bg-sand/60"
     >
       {long && (
         <IconChevronDown
@@ -272,53 +270,10 @@ function FoldingNote({
       )}
       <span
         ref={text}
-        className={`min-w-0 break-words whitespace-pre-line ${open ? "" : "line-clamp-2"}`}
+        className={`min-w-0 break-words whitespace-pre-line ${open ? "" : "line-clamp-1"}`}
       >
         {note}
       </span>
-    </button>
-  );
-}
-
-/**
- * The task's note; click it to write. Leaving the box or Ctrl/Cmd+Enter
- * saves (an empty note removes it), Escape cancels. No note shows a faint
- * "Add a note".
- */
-function TaskNote({
-  name,
-  note,
-  onSave,
-}: {
-  name: string;
-  note: string | null;
-  onSave: (note: string) => void;
-}) {
-  const [editing, setEditing] = useState(false);
-
-  if (editing) {
-    return (
-      <NoteEditor
-        name={name}
-        note={note}
-        onDone={(next) => {
-          setEditing(false);
-          if (next !== null && next !== (note ?? "")) onSave(next);
-        }}
-      />
-    );
-  }
-
-  return (
-    <button
-      type="button"
-      onClick={() => setEditing(true)}
-      data-hint={note ? "Click to edit the note" : undefined}
-      className={`mt-1 -ml-3 block min-w-0 max-w-full rounded-xl bg-transparent px-3 py-1.5 text-left break-words whitespace-pre-line shadow-none transition hover:bg-sand/60 ${
-        note ? "text-gray-700" : "text-base text-caption/60"
-      }`}
-    >
-      {note ?? "Add a note"}
     </button>
   );
 }

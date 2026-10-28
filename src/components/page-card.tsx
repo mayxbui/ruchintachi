@@ -19,8 +19,8 @@ export function PageCard({
   children: ReactNode;
 }) {
   return (
-    <section className={`rounded-blob border-6 ${borders[border]} bg-cream/90 p-6 shadow-pop`}>
-      <h1 className="mb-4 text-3xl">{title}</h1>
+    <section className={`rounded-blob border-4 ${borders[border]} bg-cream/90 p-4 shadow-pop sm:border-6 sm:p-6`}>
+      <h1 className="mb-3 text-2xl sm:mb-4 sm:text-3xl">{title}</h1>
       {children}
     </section>
   );

@@ -61,7 +61,8 @@ export function PageBackground({ background }: { background: BackgroundId }) {
   }, [layers]);
 
   return (
-    <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
+    // Large-viewport height, so it also fills the strip behind iOS Safari's toolbar.
+    <div aria-hidden className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-lvh">
       {layers.map((layer, i) => (
         <div
           key={layer.key}
