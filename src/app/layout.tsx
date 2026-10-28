@@ -5,6 +5,7 @@ import { Nunito } from "next/font/google";
 import { BackgroundButton } from "@/components/background-button";
 import { SignOutButton } from "@/components/sign-out-button";
 import { FieldWarning } from "@/components/field-warning";
+import { HoverHint } from "@/components/hover-hint";
 import { NavBar } from "@/components/nav-bar";
 import { PageBackground } from "@/components/page-background";
 import { getCurrentUser } from "@/lib/auth/session";
@@ -67,6 +68,7 @@ export default async function RootLayout({
 
         <WaveFooter />
         <FieldWarning />
+        <HoverHint />
       </body>
     </html>
   );

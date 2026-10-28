@@ -71,7 +71,7 @@ export function QuickAdd({ today, weekStart }: { today: string; weekStart: WeekS
               aria-expanded={open}
               aria-haspopup="dialog"
               aria-label="Add a due date"
-              title="Add a due date"
+              data-hint="Add a due date"
               className="flex min-w-0 items-center justify-center rounded-full bg-transparent p-2 text-caption shadow-none transition hover:bg-sand hover:text-ink"
             >
               <IconCalendarDue className="size-5" stroke={2.25} />
