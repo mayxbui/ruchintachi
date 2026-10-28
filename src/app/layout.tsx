@@ -20,7 +20,7 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "Ruchintachi — Habit Planner & Tracker",
+  title: "RuchinDachi — Habit Planner & Tracker",
   description: "A Tomodachi Life–inspired habit tracker. Keep your habits, fill your calendar with gifts.",
 };
 
@@ -42,12 +42,12 @@ export default async function RootLayout({
         <header className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-3 px-3 pt-3 sm:px-4 sm:pt-4 md:grid-cols-[1fr_auto_1fr]">
           <Link
             href="/chronicle"
-            aria-label="Ruchintachi home"
+            aria-label="RuchinDachi home"
             className="justify-self-start"
           >
             <Image
               src="/ruchintachi-logo.webp"
-              alt="Ruchintachi — Habit Planner & Tracker"
+              alt="RuchinDachi — Habit Planner & Tracker"
               width={798}
               height={615}
               priority
