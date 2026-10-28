@@ -46,9 +46,9 @@ export function SortMenu({
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-haspopup="true"
-        className="flex min-w-0 items-center gap-1.5 bg-white px-3 py-1.5 font-bold text-slate-500 transition hover:text-ink"
+        className="flex min-w-0 items-center gap-1 bg-white px-2.5 py-1 font-bold sm:gap-1.5 sm:px-3 sm:py-1.5 text-slate-500 transition hover:text-ink"
       >
-        <IconArrowsSort aria-hidden className="size-5" stroke={2.25} />
+        <IconArrowsSort aria-hidden className="size-4 sm:size-5" stroke={2.25} />
         <span className="sr-only">Sort: </span>
         {SORT_LABELS[shown.sort]}
       </button>

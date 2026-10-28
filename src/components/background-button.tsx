@@ -24,11 +24,11 @@ export function BackgroundButton({ background }: { background: BackgroundId }) {
         aria-expanded={open}
         aria-controls={id}
         onClick={() => setOpen((o) => !o)}
-        className={`flex size-13 min-w-0 items-center justify-center rounded-2xl bg-cream/90 text-slate-500 shadow-pop transition duration-300 ease-[cubic-bezier(.3,1.8,.5,1)] hover:-translate-y-0.5 hover:-rotate-6 hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sunny motion-reduce:hover:transform-none ${
+        className={`flex size-11 min-w-0 items-center justify-center rounded-2xl bg-cream/90 text-slate-500 shadow-pop transition duration-300 ease-[cubic-bezier(.3,1.8,.5,1)] hover:-translate-y-0.5 hover:-rotate-6 hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sunny motion-reduce:hover:transform-none ${
           open ? "text-ink ring-4 ring-sunny" : ""
         }`}
       >
-        <IconBackground aria-hidden className="size-6" stroke={2.25} />
+        <IconBackground aria-hidden className="size-5 sm:size-6" stroke={2.25} />
       </button>
       {open && (
         <div

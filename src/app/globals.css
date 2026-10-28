@@ -166,9 +166,12 @@ body {
 @layer base {
   /* Nunito is variable (200–1000): body 700, font-bold 800, headings 900. */
   body,p {
-    font-size: 1.125rem; /* 18px; text-sm/text-lg etc. still set their own size */
+    font-size: 1rem; /* 16px on phones, 18px from sm up; text-sm/text-lg etc. still set their own size */
     font-weight: 700;
     letter-spacing: -0.025em;
+    @variant sm {
+      font-size: 1.125rem;
+    }
   }
   h1,
   h2,
@@ -200,8 +203,11 @@ body {
   button,
   input[type="submit"],
   input[type="button"] {
-    min-width: 6rem;
-    
+    min-width: 4.5rem;
+    @variant sm {
+      min-width: 6rem;
+    }
+
     border: 0;
     border-radius: 9999px;
     box-shadow: var(--shadow-pop);

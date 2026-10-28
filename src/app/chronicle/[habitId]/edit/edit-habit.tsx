@@ -58,7 +58,7 @@ export function EditHabit({
       : "Delete this day and future";
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <p className="text-caption">
         {repeating ? `Changing ${dateLabel}` : `On ${dateLabel}`}. Past days stay as they were.
       </p>
@@ -66,9 +66,10 @@ export function EditHabit({
       {repeating && (
         <fieldset>
           <legend className="sr-only">What to change</legend>
-          <div className="flex flex-wrap gap-2">
+          {/* Both choices on one line, sharing the width on phones. */}
+          <div className="flex gap-2">
             {SCOPES.map((s) => (
-              <label key={s.value} className="cursor-pointer">
+              <label key={s.value} className="min-w-0 flex-1 cursor-pointer sm:flex-none">
                 <input
                   type="radio"
                   name="scope"
@@ -77,7 +78,7 @@ export function EditHabit({
                   onChange={() => setScope(s.value)}
                   className="peer sr-only"
                 />
-                <span className="block rounded-full bg-white px-4 py-2 font-bold text-slate-500 shadow-pop transition peer-checked:bg-tangerine peer-checked:text-white peer-focus-visible:ring-4 peer-focus-visible:ring-sky">
+                <span className="block rounded-full bg-white px-2 py-2 text-center text-sm font-bold whitespace-nowrap text-slate-500 shadow-pop transition sm:px-4 sm:text-lg peer-checked:bg-tangerine peer-checked:text-white peer-focus-visible:ring-4 peer-focus-visible:ring-sky">
                   {s.label}
                 </span>
               </label>

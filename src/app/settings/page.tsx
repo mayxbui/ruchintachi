@@ -32,7 +32,7 @@ export default async function SettingsPage() {
   const timeZones = ["UTC", ...Intl.supportedValuesOf("timeZone").filter((z) => z !== "UTC")];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <PageCard title="Settings" border="sunny">
         <PreferencesForm
           timeZone={user.timeZone}
@@ -49,7 +49,7 @@ export default async function SettingsPage() {
           <dd className="font-mono">{user.friendCode}</dd>
         </dl>
         <form action={signOut}>
-          <button type="submit" className="bg-white px-6 py-3 font-bold">
+          <button type="submit" className="bg-white px-4 py-2 font-bold sm:px-6 sm:py-3">
             Sign out
           </button>
         </form>

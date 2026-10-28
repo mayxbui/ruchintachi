@@ -47,7 +47,7 @@ export default async function EditHabitPage({
 
   if (!date) {
     return (
-      <PageCard title="Edit task">
+      <PageCard title="Edit">
         <p className="mb-4 text-caption">
           &ldquo;{habit.name}&rdquo; has no days left, and past days stay as they were.
         </p>
@@ -62,7 +62,7 @@ export default async function EditHabitPage({
   const dayName = occurrenceOn(habit, date, exceptions)?.name ?? habit.name;
 
   return (
-    <PageCard title="Edit task">
+    <PageCard title="Edit">
       <EditHabit
         repeating={repeating}
         dateLabel={formatDate(date)}
