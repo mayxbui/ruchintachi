@@ -20,7 +20,7 @@ export function BackgroundButton({ background }: { background: BackgroundId }) {
       <button
         type="button"
         aria-label="Change background"
-        title="Change background"
+        data-hint="Change background"
         aria-expanded={open}
         aria-controls={id}
         onClick={() => setOpen((o) => !o)}

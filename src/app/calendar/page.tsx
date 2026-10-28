@@ -100,7 +100,7 @@ export default async function CalendarPage({
                           className={`absolute bottom-1 left-1/2 size-4/5 -translate-x-1/2 sm:bottom-2 ${
                             inMonth ? "" : "opacity-50"
                           }`}
-                          title={gift.name}
+                          data-hint={gift.name}
                         >
                           <ItemSprite item={gift} size={64} fill />
                         </span>

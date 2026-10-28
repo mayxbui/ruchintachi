@@ -154,7 +154,7 @@ function TaskName({
       onClick={click ? () => setEditing(true) : undefined}
       onDoubleClick={click ? undefined : () => setEditing(true)}
       onKeyDown={click ? undefined : (e) => isF2(e) && setEditing(true)}
-      title={click ? "Click to rename" : "Double-click (or F2) to rename"}
+      data-hint={click ? "Click to rename" : "Double-click (or F2) to rename"}
       className={`-ml-2 block min-w-0 max-w-full rounded-lg bg-transparent px-2 text-left font-bold break-words shadow-none transition hover:bg-sand/60 ${
         done ? "text-caption line-through" : ""
       }`}
@@ -260,7 +260,7 @@ function FoldingNote({
       onDoubleClick={() => setEditing(true)}
       onKeyDown={(e) => isF2(e) && setEditing(true)}
       aria-expanded={long ? open : undefined}
-      title={`${long ? (open ? "Click to fold. " : "Click to read it all. ") : ""}Double-click (or F2) to edit the note`}
+      data-hint={`${long ? (open ? "Click to fold. " : "Click to read it all. ") : ""}Double-click (or F2) to edit the note`}
       className="mt-1 -ml-3 flex min-w-0 max-w-full items-start gap-1.5 rounded-xl bg-transparent px-3 py-1.5 text-left text-gray-700 shadow-none transition hover:bg-sand/60"
     >
       {long && (
@@ -313,7 +313,7 @@ function TaskNote({
     <button
       type="button"
       onClick={() => setEditing(true)}
-      title={note ? "Click to edit the note" : undefined}
+      data-hint={note ? "Click to edit the note" : undefined}
       className={`mt-1 -ml-3 block min-w-0 max-w-full rounded-xl bg-transparent px-3 py-1.5 text-left break-words whitespace-pre-line shadow-none transition hover:bg-sand/60 ${
         note ? "text-gray-700" : "text-base text-caption/60"
       }`}
