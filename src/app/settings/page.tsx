@@ -33,7 +33,7 @@ export default async function SettingsPage() {
 
   return (
     <div className="space-y-6">
-      <PageCard title="Settings">
+      <PageCard title="Settings" border="sunny">
         <PreferencesForm
           timeZone={user.timeZone}
           weekStart={user.weekStart}
@@ -41,7 +41,7 @@ export default async function SettingsPage() {
         />
       </PageCard>
 
-      <PageCard title="Account">
+      <PageCard title="Account" border="sunny">
         <dl className="mb-5 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2">
           <dt className="font-bold">Username</dt>
           <dd>{user.username}</dd>
@@ -55,15 +55,15 @@ export default async function SettingsPage() {
         </form>
       </PageCard>
 
-      <PageCard title="Recovery code">
+      <PageCard title="Recovery code" border="sunny">
         <RecoveryCodeForm />
       </PageCard>
 
-      <PageCard title="Delete account">
+      <PageCard title="Delete account" border="sunny">
         <DeleteAccountForm username={user.username} />
       </PageCard>
 
-      <PageCard title="FAQ">
+      <PageCard title="FAQ" border="sunny">
         {/* Native <details>: each question toggles its answer, no JS needed. */}
         <div className="space-y-3">
           {faq.map(({ q, a }) => (

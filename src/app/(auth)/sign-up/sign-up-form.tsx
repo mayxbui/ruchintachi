@@ -68,7 +68,7 @@ export function SignUpForm() {
       />
       <div className="flex flex-wrap items-center gap-4 pt-2">
         <SubmitButton pendingLabel="Moving in…">Sign up</SubmitButton>
-        <Link href="/sign-in" className="font-bold text-sky underline">
+        <Link href="/sign-in" className="font-bold text-caption underline">
           I already have an account
         </Link>
       </div>

@@ -65,7 +65,7 @@ export function RecoverForm() {
       />
       <div className="flex flex-wrap items-center gap-4 pt-2">
         <SubmitButton pendingLabel="Checking…">Reset password</SubmitButton>
-        <Link href="/sign-in" className="font-bold text-sky underline">
+        <Link href="/sign-in" className="font-bold text-caption underline">
           Back to sign in
         </Link>
       </div>

@@ -11,7 +11,7 @@ import { formatDate } from "@/lib/describe-rule";
 import { getItem, type Item } from "@/lib/items";
 
 const navClass =
-  "flex size-10 min-w-0 items-center justify-center rounded-full bg-white text-ink shadow-pop transition hover:-translate-y-0.5";
+  "flex size-10 min-w-0 items-center justify-center rounded-full bg-dark-blue text-white shadow-pop transition hover:-translate-y-0.5";
 
 /** Month grid that fills with gifts: each day that earned one shows its sprite (#19). */
 export default async function CalendarPage({
@@ -85,7 +85,7 @@ export default async function CalendarPage({
                     <div
                       className={`relative aspect-square rounded-xl sm:rounded-2xl ${
                         inMonth ? "bg-white shadow-pop" : "bg-white/40"
-                      } ${isToday ? "ring-3 ring-sky !bg-light-sky/80" : ""}`}
+                      } ${isToday ? "ring-3 ring-sky !bg-light-sky/60" : ""}`}
                     >
                       <span
                         aria-hidden
@@ -97,7 +97,7 @@ export default async function CalendarPage({
                       </span>
                       {gift && (
                         <span
-                          className={`absolute bottom-1 left-1/2 size-3/5 -translate-x-1/2 sm:bottom-2 ${
+                          className={`absolute bottom-1 left-1/2 size-4/5 -translate-x-1/2 sm:bottom-2 ${
                             inMonth ? "" : "opacity-50"
                           }`}
                           title={gift.name}

@@ -4,12 +4,14 @@ import type { ReactNode } from "react";
 const borders = {
   sunny: "border-sunny",
   sky: "border-sky", // Calendar, matching its nav pill
+  pink: "border-light-pink",
+  cherry: "border-light-cherry",
 } as const;
 
 /** Rounded white card used as the main panel on every page. */
 export function PageCard({
   title,
-  border = "sunny",
+  border = "cherry",
   children,
 }: {
   title: string;
