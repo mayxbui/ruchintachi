@@ -1,0 +1,63 @@
+# Builds the app on every push to main and publishes it as the rolling
+# `deploy-latest` release. The VM downloads it with deploy/deploy.sh, so the
+# server never installs packages or builds (#22).
+name: Build release
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["README.md", "deploy/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-release
+  cancel-in-progress: true
+
+jobs:
+  build:
+    # Same OS and Node major as the VM, so better-sqlite3 and argon2 get
+    # native binaries that run there.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+      - run: pnpm build
+
+      - name: Pack
+        run: |
+          set -euo pipefail
+          out=release
+          cp -a .next/standalone "$out"
+          cp -a public "$out/public"
+          mkdir -p "$out/.next"
+          cp -a .next/static "$out/.next/static"
+          cp -a drizzle "$out/drizzle"
+          echo "$GITHUB_SHA" > "$out/REVISION"
+          tar -czf ruchintachi.tar.gz -C "$out" .
+          ls -lh ruchintachi.tar.gz
+
+      - name: Upload to the deploy-latest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if ! gh release view deploy-latest >/dev/null 2>&1; then
+            gh release create deploy-latest --prerelease --target main \
+              --title "Latest build" --notes "Rolling build of main for deploy/deploy.sh."
+          fi
+          gh release upload deploy-latest ruchintachi.tar.gz --clobber
+          gh release edit deploy-latest --notes "Build of ${GITHUB_SHA} (run ${GITHUB_RUN_ID})."
