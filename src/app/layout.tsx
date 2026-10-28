@@ -36,7 +36,10 @@ export default async function RootLayout({
   const user = await getCurrentUser();
   return (
     <html lang="en" className={nunito.variable}>
-      <body className="flex min-h-dvh flex-col font-sans antialiased">
+      <body
+        // Large-viewport height: the footer reaches the screen's bottom edge, behind iOS Safari's toolbar.
+        className="flex min-h-lvh flex-col font-sans antialiased"
+      >
         <PageBackground background={user?.background ?? DEFAULT_BACKGROUND} />
         {/* Logo left, nav centred on one line; on phones the nav floats at the bottom of the screen. */}
         <header className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-3 px-3 pt-3 sm:px-4 sm:pt-4 md:grid-cols-[1fr_auto_1fr]">
@@ -68,7 +71,7 @@ export default async function RootLayout({
           {children}
         </main>
 
-        <WaveFooter />
+        <WaveFooter clearNav={!!user} />
         <FieldWarning />
         <HoverHint />
       </body>
@@ -85,7 +88,7 @@ const WAVE =
  * like the Tomodachi Life: Living the Dream wallpapers. Stretched to the
  * page width, so phones see fewer, wider bumps.
  */
-function WaveFooter() {
+function WaveFooter({ clearNav }: { clearNav: boolean }) {
   return (
     <footer className="mt-auto">
       <svg
@@ -105,8 +108,14 @@ function WaveFooter() {
           className="stroke-tangerine-deep"
         />
       </svg>
-      {/* Extra room on phones so the floating navbar doesn't cover the text. */}
-      <div className="bg-tangerine px-4 pb-28 md:pb-6">
+      {/* When signed in, extra room on phones so the floating navbar doesn't cover the text. */}
+      <div
+        className={`bg-tangerine px-4 ${
+          clearNav
+            ? "pb-[calc(env(safe-area-inset-bottom)+5.5rem)] md:pb-6"
+            : "pb-[calc(env(safe-area-inset-bottom)+1.5rem)]"
+        }`}
+      >
         <p className="mx-auto max-w-5xl text-center text-sm text-white sm:text-lg">
           Crafted by <span className="text-base font-black text-sunny sm:text-lg">mayxbui</span>. <br></br>
           <span className="text-xs sm:text-sm">Tomodachi Life and its assets are registered trademarks of © Nintendo Co., Ltd. Sprite rips courtesy of The Spriters Resource contributors. Item icons from tlmodding/ltd-images. Item data from the community sheet by echocolat, phil_macrocheira and superspazzy.</span>

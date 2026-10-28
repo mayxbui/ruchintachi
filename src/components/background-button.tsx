@@ -16,7 +16,9 @@ export function BackgroundButton({ background }: { background: BackgroundId }) {
   useDismiss(open, close, ref);
 
   return (
-    <div ref={ref} className="relative">
+    // On phones the picker hangs from the header's button pair (so it fits on
+    // screen); from md up, from this button.
+    <div ref={ref} className="md:relative">
       <button
         type="button"
         aria-label="Change background"

@@ -148,43 +148,40 @@ export function TodayList({
                   <IconGripVertical className="size-5" stroke={2.25} />
                 </button>
               )}
-              {/* Check above icon on phones, side by side from sm up. */}
-              <div
-                className={`flex shrink-0 flex-col items-center gap-1 py-2 sm:flex-row sm:gap-3 sm:py-0 ${reorderable ? "pl-1" : "pl-3 sm:pl-4"}`}
+              <label
+                className={`flex shrink-0 cursor-pointer items-center py-3 ${reorderable ? "pl-1" : "pl-3 sm:pl-4"}`}
               >
-                <label className="flex shrink-0 cursor-pointer items-center sm:py-3">
-                  <input
-                    type="checkbox"
-                    checked={item.done}
-                    onChange={() => toggle(item)}
-                    className="peer sr-only"
-                  />
-                  <span
-                    aria-hidden
-                    key={cheer?.id === item.habitId ? cheer.key : 0}
-                    className={`relative flex size-8 shrink-0 items-center justify-center rounded-full border-3 border-leaf bg-white text-white transition peer-checked:bg-leaf peer-focus-visible:ring-4 peer-focus-visible:ring-sky ${
-                      cheer?.id === item.habitId && item.done ? "animate-check-pop" : ""
-                    }`}
-                  >
-                    {item.done && <IconCheck className="size-5" stroke={3.5} />}
-                    {cheer?.id === item.habitId && item.done && (
-                      <span className="sparkle pointer-events-none absolute inset-0">
-                        {Array.from({ length: SPARKS }, (_, i) => (
-                          <i key={i} style={{ "--angle": `${(360 / SPARKS) * i}deg` } as React.CSSProperties} />
-                        ))}
-                      </span>
-                    )}
-                  </span>
-                </label>
-                <TaskIcon habitId={item.habitId} icon={item.icon} name={item.name} />
-              </div>
-              <div className="min-w-0 flex-1 py-2 pl-1 sm:py-3 sm:pl-2">
+                <input
+                  type="checkbox"
+                  checked={item.done}
+                  onChange={() => toggle(item)}
+                  className="peer sr-only"
+                />
+                <span
+                  aria-hidden
+                  key={cheer?.id === item.habitId ? cheer.key : 0}
+                  className={`relative flex size-8 shrink-0 items-center justify-center rounded-full border-3 border-leaf bg-white text-white transition peer-checked:bg-leaf peer-focus-visible:ring-4 peer-focus-visible:ring-sky ${
+                    cheer?.id === item.habitId && item.done ? "animate-check-pop" : ""
+                  }`}
+                >
+                  {item.done && <IconCheck className="size-5" stroke={3.5} />}
+                  {cheer?.id === item.habitId && item.done && (
+                    <span className="sparkle pointer-events-none absolute inset-0">
+                      {Array.from({ length: SPARKS }, (_, i) => (
+                        <i key={i} style={{ "--angle": `${(360 / SPARKS) * i}deg` } as React.CSSProperties} />
+                      ))}
+                    </span>
+                  )}
+                </span>
+              </label>
+              <div className="min-w-0 flex-1 py-2 pl-2 sm:py-3 sm:pl-3">
                 <TaskText
                   habitId={item.habitId}
                   name={item.name}
                   note={item.note}
                   done={item.done}
                   scope="today"
+                  lead={<TaskIcon habitId={item.habitId} icon={item.icon} name={item.name} />}
                 >
                   {item.dueDate && !item.done && (
                     <span className="block">
