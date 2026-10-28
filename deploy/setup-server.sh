@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # One-time server setup on the Ubuntu VM (issues #20, #21, #22, #23).
 # Copy the whole deploy/ folder to the VM, then run:
-#   sudo SITE_ADDRESS=ruchintachi.northcentralus.cloudapp.azure.com bash deploy/setup-server.sh
+#   sudo SITE_ADDRESS="ruchintachi.me, www.ruchintachi.me, ruchintachi.northcentralus.cloudapp.azure.com" bash deploy/setup-server.sh
+# On a re-run SITE_ADDRESS can be left out; the addresses already in
+# /etc/default/caddy are kept.
 #
 # Installs Node LTS, Caddy, the GitHub CLI and sqlite3, adds swap, locks the
 # firewall to 22/80/443, creates the app user and directories, and installs the
@@ -9,7 +11,11 @@
 # here: deploy.sh downloads the finished build from GitHub. Safe to re-run.
 set -euo pipefail
 
-SITE_ADDRESS="${SITE_ADDRESS:?set SITE_ADDRESS to the domain or Azure DNS name}"
+SITE_ADDRESS="${SITE_ADDRESS:-}"
+if [ -z "$SITE_ADDRESS" ] && [ ! -f /etc/default/caddy ]; then
+  echo "set SITE_ADDRESS to the domain(s) for Caddy, e.g. SITE_ADDRESS=\"ruchintachi.me, www.ruchintachi.me\"" >&2
+  exit 1
+fi
 NODE_MAJOR="${NODE_MAJOR:-24}"  # must match node-version in .github/workflows/build-release.yml
 APP_USER=ruchintachi
 APP_DIR=/opt/ruchintachi
@@ -102,8 +108,10 @@ GH_TOKEN=
 EOF
 fi
 
-# Caddy reverse proxy with automatic HTTPS
-echo "SITE_ADDRESS=$SITE_ADDRESS" > /etc/default/caddy
+# Caddy reverse proxy with automatic HTTPS. Only overwrite the addresses when given.
+if [ -n "$SITE_ADDRESS" ]; then
+  echo "SITE_ADDRESS=$SITE_ADDRESS" > /etc/default/caddy
+fi
 install -m 644 "$HERE/Caddyfile" /etc/caddy/Caddyfile
 mkdir -p /etc/systemd/system/caddy.service.d
 install -m 644 /dev/stdin /etc/systemd/system/caddy.service.d/env.conf <<'EOF'
