@@ -1,6 +1,8 @@
+import Link from "next/link";
 import { PageCard } from "@/components/page-card";
 import { signOut } from "@/lib/auth/actions";
 import { requireUser } from "@/lib/auth/session";
+import { formatUpdateDate, updates } from "@/lib/whats-new";
 import {
   DeleteAccountForm,
   PreferencesForm,
@@ -27,6 +29,7 @@ const faq = [
 ];
 
 export default async function SettingsPage() {
+  const latest = updates[0];
   const user = await requireUser();
   // "UTC" isn't in the IANA list Node returns, so add it back.
   const timeZones = ["UTC", ...Intl.supportedValuesOf("timeZone").filter((z) => z !== "UTC")];
@@ -61,6 +64,17 @@ export default async function SettingsPage() {
 
       <PageCard title="Delete account" border="sunny">
         <DeleteAccountForm username={user.username} />
+      </PageCard>
+
+      <PageCard title="What's new" border="sunny">
+        <p className="text-sm font-bold text-caption">{formatUpdateDate(latest.date)}</p>
+        <p className="mb-4 font-bold">{latest.title}</p>
+        <Link
+          href="/settings/whats-new"
+          className="inline-block rounded-full bg-white px-4 py-2 font-bold shadow-pop sm:px-6 sm:py-3"
+        >
+          See all updates
+        </Link>
       </PageCard>
 
       <PageCard title="FAQ" border="sunny">

@@ -1,0 +1,48 @@
+[
+  {
+    "date": "2026-10-28",
+    "title": "A fresh name and a tidier phone view",
+    "changes": [
+      "Ruchintachi is now RuchinDachi, with a brand-new logo.",
+      "On phones the navbar floats at the bottom of the screen, and task rows are more compact.",
+      "One-off tasks can have a due date. Pick one with the calendar button in quick add.",
+      "Edit several tasks at once with bulk edit.",
+      "Notes on a task fold away until you need them.",
+      "Hover hints now match the rest of the site."
+    ]
+  },
+  {
+    "date": "2026-10-27",
+    "title": "Your calendar fills with gifts",
+    "changes": [
+      "Each day you earned a gift shows that gift on the Calendar.",
+      "The inventory lists everything you've collected, with a count for duplicates.",
+      "Item icons are sharper."
+    ]
+  },
+  {
+    "date": "2026-10-26",
+    "title": "Daily gifts and page backgrounds",
+    "changes": [
+      "Finish every repeating task for the day and your Mii gives you a gift.",
+      "Pricier items are rarer, so keep an eye out for treasure.",
+      "Pick a page background with the round button next to the navbar. There are seven new ones to choose from.",
+      "Custom repeats, like every 3 days or the second Tuesday of each month.",
+      "Arrange today's tasks in your own order and change a task's icon right from its row.",
+      "Ticking a task off now sparkles."
+    ]
+  },
+  {
+    "date": "2026-10-25",
+    "title": "My Chronicle opens",
+    "changes": [
+      "My Chronicle has two tabs: Today for what's due now, and Tasks for everything else.",
+      "Sort your tasks into lists you make yourself.",
+      "Quick add a task, or edit one right where it is.",
+      "Sort tasks or drag them to reorder. Unfinished ones stay on top.",
+      "A countdown timer for today's tasks.",
+      "When you edit or delete a repeating task, choose \"only this day\" or \"this day and future\".",
+      "A new look, with a jelly navbar."
+    ]
+  }
+]
