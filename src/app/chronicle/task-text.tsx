@@ -23,7 +23,8 @@ import { renameSeriesAction, renameTodayAction, setNoteAction } from "./actions"
  * `edit` says how renaming starts: "click" (Today) or "double-click"
  * (Tasks). Either way a click folds or unfolds a long note and a
  * double-click edits it. `readOnly` shows plain text, e.g. while bulk edit
- * is selecting rows.
+ * is selecting rows. `lead` sits left of the name on its line (Today's
+ * icon), so the note below gets the full width.
  */
 export function TaskText({
   habitId,
@@ -33,6 +34,7 @@ export function TaskText({
   scope,
   edit = "click",
   readOnly = false,
+  lead,
   children,
 }: {
   habitId: string;
@@ -42,6 +44,7 @@ export function TaskText({
   scope: "today" | "series";
   edit?: EditGesture;
   readOnly?: boolean;
+  lead?: ReactNode;
   children?: ReactNode;
 }) {
   const [shown, change] = useOptimistic(
@@ -86,7 +89,16 @@ export function TaskText({
 
   return (
     <>
-      <TaskName name={shown.name} done={done} edit={edit} onRename={rename} />
+      {lead ? (
+        <div className="flex items-center gap-2">
+          {lead}
+          <div className="min-w-0 flex-1">
+            <TaskName name={shown.name} done={done} edit={edit} onRename={rename} />
+          </div>
+        </div>
+      ) : (
+        <TaskName name={shown.name} done={done} edit={edit} onRename={rename} />
+      )}
       {children}
       <FoldingNote name={shown.name} note={shown.note} onSave={saveNote} />
       {error && (
@@ -195,8 +207,8 @@ function NoteEditor({
 }
 
 /**
- * A task's note: a long one folds to one line, and a click unfolds or folds
- * it; double-click (or F2) edits. With no note, a faint "Add a note" writes
+ * A task's note: a long one folds to one line (cut off at the row's edge),
+ * and a click unfolds or folds it; double-click (or F2) edits. With no note, a faint "Add a note" writes
  * one (hidden on phones to keep rows short; the edit page has the field too).
  */
 function FoldingNote({
@@ -213,18 +225,23 @@ function FoldingNote({
   const [long, setLong] = useState(false);
   const text = useRef<HTMLSpanElement>(null);
 
-  // Long = more than one line at the current width, folded or not.
+  // Long = more than one line at the current width: folded, it overflows
+  // sideways or has line breaks; unfolded, it wraps.
   useEffect(() => {
     const el = text.current;
     if (!el) return;
     const measure = () => {
       const line = parseFloat(getComputedStyle(el).lineHeight) || 24;
-      setLong(el.scrollHeight > line + 1);
+      setLong(
+        open
+          ? el.scrollHeight > line + 1
+          : el.scrollWidth > el.clientWidth + 1 || (note ?? "").includes("\n"),
+      );
     };
     const observer = new ResizeObserver(measure);
     observer.observe(el);
     return () => observer.disconnect();
-  }, [note, editing]);
+  }, [note, editing, open]);
 
   if (editing) {
     return (
@@ -259,7 +276,7 @@ function FoldingNote({
       onKeyDown={(e) => isF2(e) && setEditing(true)}
       aria-expanded={long ? open : undefined}
       data-hint={`${long ? (open ? "Click to fold. " : "Click to read it all. ") : ""}Double-click (or F2) to edit the note`}
-      className="mt-0.5 -ml-3 flex min-w-0 max-w-full items-start gap-1.5 rounded-xl bg-transparent px-3 py-1 text-left text-gray-700 sm:mt-1 sm:py-1.5 shadow-none transition hover:bg-sand/60"
+      className="mt-0.5 -ml-3 flex w-[calc(100%+0.75rem)] min-w-0 items-start gap-1.5 rounded-xl bg-transparent px-3 py-1 text-left text-gray-700 sm:mt-1 sm:py-1.5 shadow-none transition hover:bg-sand/60"
     >
       {long && (
         <IconChevronDown
@@ -270,7 +287,7 @@ function FoldingNote({
       )}
       <span
         ref={text}
-        className={`min-w-0 break-words whitespace-pre-line ${open ? "" : "line-clamp-1"}`}
+        className={`min-w-0 flex-1 ${open ? "break-words whitespace-pre-line" : "truncate"}`}
       >
         {note}
       </span>
