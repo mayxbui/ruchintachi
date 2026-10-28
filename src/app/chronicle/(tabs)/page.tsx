@@ -37,7 +37,7 @@ export default async function TodayPage() {
         <p className="text-caption">{formatDate(today)}</p>
         <SortMenu sort={user.taskSort} doneLast={user.doneLast} />
       </div>
-      <QuickAdd />
+      <QuickAdd today={today} weekStart={user.weekStart} />
       <TodayList
         items={items}
         today={today}

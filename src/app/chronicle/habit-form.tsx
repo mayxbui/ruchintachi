@@ -132,6 +132,7 @@ export function HabitForm({
   const [endCount, setEndCount] = useState(String(initial?.endCount ?? 10));
   const [note, setNote] = useState(initial?.note ?? "");
   const [dueDate, setDueDate] = useState(initial?.dueDate ?? "");
+  const [madeOnce, setMadeOnce] = useState(false); // a due date just switched Repeats to "Just once"
   const [listId, setListId] = useState(initial?.listId ?? defaultListId ?? "");
   const [newListName, setNewListName] = useState("");
 
@@ -160,6 +161,18 @@ export function HabitForm({
   function chooseRepeat(value: RepeatChoice) {
     setRepeat(value);
     startWeekly(value === "custom" ? unit : value);
+    // Only one-off tasks have a due date.
+    if (value !== "none") setDueDate("");
+    setMadeOnce(false);
+  }
+
+  // Due dates are for one-off tasks, so picking one makes the task "Just once".
+  function chooseDueDate(date: string) {
+    setDueDate(date);
+    if (repeat !== "none") {
+      setRepeat("none");
+      setMadeOnce(true);
+    }
   }
 
   function chooseUnit(value: Unit) {
@@ -236,26 +249,26 @@ export function HabitForm({
         )}
         <Dropdown label="Repeats" name="repeat" value={repeat} options={REPEATS} onChange={chooseRepeat} />
       </div>
-      {frequency === "none" && (
-        <div className="grid grid-cols-2 gap-2 sm:gap-3">
-          <DatePicker
-            label="Due date (optional)"
-            name="dueDate"
-            value={dueDate}
-            onChange={setDueDate}
-            onClear={() => setDueDate("")}
-            placeholder="No due date"
-            min={startDate || today}
-            today={today}
-            weekStart={weekStart}
-          />
-          {dueDate && (
-            <p className="self-end pb-3 text-sm text-caption">
-              Stays on Today until it&rsquo;s done, even after the due date.
-            </p>
-          )}
-        </div>
-      )}
+      <div className="grid grid-cols-2 gap-2 sm:gap-3">
+        <DatePicker
+          label="Due date (optional)"
+          name="dueDate"
+          value={dueDate}
+          onChange={chooseDueDate}
+          onClear={() => setDueDate("")}
+          placeholder="No due date"
+          min={startDate || today}
+          today={today}
+          weekStart={weekStart}
+        />
+        <p className="self-end pb-1 text-sm text-caption" aria-live="polite">
+          {madeOnce
+            ? "Repeats is now “Just once”: due dates are for one-off tasks."
+            : dueDate
+              ? "Stays on Today until it’s done, even after the due date."
+              : "For one-off tasks, like homework due tomorrow."}
+        </p>
+      </div>
       <input type="hidden" name="frequency" value={frequency} />
       <input type="hidden" name="interval" value={every} />
       <input type="hidden" name="monthWeek" value={byWeekday ? monthPosition : ""} />

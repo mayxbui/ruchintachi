@@ -172,7 +172,10 @@ export async function reorderHabitsAction(orderedIds: string[]): Promise<{ error
 
 export type QuickAddState = { error?: string; added?: number };
 
-/** The quick "Add a task" box on Today: a one-off task for today, made at once. */
+/**
+ * The quick "Add a task" box on Today: a one-off task for today, made at
+ * once, with an optional due date (it then carries over until done).
+ */
 export async function quickAddTaskAction(
   _prev: QuickAddState,
   formData: FormData,
@@ -193,7 +196,7 @@ export async function quickAddTaskAction(
       endType: "never",
       endDate: "",
       endCount: "",
-      dueDate: "",
+      dueDate: String(formData.get("dueDate") ?? ""),
     },
     today,
   );
