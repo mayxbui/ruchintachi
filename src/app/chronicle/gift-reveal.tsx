@@ -1,16 +1,17 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { ItemSprite } from "@/components/item-sprite";
 import type { DailyGift } from "./actions";
 
-const WOBBLE_MS = 1400; // how long the wrapped present shakes before it opens
-const BURST = 10; // puffs when the lid pops
+const WOBBLE_MS = 1400; // how long the paper bag shakes before it opens
+const BURST = 10; // puffs when it opens
 
 /**
- * Tomodachi-style present reveal for the daily gift (#17): a wrapped box
- * wobbles, its lid pops off and the item rises out with its name. Tapping
- * the box opens it straight away. With reduced motion it opens at once.
+ * Tomodachi-style gift reveal for the daily gift (#17): the game's paper bag
+ * wobbles, pops open and the item rises out with its name. Tapping the bag
+ * opens it straight away. With reduced motion it opens at once.
  */
 export function GiftReveal({ gift, onClose }: { gift: DailyGift; onClose: () => void }) {
   const [open, setOpen] = useState(false);
@@ -65,10 +66,10 @@ export function GiftReveal({ gift, onClose }: { gift: DailyGift; onClose: () => 
             <button
               type="button"
               onClick={() => setOpen(true)}
-              aria-label="Open the present"
+              aria-label="Open the gift bag"
               className="animate-gift-wobble relative min-w-0 rounded-none bg-transparent shadow-none"
             >
-              <Present />
+              <Image src="/ItemPaperbag.png" alt="" width={128} height={128} priority className="size-32" />
             </button>
           )}
         </div>
@@ -94,22 +95,5 @@ export function GiftReveal({ gift, onClose }: { gift: DailyGift; onClose: () => 
         </button>
       </div>
     </div>
-  );
-}
-
-/** A wrapped present drawn in CSS: tangerine box, sunny ribbon and bow. */
-function Present() {
-  return (
-    <span aria-hidden className="relative block h-32 w-32">
-      {/* Bow */}
-      <span className="absolute top-0 left-1/2 size-9 -translate-x-[110%] rotate-[-25deg] rounded-full border-6 border-sunny" />
-      <span className="absolute top-0 left-1/2 size-9 translate-x-[10%] rotate-[25deg] rounded-full border-6 border-sunny" />
-      {/* Lid */}
-      <span className="absolute top-7 left-0 h-8 w-32 rounded-xl bg-cherry shadow-pop" />
-      {/* Box */}
-      <span className="absolute top-14 left-2 h-18 w-28 rounded-b-2xl bg-tangerine" />
-      {/* Ribbon */}
-      <span className="absolute top-7 left-1/2 h-25 w-5 -translate-x-1/2 bg-sunny" />
-    </span>
   );
 }

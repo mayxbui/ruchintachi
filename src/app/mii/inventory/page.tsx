@@ -14,7 +14,7 @@ export default async function InventoryPage() {
   const { total, kinds } = inventoryTotals(groups);
 
   return (
-    <PageCard title="My items">
+    <PageCard title="My items" border="pink">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <p className="text-caption">
           {total === 0

@@ -27,13 +27,13 @@ export function SignInForm() {
       />
       <div className="flex flex-wrap items-center gap-4 pt-2">
         <SubmitButton pendingLabel="Signing in…">Sign in</SubmitButton>
-        <Link href="/recover" className="font-bold text-sky underline">
+        <Link href="/recover" className="font-bold text-caption underline">
           Forgot password?
         </Link>
       </div>
       <p className="pt-2 text-caption">
         New here?{" "}
-        <Link href="/sign-up" className="font-bold text-sky underline">
+        <Link href="/sign-up" className="font-bold text-caption underline">
           Sign up
         </Link>
       </p>

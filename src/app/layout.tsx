@@ -42,18 +42,18 @@ export default async function RootLayout({
             className="justify-self-start"
           >
             <Image
-              src="/ruchintachi-logo.png"
+              src="/ruchintachi-logo.webp"
               alt="Ruchintachi — Habit Planner & Tracker"
-              width={874}
-              height={672}
+              width={798}
+              height={615}
               priority
               className="h-18 w-auto md:h-28"
             />
           </Link>
           {user && <NavBar />}
           {user && (
-            // Right of the navbar on desktop; top-right corner, beside the logo, on phones.
-            <div className="absolute top-4 right-4 md:static md:justify-self-end">
+            // Just right of the navbar on desktop; top-right corner, beside the logo, on phones.
+            <div className="absolute top-4 right-4 md:static md:justify-self-start">
               <BackgroundButton background={user.background} />
             </div>
           )}
