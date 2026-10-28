@@ -1,4 +1,5 @@
 # Ruchintachi Next.js app (issue #22). Starts on boot, restarts on crash.
+# Runs the standalone build that deploy.sh unpacked; `current` points at it.
 [Unit]
 Description=Ruchintachi habit tracker
 After=network-online.target
@@ -8,9 +9,9 @@ Wants=network-online.target
 Type=simple
 User=ruchintachi
 Group=ruchintachi
-WorkingDirectory=/opt/ruchintachi
+WorkingDirectory=/opt/ruchintachi/current
 EnvironmentFile=/etc/ruchintachi.env
-ExecStart=/opt/ruchintachi/node_modules/.bin/next start --port ${PORT} --hostname ${HOSTNAME}
+ExecStart=/usr/bin/node server.js
 Restart=on-failure
 RestartSec=5
 
@@ -19,7 +20,7 @@ NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=true
-ReadWritePaths=/var/lib/ruchintachi /opt/ruchintachi/.next
+ReadWritePaths=/var/lib/ruchintachi /opt/ruchintachi/releases
 
 [Install]
 WantedBy=multi-user.target
