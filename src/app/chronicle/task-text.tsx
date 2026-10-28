@@ -175,20 +175,24 @@ function NoteEditor({
   onDone: (next: string | null) => void; // null = cancelled
 }) {
   const finish = (box: HTMLTextAreaElement, save: boolean) => onDone(save ? box.value.trim() : null);
+  // Tall enough to show the note (roughly 45 characters a line), 2–8 lines.
+  const lines = (note ?? "")
+    .split("\n")
+    .reduce((n, line) => n + Math.max(1, Math.ceil(line.length / 45)), 0);
   return (
     <textarea
       defaultValue={note ?? ""}
       aria-label={`Note for ${name}`}
       placeholder="Anything to remember, e.g. after lunch"
       maxLength={HABIT_NOTE_MAX}
-      rows={2}
+      rows={Math.min(8, Math.max(2, lines))}
       autoFocus
       onBlur={(e) => finish(e.currentTarget, true)}
       onKeyDown={(e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) e.currentTarget.blur();
         if (e.key === "Escape") finish(e.currentTarget, false);
       }}
-      className="mt-1 -ml-2 block w-full resize-y bg-sand/60 px-2 py-1 text-gray-700 shadow-none outline-none focus:ring-4 focus:ring-sunny"
+      className="mt-1 -ml-3 block w-full resize-y rounded-xl bg-sand/60 px-3 py-2 text-gray-700 shadow-none outline-none focus:ring-4 focus:ring-sunny"
     />
   );
 }
@@ -242,7 +246,7 @@ function FoldingNote({
       <button
         type="button"
         onClick={() => setEditing(true)}
-        className="mt-1 -ml-2 block min-w-0 max-w-full rounded-lg bg-transparent px-2 text-left text-base text-caption/60 shadow-none transition hover:bg-sand/60"
+        className="mt-1 -ml-3 block min-w-0 max-w-full rounded-xl bg-transparent px-3 py-1.5 text-left text-base text-caption/60 shadow-none transition hover:bg-sand/60"
       >
         Add a note
       </button>
@@ -257,14 +261,8 @@ function FoldingNote({
       onKeyDown={(e) => isF2(e) && setEditing(true)}
       aria-expanded={long ? open : undefined}
       title={`${long ? (open ? "Click to fold. " : "Click to read it all. ") : ""}Double-click (or F2) to edit the note`}
-      className="mt-1 -ml-2 flex min-w-0 max-w-full items-start gap-1 rounded-lg bg-transparent px-2 text-left text-gray-700 shadow-none transition hover:bg-sand/60"
+      className="mt-1 -ml-3 flex min-w-0 max-w-full items-start gap-1.5 rounded-xl bg-transparent px-3 py-1.5 text-left text-gray-700 shadow-none transition hover:bg-sand/60"
     >
-      <span
-        ref={text}
-        className={`min-w-0 break-words whitespace-pre-line ${open ? "" : "line-clamp-2"}`}
-      >
-        {note}
-      </span>
       {long && (
         <IconChevronDown
           aria-hidden
@@ -272,6 +270,12 @@ function FoldingNote({
           stroke={2.5}
         />
       )}
+      <span
+        ref={text}
+        className={`min-w-0 break-words whitespace-pre-line ${open ? "" : "line-clamp-2"}`}
+      >
+        {note}
+      </span>
     </button>
   );
 }
@@ -310,7 +314,7 @@ function TaskNote({
       type="button"
       onClick={() => setEditing(true)}
       title={note ? "Click to edit the note" : undefined}
-      className={`mt-1 -ml-2 block min-w-0 max-w-full rounded-lg bg-transparent px-2 text-left break-words whitespace-pre-line shadow-none transition hover:bg-sand/60 ${
+      className={`mt-1 -ml-3 block min-w-0 max-w-full rounded-xl bg-transparent px-3 py-1.5 text-left break-words whitespace-pre-line shadow-none transition hover:bg-sand/60 ${
         note ? "text-gray-700" : "text-base text-caption/60"
       }`}
     >
