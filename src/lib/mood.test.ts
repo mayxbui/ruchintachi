@@ -13,7 +13,7 @@ const habit = (done: boolean) => ({ repeats: true, done });
 const oneOff = (done: boolean) => ({ repeats: false, done });
 
 describe("moodLevel", () => {
-  it("maps each band to its bubble", () => {
+  it("maps each band to its mood", () => {
     expect(moodLevel(100)).toBe("lovestruck");
     expect(moodLevel(85)).toBe("lovestruck");
     expect(moodLevel(84)).toBe("overjoyed");

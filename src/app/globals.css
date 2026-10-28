@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Palette from ruchintachi-logo.webp, the beach, and the five mood bubbles. */
+/* Palette from ruchindachi-logo.webp, the beach, and the five moods. */
 @theme {
   --font-sans: var(--font-rounded), ui-rounded, system-ui, sans-serif;
   --font-weight-bold: 800; /* labels, buttons, nav: a step above body text */
@@ -24,7 +24,7 @@
   --color-light-pink: #ff8fc8;
   /* Streak badge (M8 leaderboard): the logo's sunny yellow, with ink text
      (white is unreadable on it). The Content mood is the same yellow, so
-     the badge should be a pill with an icon, not a round bubble. */
+     the badge should be a pill with an icon, not a round face. */
   --color-streak: var(--color-sunny);
 
   --color-mood-lovestruck: #ff8fc8;

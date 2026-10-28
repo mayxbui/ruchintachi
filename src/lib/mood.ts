@@ -38,7 +38,7 @@ export function clampMood(score: number): number {
   return Math.min(MOOD_MAX, Math.max(MOOD_MIN, Math.round(score)));
 }
 
-/** The mood bubble for a score. */
+/** The mood for a score. */
 export function moodLevel(score: number): MoodLevel {
   const clamped = clampMood(score);
   return MOOD_LEVELS.find((level) => clamped >= level.min)!.id;
