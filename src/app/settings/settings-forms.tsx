@@ -29,7 +29,7 @@ export function PreferencesForm({
           Time zone
         </label>
         <p className="mb-2 text-caption">
-          &ldquo;Today&rdquo; follows this, so your tasks reset at your midnight.
+          Reset at your midnight.
         </p>
         <div className="flex flex-wrap gap-3">
           <select

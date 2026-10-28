@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Nunito } from "next/font/google";
 import { BackgroundButton } from "@/components/background-button";
+import { SignOutButton } from "@/components/sign-out-button";
 import { FieldWarning } from "@/components/field-warning";
 import { NavBar } from "@/components/nav-bar";
 import { PageBackground } from "@/components/page-background";
@@ -53,8 +54,9 @@ export default async function RootLayout({
           {user && <NavBar />}
           {user && (
             // Just right of the navbar on desktop; top-right corner, beside the logo, on phones.
-            <div className="absolute top-4 right-4 md:static md:justify-self-start">
+            <div className="absolute top-4 right-4 flex gap-2 md:static md:justify-self-start">
               <BackgroundButton background={user.background} />
+              <SignOutButton />
             </div>
           )}
         </header>
