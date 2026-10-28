@@ -1,8 +1,18 @@
 "use client";
 
-import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
-import { useActionState, useCallback, useEffect, useState } from "react";
+import { IconPlus, IconTrash } from "@tabler/icons-react";
+import {
+  useActionState,
+  useCallback,
+  useEffect,
+  useOptimistic,
+  useRef,
+  useState,
+  useTransition,
+  type KeyboardEvent,
+} from "react";
 import { FormMessage, SubmitButton } from "@/components/form";
+import { useDismiss } from "@/components/use-dismiss";
 import { useFormStatus } from "react-dom";
 import { LIST_NAME_MAX } from "@/lib/task-lists";
 import {
@@ -121,7 +131,11 @@ function DeletePanel({
 }) {
   const tasks = `${taskCount} task${taskCount === 1 ? "" : "s"}`;
   return (
-    <div role="alertdialog" aria-label={`Delete ${name}`} className="mb-4 rounded-2xl bg-cherry/10 p-4">
+    <div
+      role="alertdialog"
+      aria-label={`Delete ${name}`}
+      className="rounded-2xl border-3 border-cherry bg-cream p-4 shadow-pop"
+    >
       <p className="font-bold">Delete the list &ldquo;{name}&rdquo;?</p>
       {taskCount > 0 && (
         <p className="mt-1 text-caption">
@@ -156,49 +170,84 @@ function DeletePanel({
   );
 }
 
-/** Rename / delete for the list being shown. `taskCount` is its current tasks. */
+/**
+ * The list being shown, as a title: double-click its name (or F2) to rename
+ * it in place, where Enter or leaving the box saves and Escape cancels. The
+ * trash beside it asks what happens to the list's tasks. `taskCount` is its
+ * current tasks.
+ */
 export function ListMenu({ listId, name, taskCount }: { listId: string; name: string; taskCount: number }) {
+  const [shown, setShown] = useOptimistic(name);
+  const [, startTransition] = useTransition();
+  const [error, setError] = useState<string>();
   const [renaming, setRenaming] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const close = useCallback(() => setRenaming(false), []);
+  const ref = useRef<HTMLDivElement>(null);
+  const closeDelete = useCallback(() => setDeleting(false), []);
+  useDismiss(deleting, closeDelete, ref);
 
-  if (renaming) {
-    return (
-      <NameForm
-        action={renameListAction.bind(null, listId)}
-        initial={name}
-        label="New name"
-        submitLabel="Save"
-        onCancel={close}
-      />
-    );
-  }
-
-  if (deleting) {
-    return (
-      <DeletePanel listId={listId} name={name} taskCount={taskCount} onCancel={() => setDeleting(false)} />
-    );
+  function finish(input: HTMLInputElement, save: boolean) {
+    setRenaming(false);
+    const next = input.value.trim().replace(/\s+/g, " ");
+    if (!save || !next || next === shown) return;
+    setError(undefined);
+    startTransition(async () => {
+      setShown(next);
+      const result = await renameListAction(listId, next);
+      if (result.error) setError(result.error);
+    });
   }
 
   return (
-    <div className="mb-4 flex items-center gap-1">
-      <h3 className="mr-auto min-w-0 truncate text-xl font-extrabold">{name}</h3>
+    <div ref={ref} className="relative flex min-w-0 items-center gap-1">
+      {renaming ? (
+        <input
+          defaultValue={shown}
+          aria-label={`Rename ${shown}`}
+          maxLength={LIST_NAME_MAX}
+          autoComplete="off"
+          autoFocus
+          onFocus={(e) => e.currentTarget.select()}
+          onBlur={(e) => finish(e.currentTarget, true)}
+          onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === "Enter") e.currentTarget.blur();
+            if (e.key === "Escape") finish(e.currentTarget, false);
+          }}
+          className="-ml-1.5 min-w-0 flex-1 bg-sand/60 px-1.5 py-0.5 text-lg font-extrabold shadow-none outline-none focus:ring-4 focus:ring-sunny sm:-ml-2 sm:px-2 sm:text-xl"
+        />
+      ) : (
+        <h3 className="-ml-1.5 min-w-0 sm:-ml-2">
+          <button
+            type="button"
+            onDoubleClick={() => setRenaming(true)}
+            onKeyDown={(e) => e.key === "F2" && setRenaming(true)}
+            data-hint="Double-click (or F2) to rename"
+            className="block max-w-full min-w-0 truncate rounded-lg bg-transparent px-1.5 text-left text-lg font-extrabold shadow-none transition hover:bg-sand/60 sm:px-2 sm:text-xl"
+          >
+            {shown}
+          </button>
+        </h3>
+      )}
       <button
         type="button"
-        onClick={() => setRenaming(true)}
-        aria-label={`Rename ${name}`}
-        className="min-w-0 shrink-0 rounded-full bg-transparent p-2 text-caption shadow-none transition hover:bg-sand hover:text-ink"
-      >
-        <IconPencil className="size-5" stroke={2.25} />
-      </button>
-      <button
-        type="button"
-        onClick={() => setDeleting(true)}
-        aria-label={`Delete ${name}`}
-        className="min-w-0 shrink-0 rounded-full bg-transparent p-2 text-caption shadow-none transition hover:bg-cherry/10 hover:text-cherry"
+        onClick={() => setDeleting((d) => !d)}
+        aria-expanded={deleting}
+        aria-label={`Delete ${shown}`}
+        data-hint="Delete list"
+        className="min-w-0 shrink-0 rounded-full bg-transparent p-1 text-caption shadow-none transition hover:bg-cherry/10 hover:text-cherry sm:p-1.5"
       >
         <IconTrash className="size-5" stroke={2.25} />
       </button>
+      {deleting && (
+        <div className="absolute top-full left-0 z-20 mt-2 w-[min(24rem,calc(100vw-4rem))]">
+          <DeletePanel listId={listId} name={shown} taskCount={taskCount} onCancel={closeDelete} />
+        </div>
+      )}
+      {error && (
+        <p role="alert" className="absolute top-full left-0 mt-1 text-sm text-cherry">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

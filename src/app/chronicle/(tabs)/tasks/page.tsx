@@ -78,6 +78,11 @@ export default async function TasksPage({
           ? "No tasks in this list yet. Create one here, or pick this list when editing a task."
           : "No tasks yet.";
 
+  // The open list's name and trash, on the same line as Select and Sort.
+  const title = activeList && (
+    <ListMenu key={activeList.id} listId={activeList.id} name={activeList.name} taskCount={shown.length} />
+  );
+
   return (
     <section>
       <nav aria-label="Filter tasks" className="mb-4 flex flex-wrap items-center gap-2">
@@ -99,18 +104,10 @@ export default async function TasksPage({
         <NewList />
       </nav>
 
-      {activeList && (
-        <ListMenu
-          key={activeList.id}
-          listId={activeList.id}
-          name={activeList.name}
-          taskCount={shown.length}
-        />
-      )}
-
       {shown.length === 0 ? (
         <>
-          <div className="mb-3 flex justify-end">
+          <div className="mb-3 flex items-center gap-1.5 sm:gap-2">
+            <div className="min-w-0 flex-1">{title}</div>
             <SortMenu sort={user.taskSort} doneLast={user.doneLast} />
           </div>
           <p className="text-caption">{empty}</p>
@@ -121,6 +118,7 @@ export default async function TasksPage({
           key={`${param ?? "next"}-${user.taskSort}`}
           reorderable={user.taskSort === "custom"}
           sortMenu={<SortMenu sort={user.taskSort} doneLast={user.doneLast} />}
+          title={title}
           lists={lists}
           today={today}
           rows={shown.map((habit) => ({

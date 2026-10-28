@@ -31,19 +31,16 @@ export async function createListAction(
   redirect(`/chronicle/tasks?list=${id}`);
 }
 
-export async function renameListAction(
-  listId: string,
-  _prev: ListFormState,
-  formData: FormData,
-): Promise<ListFormState> {
+/** Renames one of the user's lists in place (double-click its name on Tasks). */
+export async function renameListAction(listId: string, rawName: string): Promise<{ error?: string }> {
   const user = await requireUser();
   if (!getTaskList(db, user.id, listId)) return { error: "That list doesn't exist." };
-  const result = validateListName(String(formData.get("name") ?? ""));
+  const result = validateListName(typeof rawName === "string" ? rawName : "");
   if ("error" in result) return { error: result.error };
 
   renameTaskList(db, user.id, listId, result.name);
   revalidatePath("/chronicle", "layout");
-  return { saved: Date.now() }; // a new value each time, so the form can close itself
+  return {};
 }
 
 /**
