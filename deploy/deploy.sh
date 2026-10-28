@@ -50,7 +50,8 @@ systemctl restart ruchintachi
 
 healthy() {
   for _ in $(seq 1 30); do
-    curl -fsS -o /dev/null "http://127.0.0.1:${PORT}/" && return 0
+    # Quiet while the app is still starting; a real failure is reported below
+    curl -fs -o /dev/null "http://127.0.0.1:${PORT}/" && return 0
     sleep 1
   done
   return 1

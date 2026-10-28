@@ -1,15 +1,8 @@
 # Deploying Ruchintachi
 
-One small Azure VM runs everything: Caddy terminates HTTPS and proxies to the
-Next.js app on `127.0.0.1:3000`, systemd keeps the app running, and a systemd
-timer backs up the SQLite file every night. Everything here is free-tier or
-free software.
+Azure VM runs everything: Caddy terminates HTTPS and proxies to the Next.js app on `127.0.0.1:3000`, systemd keeps the app running, and a systemd timer backs up the SQLite file every night. Everything here is free-tier or free software.
 
-The VM never builds. GitHub Actions builds a self-contained
-[standalone](https://nextjs.org/docs/app/api-reference/config/next-config-js/output)
-copy of the app on every push to `main` and publishes it as the `deploy-latest`
-release. On the VM, `sudo ruchintachi-deploy` downloads it and switches to it.
-Migrations run when the app starts (`src/instrumentation.ts`).
+The VM never builds. GitHub Actions builds a self-contained [standalone](https://nextjs.org/docs/app/api-reference/config/next-config-js/output) copy of the app on every push to `main` and publishes it as the `deploy-latest` release. On the VM, `sudo ruchintachi-deploy` downloads it and switches to it. Migrations run when the app starts (`src/instrumentation.ts`).
 
 | File | Purpose | Issue |
 | --- | --- | --- |
@@ -37,43 +30,51 @@ Migrations run when the app starts (`src/instrumentation.ts`).
 
 | | |
 | --- | --- |
-| Name / resource group | `vm-ruchintachi` / `VM-RUCHINTACHI_GROUP` (created in the portal) |
+| Name / resource group | `vm-ruchintachi` / `rg-ruchintachi` (created in the portal) |
 | Size / region | `Standard_B2ats_v2` (1 GiB) / North Central US |
-| Address | `ruchintachi.northcentralus.cloudapp.azure.com` (`64.236.205.109`) |
-| Login | `ssh -i .ssh/ruchintachi_key.pem azureuser@ruchintachi.northcentralus.cloudapp.azure.com` |
+| Site | https://ruchintachi.me (also `www.ruchintachi.me` and `ruchintachi.northcentralus.cloudapp.azure.com`) |
+| IP | `64.236.205.109` (static) |
+| Domain | `ruchintachi.me` at Namecheap (Student Pack, free until 2027-10-28, then paid). Advanced DNS: `A @ → 64.236.205.109`, `CNAME www → ruchintachi.me.` |
+| Login | `ssh -i .ssh/ruchintachi_key.pem azureuser@ruchintachi.me` |
 | Firewall | 80/443 open; 22 only from your IP (rule `SSH` in `vm-ruchintachi-nsg`) |
+| Auto-shutdown | Off. Stopping the VM takes the site offline. |
 
 If your IP changes and SSH times out:
 
 ```bash
-az network nsg rule update -g VM-RUCHINTACHI_GROUP --nsg-name vm-ruchintachi-nsg -n SSH --source-address-prefixes "$(curl -fsS https://api.ipify.org)/32"
+az network nsg rule update -g rg-ruchintachi --nsg-name vm-ruchintachi-nsg -n SSH --source-address-prefixes "$(curl -fsS https://api.ipify.org)/32"
 ```
 
-Stop / start the VM to save credit:
+Stop / start the VM (the site is down while it's stopped):
 
 ```bash
-az vm deallocate -g VM-RUCHINTACHI_GROUP -n vm-ruchintachi
-az vm start -g VM-RUCHINTACHI_GROUP -n vm-ruchintachi
+az vm deallocate -g rg-ruchintachi -n vm-ruchintachi
+az vm start -g rg-ruchintachi -n vm-ruchintachi
 ```
+
+In Git Bash, put `MSYS_NO_PATHCONV=1` in front of any `az` command that takes
+resource IDs (`/subscriptions/...`), or Git Bash rewrites them into Windows paths.
 
 ## 1. Set up the server (once)
 
 From the project folder, copy `deploy/` to the VM and log in:
 
 ```bash
-scp -i .ssh/ruchintachi_key.pem -r deploy azureuser@ruchintachi.northcentralus.cloudapp.azure.com:
-ssh -i .ssh/ruchintachi_key.pem azureuser@ruchintachi.northcentralus.cloudapp.azure.com
+scp -i .ssh/ruchintachi_key.pem -r deploy azureuser@ruchintachi.me:
+ssh -i .ssh/ruchintachi_key.pem azureuser@ruchintachi.me
 ```
 
-On the VM:
+On the VM, the first time:
 
 ```bash
-sudo SITE_ADDRESS=ruchintachi.northcentralus.cloudapp.azure.com bash deploy/setup-server.sh
+sudo SITE_ADDRESS="ruchintachi.me, www.ruchintachi.me, ruchintachi.northcentralus.cloudapp.azure.com" bash deploy/setup-server.sh
 ```
 
-The script is safe to re-run; run it again after changing a unit file or the
-Caddyfile. It also turns off SSH password login and enables `ufw` with only
-SSH, 80 and 443 open.
+The script is safe to re-run; run it again (copy `deploy/` first) after
+changing a unit file, `deploy.sh` or the Caddyfile. On a re-run you can leave
+out `SITE_ADDRESS`: it keeps the addresses already in `/etc/default/caddy`.
+It also turns off SSH password login and enables `ufw` with only SSH, 80 and
+443 open.
 
 ## 2. Give the VM a read-only GitHub token (once)
 
@@ -105,10 +106,16 @@ Run workflow.
 
 ## HTTPS (#21)
 
-Caddy gets and renews the certificate on its own once DNS points at the VM and
-80/443 are open. The Azure DNS name works out of the box. For your own domain,
-add an `A` record for the VM's public IP, set `SITE_ADDRESS` in
-`/etc/default/caddy`, and `sudo systemctl restart caddy`.
+Caddy gets and renews a Let's Encrypt certificate for every name in
+`SITE_ADDRESS` once DNS points at the VM and 80/443 are open, and redirects
+`http://` to `https://`. To add or change a name, point its DNS at the VM
+first (otherwise the certificate request fails and Caddy backs off), then:
+
+```bash
+echo 'SITE_ADDRESS=ruchintachi.me, www.ruchintachi.me, ruchintachi.northcentralus.cloudapp.azure.com' | sudo tee /etc/default/caddy
+sudo systemctl restart caddy
+sudo journalctl -u caddy -n 30 --no-pager | grep -i -E "certificate obtained|error"
+```
 
 ## Backups (#23)
 
@@ -138,7 +145,7 @@ copy them to your home folder on the VM first:
 
 ```bash
 sudo install -o azureuser -m 600 /var/backups/ruchintachi/*.gz ~/   # on the VM
-scp -i .ssh/ruchintachi_key.pem "azureuser@ruchintachi.northcentralus.cloudapp.azure.com:~/*.gz" .   # on your PC
+scp -i .ssh/ruchintachi_key.pem "azureuser@ruchintachi.me:~/*.gz" .   # on your PC
 ```
 
 ## Troubleshooting
