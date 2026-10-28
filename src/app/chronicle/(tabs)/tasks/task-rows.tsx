@@ -49,19 +49,23 @@ function RoundCheck({ checked }: { checked: boolean }) {
  * drag handle (mouse or finger) and up/down buttons for keyboards and
  * screen readers; the new order is saved when the drag ends.
  *
- * "Bulk edit" (beside `sortMenu`) swaps the row controls for checkboxes and
- * shows a bar to move the picked tasks to a list or delete them.
+ * "Select" (beside `sortMenu`) swaps the row controls for checkboxes and
+ * shows a bar to move the picked tasks to a list or delete them. `title`
+ * (the open list's name) starts the same line; while selecting, "Select
+ * all" takes its place.
  */
 export function TaskRows({
   rows,
   reorderable,
   sortMenu,
+  title,
   lists,
   today,
 }: {
   rows: TaskRow[];
   reorderable: boolean;
   sortMenu: ReactNode;
+  title?: ReactNode;
   lists: { id: string; name: string }[];
   today: string;
 }) {
@@ -95,9 +99,9 @@ export function TaskRows({
 
   return (
     <>
-      <div className="mb-3 flex flex-wrap items-center justify-end gap-2">
-        {selecting && (
-          <label className="mr-auto flex cursor-pointer items-center gap-2 font-bold">
+      <div className="mb-3 flex items-center gap-1.5 sm:gap-2">
+        {selecting ? (
+          <label className="mr-auto flex min-w-0 cursor-pointer items-center gap-2 font-bold">
             <input
               type="checkbox"
               checked={allPicked}
@@ -110,19 +114,21 @@ export function TaskRows({
               ({chosen.length} picked)
             </span>
           </label>
+        ) : (
+          <div className="min-w-0 flex-1">{title}</div>
         )}
         <button
           type="button"
           onClick={() => (selecting ? stopSelecting() : setSelecting(true))}
           aria-pressed={selecting}
-          className={`flex min-w-0 items-center gap-1.5 px-3 py-1.5 font-bold transition ${
+          className={`flex min-w-0 shrink-0 items-center gap-1 px-2.5 py-1.5 font-bold transition sm:gap-1.5 sm:px-3 ${
             selecting ? "bg-sky text-white" : "bg-white text-slate-500 hover:text-ink"
           }`}
         >
           <IconListCheck aria-hidden className="size-5" stroke={2.25} />
-          {selecting ? "Done" : "Bulk edit"}
+          {selecting ? "Done" : "Select"}
         </button>
-        {sortMenu}
+        <div className="shrink-0">{sortMenu}</div>
       </div>
 
       <ul className="space-y-5">
@@ -280,7 +286,7 @@ function BulkBar({
   return (
     <div
       role="region"
-      aria-label="Bulk edit"
+      aria-label="Selected tasks"
       className="sticky bottom-4 z-10 mt-5 rounded-3xl bg-sunny p-3 shadow-pop"
     >
       {confirming ? (
