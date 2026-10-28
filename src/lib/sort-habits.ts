@@ -5,6 +5,7 @@ import type { Frequency } from "./repeat-rule";
 
 export const HABIT_SORTS = [
   "next",
+  "due",
   "name-asc",
   "name-desc",
   "newest",
@@ -16,6 +17,7 @@ export type HabitSort = (typeof HABIT_SORTS)[number];
 
 export const SORT_LABELS: Record<HabitSort, string> = {
   next: "Next due",
+  due: "Due date",
   "name-asc": "Name A–Z",
   "name-desc": "Name Z–A",
   newest: "Newest",
@@ -34,6 +36,7 @@ export interface SortableHabit {
   createdAt: Date;
   position: number;
   next: string | null; // next date it comes up; null = finished
+  dueDate?: string | null; // one-off tasks only
 }
 
 const REPEAT_ORDER: Frequency[] = ["none", "daily", "weekly", "monthly", "annually"];
@@ -50,8 +53,19 @@ function byNext(a: SortableHabit, b: SortableHabit) {
   return a.next < b.next ? -1 : 1;
 }
 
+/** Tasks with a due date first, the earliest (so the most overdue) on top. */
+function byDue(a: SortableHabit, b: SortableHabit) {
+  const x = a.dueDate ?? null;
+  const y = b.dueDate ?? null;
+  if (x === y) return 0;
+  if (x === null) return 1;
+  if (y === null) return -1;
+  return x < y ? -1 : 1;
+}
+
 const FIRST: Record<HabitSort, (a: SortableHabit, b: SortableHabit) => number> = {
   next: byNext,
+  due: byDue,
   "name-asc": byName,
   "name-desc": (a, b) => byName(b, a),
   newest: (a, b) => byCreated(b, a),

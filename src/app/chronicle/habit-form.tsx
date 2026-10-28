@@ -18,6 +18,7 @@ import { HABIT_ICONS, type HabitIcon } from "@/lib/habit-icons";
 import { LIST_NAME_MAX, NEW_LIST } from "@/lib/task-lists";
 import type { EndType, Frequency } from "@/lib/repeat-rule";
 import type { HabitFormState } from "./actions";
+import { DueTag } from "./due-tag";
 
 /** The Repeats menu: the presets, or Custom (every N, nth weekday). */
 type RepeatChoice = Frequency | "custom";
@@ -80,6 +81,7 @@ export interface HabitFormInitial {
   endType: EndType;
   endDate: string | null;
   endCount: number | null;
+  dueDate?: string | null;
   listId?: string | null;
 }
 
@@ -129,6 +131,7 @@ export function HabitForm({
   const [endDate, setEndDate] = useState(initial?.endDate ?? "");
   const [endCount, setEndCount] = useState(String(initial?.endCount ?? 10));
   const [note, setNote] = useState(initial?.note ?? "");
+  const [dueDate, setDueDate] = useState(initial?.dueDate ?? "");
   const [listId, setListId] = useState(initial?.listId ?? defaultListId ?? "");
   const [newListName, setNewListName] = useState("");
 
@@ -233,6 +236,26 @@ export function HabitForm({
         )}
         <Dropdown label="Repeats" name="repeat" value={repeat} options={REPEATS} onChange={chooseRepeat} />
       </div>
+      {frequency === "none" && (
+        <div className="grid grid-cols-2 gap-2 sm:gap-3">
+          <DatePicker
+            label="Due date (optional)"
+            name="dueDate"
+            value={dueDate}
+            onChange={setDueDate}
+            onClear={() => setDueDate("")}
+            placeholder="No due date"
+            min={startDate || today}
+            today={today}
+            weekStart={weekStart}
+          />
+          {dueDate && (
+            <p className="self-end pb-3 text-sm text-caption">
+              Stays on Today until it&rsquo;s done, even after the due date.
+            </p>
+          )}
+        </div>
+      )}
       <input type="hidden" name="frequency" value={frequency} />
       <input type="hidden" name="interval" value={every} />
       <input type="hidden" name="monthWeek" value={byWeekday ? monthPosition : ""} />
@@ -405,6 +428,7 @@ export function HabitForm({
           {icon && <span className="mr-2 text-xl">{HABIT_ICONS[icon]}</span>}
           <span className="font-bold">{name.trim() || "Your task"}</span>
           <span className="block text-caption">{summary}</span>
+          {frequency === "none" && dueDate && <DueTag dueDate={dueDate} today={today} />}
         </p>
       )}
 

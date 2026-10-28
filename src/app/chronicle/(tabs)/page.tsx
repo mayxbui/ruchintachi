@@ -1,8 +1,9 @@
 import { db } from "@/db";
-import { completedHabitIds, listExceptions } from "@/db/completions";
+import { carryOverDoneDates, completedHabitIds, listExceptions } from "@/db/completions";
 import { listHabits } from "@/db/habits";
 import { requireUser } from "@/lib/auth/session";
 import { todayIn } from "@/lib/dates";
+import { scheduleAll } from "@/lib/due-date";
 import { formatDate } from "@/lib/describe-rule";
 import { sortHabits } from "@/lib/sort-habits";
 import { itemsOn } from "@/lib/today";
@@ -17,7 +18,10 @@ export default async function TodayPage() {
   const today = todayIn(user.timeZone);
   // Everything on today's list is due today, so "Next due" falls back to name.
   const habits = sortHabits(
-    listHabits(db, user.id).map((h) => ({ ...h, next: today })),
+    scheduleAll(listHabits(db, user.id), today, carryOverDoneDates(db, user.id)).map((h) => ({
+      ...h,
+      next: today,
+    })),
     user.taskSort,
   );
   const items = itemsOn(

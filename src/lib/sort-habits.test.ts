@@ -24,6 +24,16 @@ describe("sortHabits", () => {
     expect(names(sortHabits(all, "next"))).toEqual(["Apple", "Zinc", "run", "banana"]);
   });
 
+  it("Due date: tasks with one first, most overdue on top, the rest by name", () => {
+    const list = [
+      habit("No due"),
+      habit("Friday", { frequency: "none", dueDate: "2026-10-30" }),
+      habit("Late", { frequency: "none", dueDate: "2026-10-20" }),
+      habit("Also none", { dueDate: null }),
+    ];
+    expect(names(sortHabits(list, "due"))).toEqual(["Late", "Friday", "Also none", "No due"]);
+  });
+
   it("names sort case-insensitively both ways", () => {
     expect(names(sortHabits(all, "name-asc"))).toEqual(["Apple", "banana", "run", "Zinc"]);
     expect(names(sortHabits(all, "name-desc"))).toEqual(["Zinc", "run", "banana", "Apple"]);

@@ -1,8 +1,9 @@
 import { and, asc, eq, max } from "drizzle-orm";
-import { nextOccurrence, planFutureDelete } from "@/lib/habit-edit";
+import { planBulkDelete } from "@/lib/bulk-edit";
+import { scheduleAll } from "@/lib/due-date";
 import { LISTS_MAX } from "@/lib/task-lists";
 import type { Db } from "./accounts";
-import { listExceptions } from "./completions";
+import { carryOverDoneDates, listExceptions } from "./completions";
 import { deleteHabit, endHabit, getHabit, listHabits } from "./habits";
 import { habits, taskLists } from "./schema";
 
@@ -69,15 +70,14 @@ export function deleteTaskList(db: Db, userId: string, listId: string): void {
 export function deleteTaskListAndTasks(db: Db, userId: string, listId: string, today: string): void {
   db.transaction((tx) => {
     if (!getTaskList(tx, userId, listId)) return;
-    const exceptions = listExceptions(tx, userId);
-    for (const habit of listHabits(tx, userId)) {
-      if (habit.listId !== listId) continue;
-      const own = exceptions.filter((e) => e.habitId === habit.id);
-      if (!nextOccurrence(habit, own, today)) continue;
-      const plan = planFutureDelete(habit, today);
-      if (plan.kind === "delete") deleteHabit(tx, userId, habit.id);
-      else endHabit(tx, userId, habit.id, plan.endDate);
-    }
+    const inList = listHabits(tx, userId).filter((h) => h.listId === listId);
+    const plan = planBulkDelete(
+      scheduleAll(inList, today, carryOverDoneDates(tx, userId)),
+      listExceptions(tx, userId),
+      today,
+    );
+    for (const id of plan.remove) deleteHabit(tx, userId, id);
+    for (const { id, endDate } of plan.end) endHabit(tx, userId, id, endDate);
     deleteTaskList(tx, userId, listId);
   });
 }

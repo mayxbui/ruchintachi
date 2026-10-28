@@ -33,6 +33,7 @@ const habitFields = {
   endType: habits.endType,
   endDate: habits.endDate,
   endCount: habits.endCount,
+  dueDate: habits.dueDate,
   listId: habits.listId,
   position: habits.position,
   createdAt: habits.createdAt,
