@@ -104,7 +104,7 @@ export function MonthCalendar({
               className={`mx-auto flex size-9 min-w-0 items-center justify-center rounded-full text-sm font-bold shadow-none transition disabled:cursor-default disabled:opacity-30 ${
                 isSelected
                   ? "bg-tangerine text-white"
-                  : `bg-white hover:bg-sunny/60 disabled:hover:bg-white ${isToday ? "ring-2 ring-sunny-deep" : ""}`
+                  : `bg-white hover:bg-sunny/60 disabled:hover:bg-white ${isToday ? "ring-2 ring-sunny-deep ring-inset" : ""}`
               }`}
             >
               {i + 1}
