@@ -3,12 +3,14 @@ import Link from "next/link";
 import { ItemSprite } from "@/components/item-sprite";
 import { PageCard } from "@/components/page-card";
 import { db } from "@/db";
+import { habitOccurrencesBetween } from "@/db/completion-rate";
 import { dailyGiftsBetween } from "@/db/gifts";
 import { requireUser } from "@/lib/auth/session";
 import { addMonths, formatMonth, monthGrid, parseMonth, weekdayLabels } from "@/lib/calendar";
 import { todayIn } from "@/lib/dates";
 import { formatDate } from "@/lib/describe-rule";
 import { getItem, type Item } from "@/lib/items";
+import { CompletionRings } from "./completion-rings";
 
 const navClass =
   "flex size-10 min-w-0 items-center justify-center rounded-full bg-dark-blue text-white shadow-pop transition hover:-translate-y-0.5";
@@ -33,6 +35,9 @@ export default async function CalendarPage({
     const item = getItem(itemId);
     if (item) gifts.set(date, item);
   }
+  // Completion rings count every grid day up to today (#24).
+  const occurrences = habitOccurrencesBetween(db, user.id, from, to < today ? to : today);
+
   const giftsThisMonth = [...gifts.keys()].filter((date) => date.startsWith(month)).length;
 
   return (
@@ -113,6 +118,8 @@ export default async function CalendarPage({
           ))}
         </tbody>
       </table>
+
+      <CompletionRings month={month} weeks={weeks} today={today} occurrences={occurrences} />
     </PageCard>
   );
 }
