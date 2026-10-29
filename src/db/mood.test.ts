@@ -4,7 +4,7 @@ import type { NewHabit } from "@/lib/habit-form";
 import { createAccount } from "./accounts";
 import { setCompletion } from "./completions";
 import { createHabit, deleteHabit } from "./habits";
-import { currentMood, lastMoodEntry } from "./mood";
+import { currentMood, lastMoodEntry, moodLogBetween, saveMoodEntries } from "./mood";
 import * as schema from "./schema";
 import { createTestDb } from "./test-db";
 
@@ -87,5 +87,23 @@ describe("currentMood", () => {
     createHabit(db, user.id, daily); // starts on the 26th
     expect(currentMood(db, user, at("2026-10-26"))).toBe(50);
     expect(lastMoodEntry(db, user.id)).toEqual({ date: "2026-10-25", mood: 50 });
+  });
+});
+
+describe("moodLogBetween", () => {
+  it("returns only the user's saved days in range, oldest first", () => {
+    const db = createTestDb();
+    const user = addUser(db, "2026-10-20");
+    const other = createAccount(db, { username: "pat", passwordHash: "p", recoveryCodeHash: "r", timeZone: "UTC" })!;
+    saveMoodEntries(db, user.id, [
+      { date: "2026-10-27", mood: 58 },
+      { date: "2026-10-25", mood: 50 },
+      { date: "2026-10-28", mood: 54 },
+    ]);
+    saveMoodEntries(db, other.id, [{ date: "2026-10-27", mood: 90 }]);
+    expect(moodLogBetween(db, user.id, "2026-10-26", "2026-10-28")).toEqual([
+      { date: "2026-10-27", mood: 58 },
+      { date: "2026-10-28", mood: 54 },
+    ]);
   });
 });

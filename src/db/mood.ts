@@ -1,4 +1,4 @@
-import { desc, eq } from "drizzle-orm";
+import { and, asc, between, desc, eq } from "drizzle-orm";
 import { addDays, startOfWeek, todayIn, type WeekStart } from "@/lib/dates";
 import {
   MOOD_START,
@@ -21,6 +21,21 @@ export function lastMoodEntry(db: Db, userId: string): { date: string; mood: num
     .where(eq(moodLog.userId, userId))
     .orderBy(desc(moodLog.date))
     .get();
+}
+
+/** The user's saved end-of-day moods from `from` to `to` (inclusive), oldest first. */
+export function moodLogBetween(
+  db: Db,
+  userId: string,
+  from: string,
+  to: string,
+): { date: string; mood: number }[] {
+  return db
+    .select({ date: moodLog.date, mood: moodLog.mood })
+    .from(moodLog)
+    .where(and(eq(moodLog.userId, userId), between(moodLog.date, from, to)))
+    .orderBy(asc(moodLog.date))
+    .all();
 }
 
 /** Saves end-of-day moods. A day already saved keeps its first value. */
