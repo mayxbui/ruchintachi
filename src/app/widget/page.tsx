@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { moods } from "@/components/mood-meter";
 import { db } from "@/db";
 import { currentMood } from "@/db/mood";
@@ -15,45 +16,64 @@ export const metadata: Metadata = { title: "Today · RuchinDachi" };
 
 /**
  * A small, chrome-free page with today's checklist and the Mii's mood (#65),
- * for the pop-out desktop widget. The root layout hides the header and footer here.
+ * drawn as a mini laptop: mood on the left of the screen, checklist on the
+ * right. The pop-out desktop widget (#66) shows it; the root layout hides
+ * the header and footer here.
  */
 export default async function WidgetPage() {
   const user = await getCurrentUser();
   if (!user) {
     return (
-      <p className="rounded-blob bg-cream/90 py-10 text-center shadow-pop">
-        <a href="/sign-in" target="_blank" rel="noopener" className="font-bold text-caption underline">
-          Sign in on RuchinDachi
-        </a>
-      </p>
+      <Laptop>
+        <div className="flex flex-1 items-center justify-center">
+          <a href="/sign-in" target="_blank" rel="noopener" className="font-bold text-caption underline">
+            Sign in on RuchinDachi
+          </a>
+        </div>
+      </Laptop>
     );
   }
 
   const today = todayIn(user.timeZone);
   const { label, className, Face } = moods[moodLevel(currentMood(db, user))];
   return (
-    <section className="space-y-3 rounded-blob bg-cream/90 p-3 shadow-pop">
+    <Laptop>
       <WidgetRefresh />
-      <header className="flex items-center gap-3">
+      <aside className="flex w-[36%] shrink-0 flex-col items-center justify-center gap-1.5 bg-sand p-2 text-center">
         <span
-          className={`flex size-11 shrink-0 items-center justify-center rounded-full border-3 border-white text-ink shadow-pop ${className}`}
+          className={`flex size-14 items-center justify-center rounded-full border-4 border-white text-ink shadow-pop ${className}`}
         >
-          <Face aria-hidden className="size-8" stroke={1.75} />
+          <Face aria-hidden className="size-10" stroke={1.75} />
         </span>
-        <div className="min-w-0">
-          <p className="font-bold">{label}</p>
-          <p className="truncate text-sm text-caption">{formatDate(today)}</p>
-        </div>
-      </header>
-      <TimerProvider>
-        <TodayList
-          items={todayItems(db, user.id, today, user.taskSort)}
-          today={today}
-          doneLast={user.doneLast}
-          reorderable={false}
-          compact
-        />
-      </TimerProvider>
-    </section>
+        <p className="font-bold">{label}</p>
+        <p className="text-xs text-caption">{formatDate(today)}</p>
+      </aside>
+      <div className="min-w-0 flex-1 overflow-y-auto p-2.5 text-sm">
+        <TimerProvider>
+          <TodayList
+            items={todayItems(db, user.id, today, user.taskSort)}
+            today={today}
+            doneLast={user.doneLast}
+            reorderable={false}
+            compact
+          />
+        </TimerProvider>
+      </div>
+    </Laptop>
+  );
+}
+
+/** A little laptop: dark bezel round a 16:10 cream screen, on a sand base. */
+function Laptop({ children }: { children: ReactNode }) {
+  return (
+    <div className="mx-auto w-full max-w-[520px] px-3">
+      <div className="relative rounded-t-[1.6rem] rounded-b-lg bg-ink p-2.5 pt-4 shadow-pop">
+        <span aria-hidden className="absolute top-1.5 left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-white/30" />
+        <div className="flex aspect-[16/10] overflow-hidden rounded-xl bg-cream">{children}</div>
+      </div>
+      <div className="-mx-3 h-3.5 rounded-t-sm rounded-b-2xl bg-sand-deep shadow-pop">
+        <div className="mx-auto h-1.5 w-16 rounded-b-lg bg-caption/25" />
+      </div>
+    </div>
   );
 }
