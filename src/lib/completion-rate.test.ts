@@ -31,11 +31,15 @@ describe("occurrencesBetween", () => {
     ]);
   });
 
-  it("leaves out one-off tasks and skipped days", () => {
+  it("marks one-off tasks and leaves out skipped days", () => {
     const habits = [habit("water"), habit("call mum", { frequency: "none" })];
     const skipped = [{ habitId: "water", date: "2026-10-27", overrideName: null }];
     const result = occurrencesBetween(habits, skipped, new Map(), "2026-10-26", "2026-10-28");
-    expect(result.map((o) => `${o.habitId} ${o.date}`)).toEqual(["water 2026-10-26", "water 2026-10-28"]);
+    expect(result.map((o) => `${o.habitId} ${o.date} ${o.repeats}`)).toEqual([
+      "water 2026-10-26 true",
+      "call mum 2026-10-26 false",
+      "water 2026-10-28 true",
+    ]);
   });
 
   it("keeps the habit's own name when a day was renamed", () => {

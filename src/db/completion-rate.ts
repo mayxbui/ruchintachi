@@ -1,19 +1,21 @@
 import { occurrencesBetween, type RateOccurrence } from "@/lib/completion-rate";
+import { scheduleAll } from "@/lib/due-date";
 import type { Db } from "./accounts";
-import { completionsBetween, listExceptions } from "./completions";
+import { carryOverDoneDates, completionsBetween, listExceptions } from "./completions";
 import { listHabits } from "./habits";
 
 /**
- * The user's repeating-habit occurrences from `from` to `to` (inclusive),
- * each with whether it was done, for the Calendar's completion rings (#24).
+ * The user's habit and task occurrences from `from` to `today` (inclusive),
+ * each with whether it was done, for the Mii page's completion rings (#24).
+ * Carry-over tasks sit on the day they were ticked, or today.
  */
-export function habitOccurrencesBetween(db: Db, userId: string, from: string, to: string): RateOccurrence[] {
-  if (from > to) return [];
+export function habitOccurrencesBetween(db: Db, userId: string, from: string, today: string): RateOccurrence[] {
+  if (from > today) return [];
   return occurrencesBetween(
-    listHabits(db, userId),
+    scheduleAll(listHabits(db, userId), today, carryOverDoneDates(db, userId)),
     listExceptions(db, userId),
-    completionsBetween(db, userId, from, to),
+    completionsBetween(db, userId, from, today),
     from,
-    to,
+    today,
   );
 }
