@@ -118,7 +118,7 @@ function MoodTooltip({ active, payload }: Pick<TooltipContentProps, "active" | "
   if (!active || !point || point.mood === null) return null;
   return (
     <div className="rounded-2xl bg-white px-3 py-2 text-sm shadow-pop">
-      <p className="text-caption">{point.today ? "Today (so far)" : shortDate(point.date)}</p>
+      <p className="text-caption">{point.today ? "Today" : shortDate(point.date)}</p>
       <p className="font-bold">
         {moods[moodLevel(point.mood)].label} · {point.mood}
       </p>
