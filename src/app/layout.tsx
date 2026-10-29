@@ -49,7 +49,7 @@ export default async function RootLayout({
             className="justify-self-start"
           >
             <Image
-              src="/ruchintachi-logo.webp"
+              src="/ruchindachi-logo.webp"
               alt="RuchinDachi — Habit Planner & Tracker"
               width={798}
               height={615}
