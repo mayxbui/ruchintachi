@@ -1,6 +1,6 @@
 # RuchinDachi — Habit Planner & Tracker
 
-![RuchinDachi logo](public/ruchintachi-logo.webp)
+![RuchinDachi logo](public/ruchindachi-logo.webp)
 
 A habit tracker inspired by **Tomodachi Life: Living the Dream**. Create a Mii, give it habits to work on, and watch your calendar fill up with gifts as you keep your habits.
 
