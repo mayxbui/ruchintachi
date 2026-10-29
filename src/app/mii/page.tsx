@@ -1,16 +1,20 @@
 import { IconGift } from "@tabler/icons-react";
 import Link from "next/link";
 import { PageCard } from "@/components/page-card";
-import { MoodBubble, moods } from "@/components/mood-bubble";
+import { MoodMeter, moods } from "@/components/mood-meter";
+import { db } from "@/db";
+import { currentMood } from "@/db/mood";
 import { requireUser } from "@/lib/auth/session";
+import { moodLevel } from "@/lib/mood";
 
 export default async function MiiPage() {
-  await requireUser();
+  const user = await requireUser();
+  const score = currentMood(db, user);
   return (
     <PageCard title="Mii" border="pink">
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <p className="text-caption">
-          Track your Mii&apos;s mood.
+          Your Mii is feeling <strong className="text-ink">{moods[moodLevel(score)].label}</strong>.
         </p>
         <Link
           href="/mii/inventory"
@@ -20,13 +24,7 @@ export default async function MiiPage() {
           My items
         </Link>
       </div>
-      <ul className="flex flex-wrap gap-4">
-        {moods.map((mood) => (
-          <li key={mood.id}>
-            <MoodBubble mood={mood.id} />
-          </li>
-        ))}
-      </ul>
+      <MoodMeter score={score} />
     </PageCard>
   );
 }

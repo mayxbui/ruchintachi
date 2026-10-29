@@ -60,9 +60,9 @@ A habit tracker inspired by **Tomodachi Life: Living the Dream**. Create a Mii, 
 - Clothing is paused for now.
 
 ### 6. Mii mood
-Your Mii's mood shows as a coloured thought bubble, with five levels (names are tentative):
+Your Mii's mood shows as a bar of five colours, with a round face that slides along it and changes expression. Five levels (names are tentative):
 
-| Bubble | Mood |
+| Colour | Mood |
 |---|---|
 | 🩷 Pink | **Lovestruck** |
 | 🧡 Orange | **Overjoyed** |
