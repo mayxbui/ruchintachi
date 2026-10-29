@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PageCard } from "@/components/page-card";
 import { MoodMeter, moods } from "@/components/mood-meter";
 import { db } from "@/db";
+import { habitOccurrencesBetween } from "@/db/completion-rate";
 import { currentMood, moodLogBetween } from "@/db/mood";
 import { requireUser } from "@/lib/auth/session";
 import { addDays, todayIn } from "@/lib/dates";
@@ -15,6 +16,7 @@ import {
   parseMoodRange,
   type MoodRange,
 } from "@/lib/mood-history";
+import { CompletionRings } from "./completion-rings";
 import { MoodChart } from "./mood-chart";
 
 export default async function MiiPage({
@@ -28,6 +30,9 @@ export default async function MiiPage({
   const today = todayIn(user.timeZone);
   const from = moodRangeStart(today, range);
   const points = moodSeries(moodLogBetween(db, user.id, from, addDays(today, -1)), from, today, score);
+
+  // This month so far, for the completion rings (#24).
+  const occurrences = habitOccurrencesBetween(db, user.id, `${today.slice(0, 7)}-01`, today);
 
   return (
     <PageCard title="Mii" border="pink">
@@ -72,6 +77,8 @@ export default async function MiiPage({
           </p>
         )}
       </section>
+
+      <CompletionRings occurrences={occurrences} />
     </PageCard>
   );
 }
