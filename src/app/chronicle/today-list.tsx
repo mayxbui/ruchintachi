@@ -4,6 +4,7 @@ import { IconCheck, IconGripVertical, IconHourglassHigh, IconPencil } from "@tab
 import Link from "next/link";
 import { useEffect, useLayoutEffect, useOptimistic, useRef, useState, useTransition } from "react";
 import { FormMessage } from "@/components/form";
+import { iconEmoji } from "@/lib/habit-icons";
 import { formatClock, parseMinutes, remainingMs, TIMER_MAX_MINUTES, TIMER_PRESETS } from "@/lib/timer";
 import { doneLast as moveDoneLast } from "@/lib/sort-habits";
 import { dayProgress, type DayItem } from "@/lib/today";
@@ -51,18 +52,21 @@ function useSlideOnReorder(order: string, draggingId: string | null) {
  * back on error. With `doneLast`, ticked tasks move below the rest, after a
  * short pause so the tick can be seen (each new tick restarts it). With
  * `reorderable` (the Custom sort) each row has a drag handle; its arrow
- * keys move the row too.
+ * keys move the row too. `compact` (the /widget page, #65) keeps just the
+ * ticking: no reordering, renaming, icon picker, timer or edit link.
  */
 export function TodayList({
   items,
   today,
   doneLast,
   reorderable,
+  compact = false,
 }: {
   items: DayItem[];
   today: string;
   doneLast: boolean;
   reorderable: boolean;
+  compact?: boolean;
 }) {
   const [shown, change] = useOptimistic(
     items,
@@ -138,7 +142,7 @@ export function TodayList({
             }`}
           >
             <div className="flex items-center gap-1 pr-1 sm:pr-2">
-              {reorderable && (
+              {reorderable && !compact && (
                 <button
                   type="button"
                   aria-label={`Reorder ${item.name}: drag, or use the up and down arrow keys`}
@@ -149,7 +153,7 @@ export function TodayList({
                 </button>
               )}
               <label
-                className={`flex shrink-0 cursor-pointer items-center py-3 ${reorderable ? "pl-1" : "pl-3 sm:pl-4"}`}
+                className={`flex shrink-0 cursor-pointer items-center py-3 ${reorderable && !compact ? "pl-1" : "pl-3 sm:pl-4"}`}
               >
                 <input
                   type="checkbox"
@@ -181,7 +185,14 @@ export function TodayList({
                   note={item.note}
                   done={item.done}
                   scope="today"
-                  lead={<TaskIcon habitId={item.habitId} icon={item.icon} name={item.name} />}
+                  readOnly={compact}
+                  lead={
+                    compact ? (
+                      <span aria-hidden>{iconEmoji(item.icon)}</span>
+                    ) : (
+                      <TaskIcon habitId={item.habitId} icon={item.icon} name={item.name} />
+                    )
+                  }
                 >
                   {item.dueDate && !item.done && (
                     <span className="block">
@@ -190,18 +201,22 @@ export function TodayList({
                   )}
                 </TaskText>
               </div>
-              <TimerButton
-                item={item}
-                open={timerFor === item.habitId}
-                onToggle={() => setTimerFor((id) => (id === item.habitId ? null : item.habitId))}
-              />
-              <Link
-                href={`/chronicle/${item.habitId}/edit?date=${today}`}
-                aria-label={`Edit ${item.name}`}
-                className="shrink-0 rounded-full p-1.5 text-caption transition hover:bg-sand hover:text-ink sm:p-2"
-              >
-                <IconPencil className="size-5" stroke={2.25} />
-              </Link>
+              {!compact && (
+                <>
+                  <TimerButton
+                    item={item}
+                    open={timerFor === item.habitId}
+                    onToggle={() => setTimerFor((id) => (id === item.habitId ? null : item.habitId))}
+                  />
+                  <Link
+                    href={`/chronicle/${item.habitId}/edit?date=${today}`}
+                    aria-label={`Edit ${item.name}`}
+                    className="shrink-0 rounded-full p-1.5 text-caption transition hover:bg-sand hover:text-ink sm:p-2"
+                  >
+                    <IconPencil className="size-5" stroke={2.25} />
+                  </Link>
+                </>
+              )}
             </div>
             {timerFor === item.habitId && (
               <TimerPicker

@@ -9,6 +9,15 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [{ source: "/bg-:id.png", destination: "/backgrounds/:id.png", permanent: true }];
   },
+  // The pop-out widget frames /widget (#66); nobody else may.
+  async headers() {
+    return [
+      {
+        source: "/widget",
+        headers: [{ key: "Content-Security-Policy", value: "frame-ancestors 'self'" }],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

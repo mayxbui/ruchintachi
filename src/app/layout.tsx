@@ -8,6 +8,7 @@ import { FieldWarning } from "@/components/field-warning";
 import { HoverHint } from "@/components/hover-hint";
 import { NavBar } from "@/components/nav-bar";
 import { PageBackground } from "@/components/page-background";
+import { SiteChrome } from "@/components/site-chrome";
 import { getCurrentUser } from "@/lib/auth/session";
 import { DEFAULT_BACKGROUND } from "@/lib/backgrounds";
 import "./globals.css";
@@ -42,36 +43,40 @@ export default async function RootLayout({
       >
         <PageBackground background={user?.background ?? DEFAULT_BACKGROUND} />
         {/* Logo left, nav centred on one line; on phones the nav floats at the bottom of the screen. */}
-        <header className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-3 px-3 pt-3 sm:px-4 sm:pt-4 md:grid-cols-[1fr_auto_1fr]">
-          <Link
-            href="/chronicle"
-            aria-label="RuchinDachi home"
-            className="justify-self-start"
-          >
-            <Image
-              src="/ruchindachi-logo.webp"
-              alt="RuchinDachi — Habit Planner & Tracker"
-              width={798}
-              height={615}
-              priority
-              className="h-14 w-auto sm:h-18 md:h-28"
-            />
-          </Link>
-          {user && <NavBar />}
-          {user && (
-            // Just right of the navbar on desktop; top-right corner, beside the logo, on phones.
-            <div className="absolute top-3 right-3 flex gap-2 sm:top-4 sm:right-4 md:static md:justify-self-start">
-              <BackgroundButton background={user.background} />
-              <SignOutButton />
-            </div>
-          )}
-        </header>
+        <SiteChrome>
+          <header className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-3 px-3 pt-3 sm:px-4 sm:pt-4 md:grid-cols-[1fr_auto_1fr]">
+            <Link
+              href="/chronicle"
+              aria-label="RuchinDachi home"
+              className="justify-self-start"
+            >
+              <Image
+                src="/ruchindachi-logo.webp"
+                alt="RuchinDachi — Habit Planner & Tracker"
+                width={798}
+                height={615}
+                priority
+                className="h-14 w-auto sm:h-18 md:h-28"
+              />
+            </Link>
+            {user && <NavBar />}
+            {user && (
+              // Just right of the navbar on desktop; top-right corner, beside the logo, on phones.
+              <div className="absolute top-3 right-3 flex gap-2 sm:top-4 sm:right-4 md:static md:justify-self-start">
+                <BackgroundButton background={user.background} />
+                <SignOutButton />
+              </div>
+            )}
+          </header>
+        </SiteChrome>
 
         <main className="mx-auto w-full max-w-5xl flex-1 px-3 pt-4 pb-10 sm:px-4 sm:pt-6 sm:pb-12">
           {children}
         </main>
 
-        <WaveFooter clearNav={!!user} />
+        <SiteChrome>
+          <WaveFooter clearNav={!!user} />
+        </SiteChrome>
         <FieldWarning />
         <HoverHint />
       </body>
