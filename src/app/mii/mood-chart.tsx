@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactElement } from "react";
 import {
   Line,
   LineChart,
@@ -26,7 +27,7 @@ export function MoodChart({ points }: { points: MoodPoint[] }) {
   return (
     <div className="h-56 w-full sm:h-64">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={points} margin={{ top: 8, right: 12, bottom: 0, left: 12 }}>
+        <LineChart data={points} margin={{ top: 18, right: 20, bottom: 0, left: 12 }}>
           {bands.map((band) => (
             <ReferenceArea
               key={band.id}
@@ -52,15 +53,63 @@ export function MoodChart({ points }: { points: MoodPoint[] }) {
           <Line
             dataKey="mood"
             type="monotone"
-            stroke="var(--color-ink)"
-            strokeWidth={3}
-            dot={points.length <= 31 ? { r: 3, fill: "var(--color-ink)", strokeWidth: 0 } : false}
-            activeDot={{ r: 6, fill: "white", stroke: "var(--color-ink)", strokeWidth: 3 }}
+            stroke="var(--color-caption)"
+            strokeWidth={3.5}
+            strokeLinecap="round"
+            dot={(props: DotProps) => <MoodDot {...props} small={points.length > 31} />}
+            activeDot={(props: DotProps) => <MoodDot {...props} active />}
             isAnimationActive={false}
           />
         </LineChart>
       </ResponsiveContainer>
     </div>
+  );
+}
+
+interface DotProps {
+  cx?: number;
+  cy?: number;
+  index?: number;
+  payload?: MoodPoint;
+}
+
+/**
+ * A day's dot, filled with that day's mood colour and ringed in white like
+ * the meter's face. Today wears the face itself; long ranges get small dots.
+ */
+function MoodDot({
+  cx,
+  cy,
+  index,
+  payload,
+  small,
+  active,
+}: DotProps & { small?: boolean; active?: boolean }): ReactElement {
+  const key = `dot-${index}`;
+  if (cx === undefined || cy === undefined || payload?.mood == null) return <g key={key} />;
+  const level = moodLevel(payload.mood);
+  const { Face } = moods[level];
+  const fill = `var(--color-mood-${level})`;
+  if (payload.today) {
+    const r = active ? 15 : 13;
+    return (
+      <g key={key}>
+        <circle cx={cx} cy={cy} r={r} fill={fill} stroke="white" strokeWidth={3} />
+        <Face x={cx - r + 3} y={cy - r + 3} width={2 * r - 6} height={2 * r - 6} stroke={2} color="var(--color-ink)" />
+      </g>
+    );
+  }
+  const r = active ? 8 : small ? 3.5 : 5.5;
+  return (
+    <circle
+      key={key}
+      cx={cx}
+      cy={cy}
+      r={r}
+      fill={fill}
+      stroke={active ? "var(--color-caption)" : "white"}
+      strokeWidth={small && !active ? 1.5 : 2.5}
+    />
   );
 }
 
