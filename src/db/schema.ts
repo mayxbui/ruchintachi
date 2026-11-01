@@ -183,21 +183,8 @@ export const inventory = sqliteTable(
   (t) => [primaryKey({ columns: [t.userId, t.itemId] })],
 );
 
-// One gift per user per day; the unique key makes awarding idempotent.
-export const dailyGifts = sqliteTable(
-  "daily_gifts",
-  {
-    userId: text("user_id")
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    date: text("date").notNull(),
-    itemId: text("item_id").notNull(),
-    awardedAt: createdAt(),
-  },
-  (t) => [uniqueIndex("daily_gifts_user_date_uq").on(t.userId, t.date)],
-);
-
-// One gift per user per week (#27).
+// One gift per user per week (#27); the unique key makes awarding
+// idempotent. revealedAt is set once the gift reveal has played.
 export const weeklyRewards = sqliteTable(
   "weekly_rewards",
   {
@@ -207,6 +194,7 @@ export const weeklyRewards = sqliteTable(
     weekStartDate: text("week_start_date").notNull(),
     itemId: text("item_id").notNull(),
     awardedAt: createdAt(),
+    revealedAt: integer("revealed_at", { mode: "timestamp_ms" }),
   },
   (t) => [uniqueIndex("weekly_rewards_user_week_uq").on(t.userId, t.weekStartDate)],
 );

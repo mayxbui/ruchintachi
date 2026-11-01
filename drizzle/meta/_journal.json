@@ -64,6 +64,13 @@
       "when": 1793566948552,
       "tag": "0008_coin_ledger",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1793567102368,
+      "tag": "0009_weekly_gift",
+      "breakpoints": true
     }
   ]
 }

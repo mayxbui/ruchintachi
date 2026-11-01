@@ -22,7 +22,15 @@ const faq = [
   },
   {
     q: "How do I get a gift?",
-    a: "Tick every task scheduled for today and your Mii gives you a random gift. A day with no tasks gives no gift.",
+    a: "A day where you finish every repeating habit is a complete day, and gets a rubber-duck stamp on your calendar. When a week ends, your Mii rolls one gift for each complete day and gives you the rarest. Open My Chronicle to unwrap it. A week with no complete days gives no gift, and one-off tasks don't count.",
+  },
+  {
+    q: "What is my streak?",
+    a: "The number of complete days in a row, up to today or yesterday. Days with no repeating habits are skipped: they don't break it or add to it.",
+  },
+  {
+    q: "How do I earn coins?",
+    a: "Each repeating habit you tick earns 2 coins (up to 10 a day). A complete day adds 20, plus 2 for every day of your streak (up to 20). Unticking never takes coins back. Your coins are private.",
   },
   {
     q: "What can my friends see?",

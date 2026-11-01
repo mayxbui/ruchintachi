@@ -37,7 +37,6 @@ function fillEverything(
   db.insert(schema.habitExceptions).values({ habitId, date: "2026-10-02" }).run();
   db.insert(schema.completions).values({ habitId, userId, date: "2026-10-01" }).run();
   db.insert(schema.inventory).values({ userId, itemId: "apple", quantity: 2 }).run();
-  db.insert(schema.dailyGifts).values({ userId, date: "2026-10-01", itemId: "apple" }).run();
   db.insert(schema.weeklyRewards)
     .values({ userId, weekStartDate: "2026-09-28", itemId: "hat" })
     .run();

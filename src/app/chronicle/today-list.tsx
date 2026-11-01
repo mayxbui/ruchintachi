@@ -8,9 +8,8 @@ import { iconEmoji } from "@/lib/habit-icons";
 import { formatClock, parseMinutes, remainingMs, TIMER_MAX_MINUTES, TIMER_PRESETS } from "@/lib/timer";
 import { doneLast as moveDoneLast } from "@/lib/sort-habits";
 import { dayProgress, type DayItem } from "@/lib/today";
-import { reorderHabitsAction, toggleCompletionAction, type DailyGift } from "./actions";
+import { reorderHabitsAction, toggleCompletionAction } from "./actions";
 import { DueTag } from "./due-tag";
-import { GiftReveal } from "./gift-reveal";
 import { CoinIcon } from "./stat-pills";
 import { TaskIcon } from "./task-icon";
 import { TaskText } from "./task-text";
@@ -80,8 +79,6 @@ export function TodayList({
   const timer = useTimer();
   // The task just ticked, keyed so ticking it again replays the sparkle.
   const [cheer, setCheer] = useState<{ id: string; key: number } | null>(null);
-  // Today's gift, set when the tick that finished the day awarded it (#16).
-  const [gift, setGift] = useState<DailyGift | null>(null);
   // Coins the last tick earned (#28), keyed so each tick replays the "+N".
   const [coinPop, setCoinPop] = useState<{ amount: number; key: number } | null>(null);
   // Just-ticked tasks keep their place until the pause ends.
@@ -122,7 +119,6 @@ export function TodayList({
       change({ habitId: item.habitId, done: !item.done });
       const result = await toggleCompletionAction(item.habitId, !item.done);
       if (result.error) setError(result.error);
-      if (result.gift) setGift(result.gift);
       if (result.coins) setCoinPop((c) => ({ amount: result.coins!, key: (c?.key ?? 0) + 1 }));
     });
   }
@@ -241,7 +237,6 @@ export function TodayList({
         ))}
       </ul>
       <FormMessage error={error ?? drag.error} />
-      {gift && <GiftReveal gift={gift} onClose={() => setGift(null)} />}
     </div>
   );
 }

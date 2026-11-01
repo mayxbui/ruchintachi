@@ -22,7 +22,7 @@ export interface DayItem {
   icon: string | null;
   note: string | null;
   dueDate: string | null; // a one-off task's deadline
-  repeats: boolean; // a repeating habit, not a one-off task; only these count for the daily gift
+  repeats: boolean; // a repeating habit, not a one-off task; only these count for the streak, coins and weekly gift
   done: boolean;
 }
 
