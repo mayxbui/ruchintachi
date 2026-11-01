@@ -16,8 +16,8 @@ const navClass =
   "flex size-10 min-w-0 items-center justify-center rounded-full bg-dark-blue text-white shadow-pop transition hover:-translate-y-0.5";
 
 /**
- * Month grid (#19): a rubber-duck stamp on each complete day, and each
- * week's gift on its last day (#27).
+ * Month grid (#19): a rubber-duck stamp on each complete day, a patch on
+ * each repaired day (#82), and each week's gift on its last day (#27).
  */
 export default async function CalendarPage({
   searchParams,
@@ -39,6 +39,7 @@ export default async function CalendarPage({
     if (item) gifts.set(date, item);
   }
   const history = dayHistory(db, user.id, today);
+  const repaired = new Set(history.repaired);
   const monthDays = weeks.flat().filter((day) => day.inMonth);
   const completeThisMonth = monthDays.filter(({ date }) => history.typeOf(date) === "complete").length;
   const giftsThisMonth = monthDays.filter(({ date }) => gifts.has(date)).length;
@@ -89,8 +90,14 @@ export default async function CalendarPage({
               {week.map(({ date, inMonth }) => {
                 const gift = gifts.get(date);
                 const complete = history.typeOf(date) === "complete";
+                const patched = repaired.has(date);
                 const isToday = date === today;
-                const label = [formatDate(date), complete && "every habit done", gift && `gift: ${gift.name}`]
+                const label = [
+                  formatDate(date),
+                  complete && "every habit done",
+                  patched && "streak repaired",
+                  gift && `gift: ${gift.name}`,
+                ]
                   .filter(Boolean)
                   .join(", ");
                 return (
@@ -117,6 +124,17 @@ export default async function CalendarPage({
                           data-hint="Every habit done"
                         >
                           <Image src="/items/Treasure040.png" alt="" fill sizes="64px" className="object-contain" />
+                        </span>
+                      )}
+                      {patched && (
+                        <span
+                          aria-hidden
+                          data-hint="Streak repaired"
+                          className={`absolute ${
+                            gift ? "top-0.5 right-1 text-xs sm:text-base" : "inset-x-0 bottom-1 text-center text-lg sm:bottom-2 sm:text-3xl"
+                          } ${inMonth ? "" : "opacity-50"}`}
+                        >
+                          🩹
                         </span>
                       )}
                       {gift && (

@@ -10,6 +10,7 @@ import {
   setCompletion,
 } from "@/db/completions";
 import { earnTodayCoins } from "@/db/coins";
+import { buyRepair } from "@/db/streak";
 import { markWeeklyGiftRevealed } from "@/db/weekly-gifts";
 import {
   clearException,
@@ -120,6 +121,16 @@ export async function toggleCompletionAction(
   const coins = done ? earnTodayCoins(db, user.id, today) : 0;
   revalidatePath("/chronicle", "layout");
   return coins > 0 ? { coins } : {};
+}
+
+/** Buys back yesterday's miss with coins to keep the streak (#82). */
+export async function buyRepairAction(): Promise<{ error?: string }> {
+  const user = await requireUser();
+  const result = buyRepair(db, user, todayIn(user.timeZone));
+  if ("error" in result) return { error: result.error };
+  revalidatePath("/chronicle", "layout");
+  revalidatePath("/calendar");
+  return {};
 }
 
 /** Marks a weekly gift's reveal as played (#27), so it shows only once. */

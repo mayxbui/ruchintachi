@@ -228,3 +228,17 @@ export const coinLedger = sqliteTable(
   },
   (t) => [uniqueIndex("coin_ledger_user_date_reason_uq").on(t.userId, t.date, t.reason)],
 );
+
+// Streak repairs (#82): a missed day bought back with coins, which then
+// counts as an empty day. One per user per day.
+export const streakRepairs = sqliteTable(
+  "streak_repairs",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    date: text("date").notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [uniqueIndex("streak_repairs_user_date_uq").on(t.userId, t.date)],
+);

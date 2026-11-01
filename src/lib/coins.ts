@@ -9,6 +9,7 @@ export const COMPLETE_DAY_COINS = 20;
 export const COINS_PER_STREAK_DAY = 2;
 export const STREAK_COINS_MAX = 20;
 export const DAY_COINS_MAX = HABIT_COINS_MAX + COMPLETE_DAY_COINS + STREAK_COINS_MAX; // 50
+export const REPAIR_COST = 100; // a streak repair (#82)
 
 /**
  * What a day's habits earn: 2 per repeating habit done (up to 10), plus 20

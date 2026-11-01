@@ -6,7 +6,7 @@
 // them done; a missed day has some left undone; an empty day has none
 // (one-off tasks never count). A repaired day (#82) counts as empty.
 
-import { addDays } from "./dates";
+import { addDays, startOfWeek, type WeekStart } from "./dates";
 
 export type DayType = "complete" | "missed" | "empty";
 
@@ -52,4 +52,25 @@ export function currentStreak(today: string, typeOf: (date: string) => DayType, 
 export function todayPercent(items: readonly { done: boolean }[]): number | null {
   if (items.length === 0) return null;
   return Math.round((items.filter((item) => item.done).length / items.length) * 100);
+}
+
+/**
+ * The missed day a streak repair (#82) can buy back today, or null. Offered
+ * when yesterday was missed and the streak before it is at least 1, until
+ * today ends. At most one repair per week (the week of the missed day), so
+ * pass the dates already repaired. `typeOf` already counts repaired days as
+ * empty, so two missed days in a row leave no streak to repair.
+ */
+export function repairOffer(
+  today: string,
+  typeOf: (date: string) => DayType,
+  earliest: string,
+  repaired: readonly string[],
+  weekStart: WeekStart,
+): string | null {
+  const yesterday = addDays(today, -1);
+  if (typeOf(yesterday) !== "missed") return null;
+  const week = startOfWeek(yesterday, weekStart);
+  if (repaired.some((date) => startOfWeek(date, weekStart) === week)) return null;
+  return streakEndingAt(addDays(yesterday, -1), typeOf, earliest) >= 1 ? yesterday : null;
 }

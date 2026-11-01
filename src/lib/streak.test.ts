@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { currentStreak, dayType, isCompleteDay, streakEndingAt, todayPercent, type DayType } from "./streak";
+import {
+  currentStreak,
+  dayType,
+  isCompleteDay,
+  repairOffer,
+  streakEndingAt,
+  todayPercent,
+  type DayType,
+} from "./streak";
 
 const habit = (done: boolean) => ({ repeats: true, done });
 const oneOff = (done: boolean) => ({ repeats: false, done });
@@ -84,5 +92,43 @@ describe("todayPercent", () => {
     expect(todayPercent([{ done: true }, { done: false }, { done: false }])).toBe(33);
     expect(todayPercent([{ done: true }])).toBe(100);
     expect(todayPercent([{ done: false }])).toBe(0);
+  });
+});
+
+describe("repairOffer", () => {
+  // Wed 4 Nov 2026; Monday weeks.
+  const today = "2026-11-04";
+  const earliest = "2026-10-01";
+  const offer = (types: Record<string, DayType>, repaired: string[] = []) =>
+    repairOffer(today, days(types), earliest, repaired, "monday");
+
+  it("offers yesterday when it was missed after a streak", () => {
+    expect(offer({ "2026-11-02": "complete", "2026-11-03": "missed" })).toBe("2026-11-03");
+    // Empty days before the miss are skipped when looking for the streak.
+    expect(offer({ "2026-10-30": "complete", "2026-11-03": "missed" })).toBe("2026-11-03");
+  });
+
+  it("offers nothing when yesterday wasn't missed", () => {
+    expect(offer({ "2026-11-02": "complete", "2026-11-03": "complete" })).toBeNull();
+    expect(offer({ "2026-11-02": "complete" })).toBeNull();
+  });
+
+  it("offers nothing without a streak before the miss", () => {
+    expect(offer({ "2026-11-03": "missed" })).toBeNull();
+    // Two missed days in a row can't be repaired.
+    expect(offer({ "2026-11-01": "complete", "2026-11-02": "missed", "2026-11-03": "missed" })).toBeNull();
+  });
+
+  it("allows one repair per week of the missed day", () => {
+    const types = { "2026-11-02": "complete", "2026-11-03": "missed" } as const;
+    expect(offer(types, ["2026-11-02"])).toBeNull(); // same week
+    expect(offer(types, ["2026-11-01"])).toBe("2026-11-03"); // the week before
+  });
+
+  it("counts a missed Sunday in its own week", () => {
+    // Today Mon 9 Nov; the miss was Sun 8 Nov, in the week of Mon 2 Nov.
+    const types = { "2026-11-07": "complete", "2026-11-08": "missed" } as const;
+    expect(repairOffer("2026-11-09", days(types), earliest, ["2026-11-03"], "monday")).toBeNull();
+    expect(repairOffer("2026-11-09", days(types), earliest, ["2026-11-03"], "sunday")).toBe("2026-11-08");
   });
 });

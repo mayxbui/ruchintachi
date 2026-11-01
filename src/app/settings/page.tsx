@@ -33,6 +33,10 @@ const faq = [
     a: "Each repeating habit you tick earns 2 coins (up to 10 a day). A complete day adds 20, plus 2 for every day of your streak (up to 20). Unticking never takes coins back. Your coins are private.",
   },
   {
+    q: "I missed a day. Is my streak gone?",
+    a: "If you had a streak before yesterday's miss, My Chronicle offers a repair for 100 coins until today ends. A repaired day gets a patch on your calendar and counts like a day off: it keeps your streak but earns no coins and doesn't count towards the weekly gift. One repair per week, and two missed days in a row can't be repaired.",
+  },
+  {
     q: "What can my friends see?",
     a: "Only your Mii: its look, its clothes and its item collection. Your habits, chronicle and calendar stay private.",
   },
