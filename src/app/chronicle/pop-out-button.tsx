@@ -3,8 +3,8 @@
 import { IconPictureInPictureOn } from "@tabler/icons-react";
 import { useSyncExternalStore } from "react";
 
-// The window fits /widget's mini laptop.
-const SIZE = { width: 560, height: 400 };
+// Room for /widget's top bar and a column of tasks.
+const SIZE = { width: 440, height: 540 };
 
 const noSubscribe = () => () => {};
 const hasPip = () => !!window.documentPictureInPicture;
