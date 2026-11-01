@@ -57,6 +57,13 @@
       "when": 1793202768327,
       "tag": "0007_premium_lyja",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1793566948552,
+      "tag": "0008_coin_ledger",
+      "breakpoints": true
     }
   ]
 }

@@ -45,6 +45,8 @@
   /* Daily gift reveal (#17): the wrapped present shakes, then the item rises. */
   --animate-gift-wobble: gift-wobble 700ms ease-in-out infinite;
   --animate-gift-rise: gift-rise 600ms cubic-bezier(0.2, 1.4, 0.4, 1) both;
+  /* "+N" coins after a tick (#28): floats up and fades. */
+  --animate-coin-pop: coin-pop 1600ms ease-out both;
 
   @keyframes gift-wobble {
     0%,
@@ -68,6 +70,22 @@
     from {
       opacity: 0;
       transform: translateY(2.5rem) scale(0.4);
+    }
+  }
+
+  @keyframes coin-pop {
+    0% {
+      opacity: 0;
+      transform: translateY(0.5rem) scale(0.8);
+    }
+    15%,
+    70% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-0.75rem);
     }
   }
 
@@ -146,7 +164,8 @@
   .animate-check-pop,
   .animate-warning-in,
   .animate-gift-wobble,
-  .animate-gift-rise {
+  .animate-gift-rise,
+  .animate-coin-pop {
     animation: none;
   }
   .poof,

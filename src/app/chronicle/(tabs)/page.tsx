@@ -1,4 +1,5 @@
 import { db } from "@/db";
+import { coinBalance } from "@/db/coins";
 import { streakFor } from "@/db/streak";
 import { todayItems } from "@/db/today";
 import { requireUser } from "@/lib/auth/session";
@@ -6,7 +7,7 @@ import { todayIn } from "@/lib/dates";
 import { formatDate } from "@/lib/describe-rule";
 import { QuickAdd } from "../quick-add";
 import { SortMenu } from "../sort-menu";
-import { StreakPill } from "../stat-pills";
+import { CoinPill, StreakPill } from "../stat-pills";
 import { TodayList } from "../today-list";
 
 /** Today tab: today's tasks to tick off or edit. */
@@ -23,6 +24,7 @@ export default async function TodayPage() {
         <p className="text-caption">{formatDate(today)}</p>
         <div className="ml-auto flex flex-wrap items-center justify-end gap-2">
           <StreakPill streak={streak} />
+          <CoinPill coins={coinBalance(db, user.id)} />
         </div>
         <SortMenu sort={user.taskSort} doneLast={user.doneLast} />
       </div>

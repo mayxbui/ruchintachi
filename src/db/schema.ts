@@ -223,3 +223,20 @@ export const moodLog = sqliteTable(
   },
   (t) => [primaryKey({ columns: [t.userId, t.date] })],
 );
+
+// Coins (#28): one row per user, day and reason. "day" is what that day's
+// habits earned (only ever raised); "repair" is a streak repair's cost (#82).
+// The balance is the sum. Private to the owner.
+export const coinLedger = sqliteTable(
+  "coin_ledger",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    date: text("date").notNull(),
+    reason: text("reason", { enum: ["day", "repair"] }).notNull(),
+    amount: integer("amount").notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [uniqueIndex("coin_ledger_user_date_reason_uq").on(t.userId, t.date, t.reason)],
+);

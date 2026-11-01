@@ -10,6 +10,7 @@ import {
   listExceptions,
   setCompletion,
 } from "@/db/completions";
+import { earnTodayCoins } from "@/db/coins";
 import { awardDailyGift, dailyGiftOn } from "@/db/gifts";
 import {
   clearException,
@@ -109,7 +110,7 @@ function scheduledHabit(userId: string, habitId: string, today: string) {
 export async function toggleCompletionAction(
   habitId: string,
   done: boolean,
-): Promise<{ error?: string; gift?: DailyGift }> {
+): Promise<{ error?: string; gift?: DailyGift; coins?: number }> {
   const user = await requireUser();
   const today = todayIn(user.timeZone);
   const habit = scheduledHabit(user.id, habitId, today);
@@ -122,8 +123,10 @@ export async function toggleCompletionAction(
 
   setCompletion(db, user.id, habitId, today, done);
   const gift = done ? awardDailyGiftIfEarned(user.id, today) : undefined;
+  // Unticking never takes coins back, so only a tick can earn any.
+  const coins = done ? earnTodayCoins(db, user.id, today) : 0;
   revalidatePath("/chronicle", "layout");
-  return gift ? { gift } : {};
+  return { ...(gift && { gift }), ...(coins > 0 && { coins }) };
 }
 
 export type DailyGift = Pick<Item, "id" | "name" | "category" | "sprite">;

@@ -11,6 +11,7 @@ import { dayProgress, type DayItem } from "@/lib/today";
 import { reorderHabitsAction, toggleCompletionAction, type DailyGift } from "./actions";
 import { DueTag } from "./due-tag";
 import { GiftReveal } from "./gift-reveal";
+import { CoinIcon } from "./stat-pills";
 import { TaskIcon } from "./task-icon";
 import { TaskText } from "./task-text";
 import { useTimer } from "./timer";
@@ -81,6 +82,8 @@ export function TodayList({
   const [cheer, setCheer] = useState<{ id: string; key: number } | null>(null);
   // Today's gift, set when the tick that finished the day awarded it (#16).
   const [gift, setGift] = useState<DailyGift | null>(null);
+  // Coins the last tick earned (#28), keyed so each tick replays the "+N".
+  const [coinPop, setCoinPop] = useState<{ amount: number; key: number } | null>(null);
   // Just-ticked tasks keep their place until the pause ends.
   const [settling, setSettling] = useState<ReadonlySet<string>>(new Set());
   const settleTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -120,13 +123,21 @@ export function TodayList({
       const result = await toggleCompletionAction(item.habitId, !item.done);
       if (result.error) setError(result.error);
       if (result.gift) setGift(result.gift);
+      if (result.coins) setCoinPop((c) => ({ amount: result.coins!, key: (c?.key ?? 0) + 1 }));
     });
   }
 
   return (
     <div className="space-y-3">
-      <p className="text-caption" aria-live="polite">
+      <p className="flex items-center gap-2 text-caption" aria-live="polite">
         {done === total ? `All ${total} done! 🎉` : `${done} of ${total} done`}
+        {coinPop && (
+          <span key={coinPop.key} className="animate-coin-pop flex items-center gap-0.5 font-black text-sunny-deep">
+            +{coinPop.amount}
+            <CoinIcon className="size-4" />
+            <span className="sr-only">coins</span>
+          </span>
+        )}
       </p>
       <ul className="space-y-3">
         {ordered.map((item) => (

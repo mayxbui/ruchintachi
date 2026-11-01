@@ -41,6 +41,7 @@ function fillEverything(
   db.insert(schema.weeklyRewards)
     .values({ userId, weekStartDate: "2026-09-28", itemId: "hat" })
     .run();
+  db.insert(schema.coinLedger).values({ userId, date: "2026-10-01", reason: "day", amount: 24 }).run();
   db.insert(schema.moodLog).values({ userId, date: "2026-10-01", mood: 60 }).run();
   // Friend links in both directions.
   db.insert(schema.friendships)
