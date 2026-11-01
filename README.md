@@ -41,7 +41,7 @@ A habit tracker inspired by **Tomodachi Life: Living the Dream**. Create a Mii, 
 - End conditions: **never**, **on a date**, or **after N occurrences**.
 - Editing or deleting a repeating habit asks: **"only this day"** or **"this day and all future days"**. Past days are never changed.
 - You can only check off **today**. No backfilling past days, no vacation mode.
-- **Pop-out widget** — on a computer with Chrome or Edge, **Pop out** on My Chronicle opens a mini-laptop window that stays on top of your other windows: today's checklist and your Mii's mood. You can tick tasks, add one-off tasks and write notes there; new habits are made on the main site.
+- **Pop-out widget** — on a computer with Chrome or Edge, **Pop out** on My Chronicle opens a small window that stays on top of your other windows: your Mii's mood and today's checklist. You can tick tasks, add one-off tasks and write notes there; new habits are made on the main site.
 
 ### 3. Progress tracking
 - **Calendar view** — every day you finished all your habits shows the gift you got that day, so keeping a habit fills the calendar with items.
