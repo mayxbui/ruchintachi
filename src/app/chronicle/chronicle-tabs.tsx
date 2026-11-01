@@ -3,6 +3,7 @@
 import { IconListDetails, IconPlus, IconSunHigh } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
+import { PopOutButton } from "./pop-out-button";
 
 const tabs = [
   { href: "/chronicle", label: "Today", icon: IconSunHigh },
@@ -11,7 +12,8 @@ const tabs = [
 
 /**
  * Top row of My Chronicle: the Today / Tasks switch (each tab has its own
- * URL) and "Create a habit" for the full form.
+ * URL), "Pop out" for the always-on-top widget (#66), and "Create a habit"
+ * for the full form.
  */
 export function ChronicleTabs() {
   const pathname = usePathname();
@@ -40,14 +42,17 @@ export function ChronicleTabs() {
           );
         })}
       </nav>
-      <Link
-        href={newHref}
-        aria-label="Create a habit"
-        className="ml-auto flex shrink-0 items-center gap-1.5 rounded-full bg-tangerine p-2.5 font-bold text-white shadow-pop transition hover:brightness-105 sm:p-3 md:px-5 md:py-2.5"
-      >
-        <IconPlus aria-hidden className="size-5" stroke={3} />
-        <span className="hidden md:inline">Create a habit</span>
-      </Link>
+      <div className="ml-auto flex shrink-0 gap-2">
+        <PopOutButton />
+        <Link
+          href={newHref}
+          aria-label="Create a habit"
+          className="flex shrink-0 items-center gap-1.5 rounded-full bg-tangerine p-2.5 font-bold text-white shadow-pop transition hover:brightness-105 sm:p-3 md:px-5 md:py-2.5"
+        >
+          <IconPlus aria-hidden className="size-5" stroke={3} />
+          <span className="hidden md:inline">Create a habit</span>
+        </Link>
+      </div>
     </div>
   );
 }

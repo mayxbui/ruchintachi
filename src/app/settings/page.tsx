@@ -26,6 +26,10 @@ const faq = [
     q: "What can my friends see?",
     a: "Only your Mii: its look, its clothes and its item collection. Your habits, chronicle and calendar stay private.",
   },
+  {
+    q: "How do I keep my tasks on my desktop?",
+    a: "On a computer with Chrome or Edge, press Pop out on My Chronicle. A small window with today's tasks and your Mii's mood stays on top of your other windows until you close it or this tab. Other browsers and phones don't support it yet.",
+  },
 ];
 
 export default async function SettingsPage() {
