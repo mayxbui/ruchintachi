@@ -22,7 +22,9 @@ import { renameSeriesAction, renameTodayAction, setNoteAction } from "./actions"
  *
  * `edit` says how renaming starts: "click" (Today) or "double-click"
  * (Tasks). Either way a click folds or unfolds a long note and a
- * double-click edits it. `readOnly` shows plain text, e.g. while bulk edit
+ * double-click edits it. `renamable` false keeps the name as plain text but
+ * the note editable, and shows "Add a note" at every width (the /widget
+ * page, #66, is narrower than the phone breakpoint). `readOnly` shows plain text, e.g. while bulk edit
  * is selecting rows. `lead` sits left of the name on its line (Today's
  * icon), so the note below gets the full width.
  */
@@ -34,6 +36,7 @@ export function TaskText({
   scope,
   edit = "click",
   readOnly = false,
+  renamable = true,
   lead,
   children,
 }: {
@@ -44,6 +47,7 @@ export function TaskText({
   scope: "today" | "series";
   edit?: EditGesture;
   readOnly?: boolean;
+  renamable?: boolean;
   lead?: ReactNode;
   children?: ReactNode;
 }) {
@@ -87,20 +91,24 @@ export function TaskText({
     );
   }
 
+  const nameText = renamable ? (
+    <TaskName name={shown.name} done={done} edit={edit} onRename={rename} />
+  ) : (
+    <span className={`block font-bold break-words ${done ? "text-caption line-through" : ""}`}>{shown.name}</span>
+  );
+
   return (
     <>
       {lead ? (
         <div className="flex items-center gap-2">
           {lead}
-          <div className="min-w-0 flex-1">
-            <TaskName name={shown.name} done={done} edit={edit} onRename={rename} />
-          </div>
+          <div className="min-w-0 flex-1">{nameText}</div>
         </div>
       ) : (
-        <TaskName name={shown.name} done={done} edit={edit} onRename={rename} />
+        nameText
       )}
       {children}
-      <FoldingNote name={shown.name} note={shown.note} onSave={saveNote} />
+      <FoldingNote name={shown.name} note={shown.note} onSave={saveNote} addOnPhones={!renamable} />
       {error && (
         <p role="alert" className="mt-1 text-cherry">
           {error}
@@ -209,16 +217,19 @@ function NoteEditor({
 /**
  * A task's note: a long one folds to one line (cut off at the row's edge),
  * and a click unfolds or folds it; double-click (or F2) edits. With no note, a faint "Add a note" writes
- * one (hidden on phones to keep rows short; the edit page has the field too).
+ * one (hidden on phones to keep rows short, unless `addOnPhones`; the edit
+ * page has the field too).
  */
 function FoldingNote({
   name,
   note,
   onSave,
+  addOnPhones = false,
 }: {
   name: string;
   note: string | null;
   onSave: (note: string) => void;
+  addOnPhones?: boolean;
 }) {
   const [editing, setEditing] = useState(false);
   const [open, setOpen] = useState(false);
@@ -261,7 +272,7 @@ function FoldingNote({
       <button
         type="button"
         onClick={() => setEditing(true)}
-        className="mt-1 -ml-3 block min-w-0 max-w-full rounded-xl bg-transparent px-3 py-1.5 text-left text-base text-caption/60 shadow-none transition hover:bg-sand/60 max-sm:hidden"
+        className={`mt-1 -ml-3 block min-w-0 max-w-full rounded-xl bg-transparent px-3 py-1.5 text-left text-base text-caption/60 shadow-none transition hover:bg-sand/60 ${addOnPhones ? "" : "max-sm:hidden"}`}
       >
         Add a note
       </button>

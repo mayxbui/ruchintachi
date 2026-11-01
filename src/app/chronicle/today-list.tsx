@@ -53,7 +53,7 @@ function useSlideOnReorder(order: string, draggingId: string | null) {
  * short pause so the tick can be seen (each new tick restarts it). With
  * `reorderable` (the Custom sort) each row has a drag handle; its arrow
  * keys move the row too. `compact` (the /widget page, #65) keeps just the
- * ticking: no reordering, renaming, icon picker, timer or edit link.
+ * ticking and notes: no reordering, renaming, icon picker, timer or edit link.
  */
 export function TodayList({
   items,
@@ -185,7 +185,7 @@ export function TodayList({
                   note={item.note}
                   done={item.done}
                   scope="today"
-                  readOnly={compact}
+                  renamable={!compact}
                   lead={
                     compact ? (
                       <span aria-hidden>{iconEmoji(item.icon)}</span>
