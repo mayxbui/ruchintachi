@@ -10,16 +10,18 @@ const borders = {
 
 /** Rounded white card used as the main panel on every page. */
 export function PageCard({
+  id,
   title,
   border = "cherry",
   children,
 }: {
+  id?: string; // for linking straight to the card, e.g. /settings#faq
   title: string;
   border?: keyof typeof borders;
   children: ReactNode;
 }) {
   return (
-    <section className={`rounded-blob border-4 ${borders[border]} bg-cream/90 p-4 shadow-pop sm:border-6 sm:p-6`}>
+    <section id={id} className={`rounded-blob border-4 ${borders[border]} bg-cream/90 p-4 shadow-pop scroll-mt-4 sm:border-6 sm:p-6`}>
       <h1 className="mb-3 text-2xl sm:mb-4 sm:text-3xl">{title}</h1>
       {children}
     </section>

@@ -1,13 +1,13 @@
 // Mii mood (#25). Pure: the server loads each day's habits and completions,
 // and these functions turn them into a 0–100 score and one of five moods.
 //
-// Only repeating habits count, as for the daily gift and the streak. A
+// Only repeating habits count, as for the weekly gift and the streak. A
 // finished day where every habit was done lifts the mood; each habit left
 // undone lowers it; a day with no habits leaves it alone. A perfect week
 // adds a bonus on its last day. Today can only lift the mood (once every
 // habit is done), so it never drops in the middle of a day.
 
-import { earnsDailyGift } from "./daily-gift";
+import { isCompleteDay } from "./streak";
 import { addDays, startOfWeek, weekDates, type WeekStart } from "./dates";
 
 export const MOOD_MIN = 0;
@@ -49,7 +49,7 @@ export function moodLevel(score: number): MoodLevel {
  * only counts once it's complete; misses wait until the day is over.
  */
 export function dayMoodChange(items: DayHabits, finished: boolean): number {
-  if (earnsDailyGift(items)) return COMPLETE_DAY;
+  if (isCompleteDay(items)) return COMPLETE_DAY;
   if (!finished) return 0;
   const missed = items.filter((item) => item.repeats && !item.done).length;
   return missed === 0 ? 0 : -Math.min(MISSED_DAY_MAX, missed * MISSED_HABIT);

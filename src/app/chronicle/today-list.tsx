@@ -4,13 +4,12 @@ import { IconCheck, IconGripVertical, IconHourglassHigh, IconPencil } from "@tab
 import Link from "next/link";
 import { useEffect, useLayoutEffect, useOptimistic, useRef, useState, useTransition } from "react";
 import { FormMessage } from "@/components/form";
-import { iconEmoji } from "@/lib/habit-icons";
 import { formatClock, parseMinutes, remainingMs, TIMER_MAX_MINUTES, TIMER_PRESETS } from "@/lib/timer";
 import { doneLast as moveDoneLast } from "@/lib/sort-habits";
 import { dayProgress, type DayItem } from "@/lib/today";
-import { reorderHabitsAction, toggleCompletionAction, type DailyGift } from "./actions";
+import { reorderHabitsAction, toggleCompletionAction } from "./actions";
 import { DueTag } from "./due-tag";
-import { GiftReveal } from "./gift-reveal";
+import { CoinIcon } from "@/components/stat-pills";
 import { TaskIcon } from "./task-icon";
 import { TaskText } from "./task-text";
 import { useTimer } from "./timer";
@@ -52,8 +51,8 @@ function useSlideOnReorder(order: string, draggingId: string | null) {
  * back on error. With `doneLast`, ticked tasks move below the rest, after a
  * short pause so the tick can be seen (each new tick restarts it). With
  * `reorderable` (the Custom sort) each row has a drag handle; its arrow
- * keys move the row too. `compact` (the /widget page, #65) keeps just the
- * ticking and notes: no reordering, renaming, icon picker, timer or edit link.
+ * keys move the row too. `compact` (the /widget page, #65) keeps ticking,
+ * renaming, icons and notes: no reordering, timer or edit link.
  */
 export function TodayList({
   items,
@@ -79,8 +78,8 @@ export function TodayList({
   const timer = useTimer();
   // The task just ticked, keyed so ticking it again replays the sparkle.
   const [cheer, setCheer] = useState<{ id: string; key: number } | null>(null);
-  // Today's gift, set when the tick that finished the day awarded it (#16).
-  const [gift, setGift] = useState<DailyGift | null>(null);
+  // Coins the last tick earned (#28), keyed so each tick replays the "+N".
+  const [coinPop, setCoinPop] = useState<{ amount: number; key: number } | null>(null);
   // Just-ticked tasks keep their place until the pause ends.
   const [settling, setSettling] = useState<ReadonlySet<string>>(new Set());
   const settleTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -119,14 +118,21 @@ export function TodayList({
       change({ habitId: item.habitId, done: !item.done });
       const result = await toggleCompletionAction(item.habitId, !item.done);
       if (result.error) setError(result.error);
-      if (result.gift) setGift(result.gift);
+      if (result.coins) setCoinPop((c) => ({ amount: result.coins!, key: (c?.key ?? 0) + 1 }));
     });
   }
 
   return (
     <div className="space-y-3">
-      <p className="text-caption" aria-live="polite">
+      <p className="flex items-center gap-2 text-caption" aria-live="polite">
         {done === total ? `All ${total} done! 🎉` : `${done} of ${total} done`}
+        {coinPop && (
+          <span key={coinPop.key} className="animate-coin-pop flex items-center gap-0.5 font-black text-sunny-deep">
+            +{coinPop.amount}
+            <CoinIcon className="size-4" />
+            <span className="sr-only">coins</span>
+          </span>
+        )}
       </p>
       <ul className="space-y-3">
         {ordered.map((item) => (
@@ -185,14 +191,7 @@ export function TodayList({
                   note={item.note}
                   done={item.done}
                   scope="today"
-                  renamable={!compact}
-                  lead={
-                    compact ? (
-                      <span aria-hidden>{iconEmoji(item.icon)}</span>
-                    ) : (
-                      <TaskIcon habitId={item.habitId} icon={item.icon} name={item.name} />
-                    )
-                  }
+                  lead={<TaskIcon habitId={item.habitId} icon={item.icon} name={item.name} />}
                 >
                   {item.dueDate && !item.done && (
                     <span className="block">
@@ -230,7 +229,6 @@ export function TodayList({
         ))}
       </ul>
       <FormMessage error={error ?? drag.error} />
-      {gift && <GiftReveal gift={gift} onClose={() => setGift(null)} />}
     </div>
   );
 }

@@ -9,9 +9,15 @@ import { previewBackground } from "./page-background";
 
 const PUFFS = 8;
 
-/** Brings the picked tile into view when the picker opens (it may be below the fold). */
+/**
+ * Scrolls the picked tile into view inside the 3×3 window (it may be below
+ * its fold), without scrolling the page itself.
+ */
 function scrollIntoView(el: HTMLLIElement | null) {
-  el?.scrollIntoView({ block: "nearest" });
+  const list = el?.parentElement;
+  if (!el || !list) return;
+  const top = el.getBoundingClientRect().top - list.getBoundingClientRect().top;
+  if (top < 0 || top + el.offsetHeight > list.clientHeight) list.scrollTop += top - 6;
 }
 
 /** Scrolling 3×3 grid of square previews; a tap switches the background with no Save button. */

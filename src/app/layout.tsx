@@ -2,15 +2,19 @@ import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Nunito } from "next/font/google";
-import { BackgroundButton } from "@/components/background-button";
 import { SignOutButton } from "@/components/sign-out-button";
 import { FieldWarning } from "@/components/field-warning";
 import { HoverHint } from "@/components/hover-hint";
 import { NavBar } from "@/components/nav-bar";
 import { PageBackground } from "@/components/page-background";
 import { SiteChrome } from "@/components/site-chrome";
+import { StatPills } from "@/components/stat-pills";
+import { db } from "@/db";
+import { coinBalance } from "@/db/coins";
+import { streakFor } from "@/db/streak";
 import { getCurrentUser } from "@/lib/auth/session";
 import { DEFAULT_BACKGROUND } from "@/lib/backgrounds";
+import { todayIn } from "@/lib/dates";
 import "./globals.css";
 
 // Self-hosted by next/font, so no request to Google from visitors.
@@ -35,6 +39,8 @@ export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const user = await getCurrentUser();
+  // Streak and coins (#35, #28), shown right of the navbar while signed in.
+  const stats = user && { streak: streakFor(db, user.id, todayIn(user.timeZone)), coins: coinBalance(db, user.id) };
   return (
     <html lang="en" className={nunito.variable}>
       <body
@@ -42,28 +48,25 @@ export default async function RootLayout({
         className="flex min-h-lvh flex-col font-sans antialiased"
       >
         <PageBackground background={user?.background ?? DEFAULT_BACKGROUND} />
-        {/* Logo left, nav centred on one line; on phones the nav floats at the bottom of the screen. */}
+        {/* Logo left, nav in the middle, streak and coins right, on one line; on phones the nav floats at the bottom of the screen. */}
         <SiteChrome>
-          <header className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-3 px-3 pt-3 sm:px-4 sm:pt-4 md:grid-cols-[1fr_auto_1fr]">
-            <Link
-              href="/chronicle"
-              aria-label="RuchinDachi home"
-              className="justify-self-start"
-            >
+          <header className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-3 px-3 pt-3 sm:px-4 sm:pt-4 md:grid-cols-[auto_1fr_auto]">
+            <Link href="/chronicle" aria-label="RuchinDachi home" className="justify-self-start">
               <Image
                 src="/ruchindachi-logo.webp"
                 alt="RuchinDachi — Habit Planner & Tracker"
                 width={798}
                 height={615}
                 priority
-                className="h-14 w-auto sm:h-18 md:h-28"
+                className="h-14 w-auto max-w-none sm:h-18 md:h-28"
               />
             </Link>
             {user && <NavBar />}
-            {user && (
-              // Just right of the navbar on desktop; top-right corner, beside the logo, on phones.
+            {stats && (
+              // Streak and coins as one group: just right of the navbar on desktop;
+              // top-right corner, beside the logo, on phones.
               <div className="absolute top-3 right-3 flex gap-2 sm:top-4 sm:right-4 md:static md:justify-self-start">
-                <BackgroundButton background={user.background} />
+                <StatPills {...stats} />
                 <SignOutButton />
               </div>
             )}
@@ -75,7 +78,7 @@ export default async function RootLayout({
         </main>
 
         <SiteChrome>
-          <WaveFooter clearNav={!!user} />
+          <WaveFooter signedIn={!!user} />
         </SiteChrome>
         <FieldWarning />
         <HoverHint />
@@ -93,7 +96,7 @@ const WAVE =
  * like the Tomodachi Life: Living the Dream wallpapers. Stretched to the
  * page width, so phones see fewer, wider bumps.
  */
-function WaveFooter({ clearNav }: { clearNav: boolean }) {
+function WaveFooter({ signedIn }: { signedIn: boolean }) {
   return (
     <footer className="mt-auto">
       <svg
@@ -116,13 +119,22 @@ function WaveFooter({ clearNav }: { clearNav: boolean }) {
       {/* When signed in, extra room on phones so the floating navbar doesn't cover the text. */}
       <div
         className={`bg-tangerine px-4 ${
-          clearNav
+          signedIn
             ? "pb-[calc(env(safe-area-inset-bottom)+5.5rem)] md:pb-6"
             : "pb-[calc(env(safe-area-inset-bottom)+1.5rem)]"
         }`}
       >
         <p className="mx-auto max-w-5xl text-center text-sm text-white sm:text-lg">
-          Crafted by <span className="text-base font-black text-sunny sm:text-lg">mayxbui</span>. <br></br>
+          Crafted by <span className="text-base font-black text-sunny sm:text-lg">mayxbui</span>.
+          {signedIn && (
+            <>
+              {" · "}
+              <Link href="/settings#faq" className="font-bold underline hover:text-sunny">
+                FAQ
+              </Link>
+            </>
+          )}
+          <br></br>
           <span className="text-xs sm:text-sm">Tomodachi Life and its assets are registered trademarks of © Nintendo Co., Ltd. Sprite rips courtesy of The Spriters Resource contributors. Item icons from tlmodding/ltd-images. Item data from the community sheet by echocolat, phil_macrocheira and superspazzy.</span>
         </p>
       </div>

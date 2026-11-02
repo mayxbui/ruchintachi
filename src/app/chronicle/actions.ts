@@ -6,18 +6,18 @@ import { db } from "@/db";
 import { bulkDeleteHabits, bulkMoveHabits } from "@/db/bulk-edit";
 import {
   carryOverDoneDates,
-  completedHabitIds,
   listExceptions,
   setCompletion,
 } from "@/db/completions";
-import { awardDailyGift, dailyGiftOn } from "@/db/gifts";
+import { earnTodayCoins } from "@/db/coins";
+import { buyRepair } from "@/db/streak";
+import { markWeeklyGiftRevealed } from "@/db/weekly-gifts";
 import {
   clearException,
   createHabit,
   deleteHabit,
   endHabit,
   getHabit,
-  listHabits,
   renameHabit,
   setException,
   setHabitIcon,
@@ -30,10 +30,8 @@ import { setSortSettings } from "@/db/accounts";
 import { createTaskList, setHabitList } from "@/db/task-lists";
 import { requireUser } from "@/lib/auth/session";
 import { parseBulkIds } from "@/lib/bulk-edit";
-import { dailyGiftPool, earnsDailyGift } from "@/lib/daily-gift";
 import { todayIn } from "@/lib/dates";
-import { scheduleAll, scheduled } from "@/lib/due-date";
-import { rollGift } from "@/lib/gift-roll";
+import { scheduled } from "@/lib/due-date";
 import {
   isEditableDay,
   nextOccurrence,
@@ -45,11 +43,9 @@ import {
 } from "@/lib/habit-edit";
 import { HABIT_NAME_MAX, HABIT_NOTE_MAX, readHabitForm, validateHabit } from "@/lib/habit-form";
 import { isHabitIcon } from "@/lib/habit-icons";
-import type { Item } from "@/lib/items";
 import { occurrenceOn } from "@/lib/repeat-rule";
 import { isHabitSort, type HabitSort } from "@/lib/sort-habits";
 import { LISTS_MAX, NEW_LIST, validateListName } from "@/lib/task-lists";
-import { itemsOn } from "@/lib/today";
 
 export type HabitFormState = { error?: string };
 
@@ -109,7 +105,7 @@ function scheduledHabit(userId: string, habitId: string, today: string) {
 export async function toggleCompletionAction(
   habitId: string,
   done: boolean,
-): Promise<{ error?: string; gift?: DailyGift }> {
+): Promise<{ error?: string; coins?: number }> {
   const user = await requireUser();
   const today = todayIn(user.timeZone);
   const habit = scheduledHabit(user.id, habitId, today);
@@ -121,32 +117,28 @@ export async function toggleCompletionAction(
   }
 
   setCompletion(db, user.id, habitId, today, done);
-  const gift = done ? awardDailyGiftIfEarned(user.id, today) : undefined;
+  // Unticking never takes coins back, so only a tick can earn any.
+  const coins = done ? earnTodayCoins(db, user.id, today) : 0;
   revalidatePath("/chronicle", "layout");
-  return gift ? { gift } : {};
+  revalidatePath("/widget"); // its streak and coins, when ticked there
+  return coins > 0 ? { coins } : {};
 }
 
-export type DailyGift = Pick<Item, "id" | "name" | "category" | "sprite">;
+/** Buys back yesterday's miss with coins to keep the streak (#82). */
+export async function buyRepairAction(): Promise<{ error?: string }> {
+  const user = await requireUser();
+  const result = buyRepair(db, user, todayIn(user.timeZone));
+  if ("error" in result) return { error: result.error };
+  revalidatePath("/chronicle", "layout");
+  revalidatePath("/calendar");
+  return {};
+}
 
-/**
- * Awards today's gift once every repeating habit scheduled today is done
- * (one-off tasks don't count; see earnsDailyGift). Returns the
- * gift only when this call awarded it; unticking later never takes it back,
- * and ticking again never rolls a second one.
- */
-function awardDailyGiftIfEarned(userId: string, today: string): DailyGift | undefined {
-  if (dailyGiftOn(db, userId, today)) return undefined;
-  const items = itemsOn(
-    scheduleAll(listHabits(db, userId), today, carryOverDoneDates(db, userId)),
-    listExceptions(db, userId),
-    completedHabitIds(db, userId, today),
-    today,
-  );
-  if (!earnsDailyGift(items)) return undefined;
-
-  const item = rollGift(dailyGiftPool());
-  if (!item || !awardDailyGift(db, userId, today, item.id)) return undefined;
-  return { id: item.id, name: item.name, category: item.category, sprite: item.sprite };
+/** Marks a weekly gift's reveal as played (#27), so it shows only once. */
+export async function revealWeeklyGiftAction(weekStartDate: string): Promise<void> {
+  const user = await requireUser();
+  if (typeof weekStartDate !== "string") return;
+  markWeeklyGiftRevealed(db, user.id, weekStartDate);
 }
 
 /** Saves the sort menu: the order and whether done tasks drop to the bottom. */

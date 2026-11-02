@@ -44,21 +44,21 @@ A habit tracker inspired by **Tomodachi Life: Living the Dream**. Create a Mii, 
 - **Pop-out widget** — on a computer with Chrome or Edge, **Pop out** on My Chronicle opens a small window that stays on top of your other windows: your Mii's mood and today's checklist. You can tick tasks, add one-off tasks and write notes there; new habits are made on the main site.
 
 ### 3. Progress tracking
-- **Calendar view** — every day you finished all your habits shows the gift you got that day, so keeping a habit fills the calendar with items.
+- **Calendar view** — every day you finished all your habits gets a rubber-duck stamp, and each week's gift sits on its last day, so keeping a habit fills the calendar.
 - **Completion rings** (Mii page) — how many tasks you finished this month, and a ring per habit.
 - **Mood line** (Mii page) — a line chart of your Mii's happiness over time.
 
-### 4. Daily gift
-- Finish **every habit scheduled today** (repeating tasks) → your Mii gives you one random gift (custom item, food, goods/prezzie, treasure or object). One-off tasks don't count towards the gift.
-- **A day with no habits gives no gift**, and doesn't count as a miss either.
+### 4. Weekly gift
+- A **complete day** = every repeating habit scheduled that day is done. One-off tasks don't count either way, and a day with no habits is neither complete nor a miss.
+- At the end of each week your Mii rolls **one gift per complete day** (food, goods or treasure) and you keep the **rarest** roll. A week with no complete days gives no gift. The gift is unwrapped the next time you open My Chronicle.
 - **Rarity is based on the item's in-game price**: the more expensive the item, the less likely it drops.
 - **Duplicates are allowed** and counted (the inventory shows ×2, ×3, …).
-
-### 5. Weekly gift, coins & streak repair (planned, M7)
-- **Weekly gift**: one gift at the end of each week, rolled once per complete day; you keep the rarest roll.
-- **Coins** for the habits you finish each day, with a bonus for complete days and streaks.
-- **Streak repair**: missed a day? Spend coins before the next day ends to keep your streak.
 - Clothing is paused for now.
+
+### 5. Streak, coins & streak repair
+- **Streak** (the rubber duck): complete days in a row, up to today or yesterday. Days with no habits are skipped. Your streak and coins sit right of the menu on every page and in the pop-out window.
+- **Coins**: 2 per repeating habit done (up to 10 a day), +20 on a complete day, +2 per streak day (up to 20). Max 50 a day; unticking never takes coins back. Coins are private.
+- **Streak repair**: missed yesterday? Spend 100 coins before today ends to keep your streak (once a week).
 
 ### 6. Mii mood
 Your Mii's mood shows as a bar of five colours, with a round face that slides along it and changes expression. Five levels (names are tentative):
@@ -98,7 +98,7 @@ Your Mii's mood shows as a bar of five colours, with a round face that slides al
 | **Town** | Your friend code, add friends, friends leaderboard with cheers, visit friends' Miis, group trackers |
 | **Mii** | Mii creator, wardrobe, inventory, mood line |
 | **Settings** | Time zone, week start (Monday/Sunday), account, recovery code, delete account, **FAQ** |
-| **Background** button (right of the navbar) | Pick one of 22 page backgrounds; it switches straight away |
+| **Streak & coins** (right of the navbar) | Your streak (rubber duck) and coin balance |
 
 On phones the navbar is a bottom tab bar; on desktop it sits at the top.
 

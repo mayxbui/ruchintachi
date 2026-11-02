@@ -1,9 +1,11 @@
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import Image from "next/image";
 import Link from "next/link";
 import { ItemSprite } from "@/components/item-sprite";
 import { PageCard } from "@/components/page-card";
 import { db } from "@/db";
-import { dailyGiftsBetween } from "@/db/gifts";
+import { dayHistory } from "@/db/streak";
+import { weeklyGiftsBetween } from "@/db/weekly-gifts";
 import { requireUser } from "@/lib/auth/session";
 import { addMonths, formatMonth, monthGrid, parseMonth, weekdayLabels } from "@/lib/calendar";
 import { todayIn } from "@/lib/dates";
@@ -13,7 +15,10 @@ import { getItem, type Item } from "@/lib/items";
 const navClass =
   "flex size-10 min-w-0 items-center justify-center rounded-full bg-dark-blue text-white shadow-pop transition hover:-translate-y-0.5";
 
-/** Month grid that fills with gifts: each day that earned one shows its sprite (#19). */
+/**
+ * Month grid (#19): a rubber-duck stamp on each complete day, a patch on
+ * each repaired day (#82), and each week's gift on its last day (#27).
+ */
 export default async function CalendarPage({
   searchParams,
 }: {
@@ -29,11 +34,19 @@ export default async function CalendarPage({
   const from = weeks[0][0].date;
   const to = weeks.at(-1)!.at(-1)!.date;
   const gifts = new Map<string, Item>();
-  for (const { date, itemId } of dailyGiftsBetween(db, user.id, from, to)) {
+  for (const { date, itemId } of weeklyGiftsBetween(db, user.id, from, to)) {
     const item = getItem(itemId);
     if (item) gifts.set(date, item);
   }
-  const giftsThisMonth = [...gifts.keys()].filter((date) => date.startsWith(month)).length;
+  const history = dayHistory(db, user.id, today);
+  const repaired = new Set(history.repaired);
+  const monthDays = weeks.flat().filter((day) => day.inMonth);
+  const completeThisMonth = monthDays.filter(({ date }) => history.typeOf(date) === "complete").length;
+  const giftsThisMonth = monthDays.filter(({ date }) => gifts.has(date)).length;
+  const summary = [
+    completeThisMonth > 0 && `${completeThisMonth} complete day${completeThisMonth === 1 ? "" : "s"}`,
+    giftsThisMonth > 0 && `${giftsThisMonth} gift${giftsThisMonth === 1 ? "" : "s"}`,
+  ].filter(Boolean);
 
   return (
     <PageCard title="Calendar" border="sky">
@@ -44,9 +57,7 @@ export default async function CalendarPage({
         <div className="text-center">
           <h2 className="text-2xl">{formatMonth(month)}</h2>
           <p className="text-sm text-caption">
-            {giftsThisMonth === 0
-              ? "No gifts yet this month"
-              : `${giftsThisMonth} gift${giftsThisMonth === 1 ? "" : "s"} this month`}
+            {summary.length === 0 ? "Nothing stamped yet this month" : `${summary.join(" · ")} this month`}
             {month !== thisMonth && (
               <>
                 {" · "}
@@ -63,7 +74,7 @@ export default async function CalendarPage({
       </div>
 
       <table className="w-full table-fixed border-separate border-spacing-1 sm:border-spacing-2">
-        <caption className="sr-only">Gifts in {formatMonth(month)}</caption>
+        <caption className="sr-only">Stamps and gifts in {formatMonth(month)}</caption>
         <thead>
           <tr>
             {weekdayLabels(user.weekStart).map((label) => (
@@ -78,9 +89,19 @@ export default async function CalendarPage({
             <tr key={week[0].date}>
               {week.map(({ date, inMonth }) => {
                 const gift = gifts.get(date);
+                const complete = history.typeOf(date) === "complete";
+                const patched = repaired.has(date);
                 const isToday = date === today;
+                const label = [
+                  formatDate(date),
+                  complete && "every habit done",
+                  patched && "streak repaired",
+                  gift && `gift: ${gift.name}`,
+                ]
+                  .filter(Boolean)
+                  .join(", ");
                 return (
-                  <td key={date} className="p-0" aria-label={`${formatDate(date)}${gift ? `: ${gift.name}` : ""}`}>
+                  <td key={date} className="p-0" aria-label={label}>
                     {/* Table cells ignore aspect-ratio, so the square lives on a div inside. */}
                     <div
                       className={`relative aspect-square rounded-xl sm:rounded-2xl ${
@@ -95,6 +116,27 @@ export default async function CalendarPage({
                       >
                         {Number(date.slice(8))}
                       </span>
+                      {complete && (
+                        <span
+                          className={`absolute ${
+                            gift ? "top-0.5 right-0.5 size-1/3" : "bottom-1 left-1/2 size-3/5 -translate-x-1/2 sm:bottom-2"
+                          } ${inMonth ? "" : "opacity-50"}`}
+                          data-hint="Every habit done"
+                        >
+                          <Image src="/items/Treasure040.png" alt="" fill sizes="64px" className="object-contain" />
+                        </span>
+                      )}
+                      {patched && (
+                        <span
+                          aria-hidden
+                          data-hint="Streak repaired"
+                          className={`absolute ${
+                            gift ? "top-0.5 right-1 text-xs sm:text-base" : "inset-x-0 bottom-1 text-center text-lg sm:bottom-2 sm:text-3xl"
+                          } ${inMonth ? "" : "opacity-50"}`}
+                        >
+                          🩹
+                        </span>
+                      )}
                       {gift && (
                         <span
                           className={`absolute bottom-1 left-1/2 size-4/5 -translate-x-1/2 sm:bottom-2 ${

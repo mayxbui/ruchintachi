@@ -3,17 +3,20 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { ItemSprite } from "@/components/item-sprite";
-import type { DailyGift } from "./actions";
+import type { Item } from "@/lib/items";
+
+export type GiftItem = Pick<Item, "id" | "name" | "category" | "sprite">;
 
 const WOBBLE_MS = 1400; // how long the paper bag shakes before it opens
 const BURST = 10; // puffs when it opens
 
 /**
- * Tomodachi-style gift reveal for the daily gift (#17): the game's paper bag
- * wobbles, pops open and the item rises out with its name. Tapping the bag
- * opens it straight away. With reduced motion it opens at once.
+ * Tomodachi-style gift reveal (#17), now for the weekly gift (#27): the
+ * game's paper bag wobbles, pops open and the item rises out with its name.
+ * `note` says which week it's for. Tapping the bag opens it straight away.
+ * With reduced motion it opens at once.
  */
-export function GiftReveal({ gift, onClose }: { gift: DailyGift; onClose: () => void }) {
+export function GiftReveal({ gift, note, onClose }: { gift: GiftItem; note?: string; onClose: () => void }) {
   const [open, setOpen] = useState(false);
   const okRef = useRef<HTMLButtonElement>(null);
 
@@ -46,9 +49,12 @@ export function GiftReveal({ gift, onClose }: { gift: DailyGift; onClose: () => 
       }}
     >
       <div className="animate-warning-in flex w-full max-w-xs flex-col items-center gap-4 rounded-blob bg-cream px-6 pt-8 pb-6 text-center shadow-pop">
-        <h2 id="gift-reveal-title" className="text-2xl">
-          {open ? "You got a gift!" : "A present for you!"}
-        </h2>
+        <div>
+          <h2 id="gift-reveal-title" className="text-2xl">
+            {open ? "You got a gift!" : "A present for you!"}
+          </h2>
+          {note && <p className="text-sm text-caption">{note}</p>}
+        </div>
 
         <div className="relative flex h-40 w-40 items-end justify-center">
           {open ? (

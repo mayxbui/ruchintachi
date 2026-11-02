@@ -1,7 +1,7 @@
 // Completion rings on the Mii page (#24). Pure: the page loads the user's
 // habits, exceptions and completions; these functions count how many
 // occurrences were scheduled and done, up to today. The habit rings count
-// repeating habits only, as for the daily gift, streak and mood; one-off
+// repeating habits only, as for the weekly gift, streak and mood; one-off
 // tasks get a ring of their own.
 
 import { expandOccurrences, type RepeatRule } from "./repeat-rule";
