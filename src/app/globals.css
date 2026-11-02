@@ -47,6 +47,21 @@
   --animate-gift-rise: gift-rise 600ms cubic-bezier(0.2, 1.4, 0.4, 1) both;
   /* "+N" coins after a tick (#28): floats up and fades. */
   --animate-coin-pop: coin-pop 1600ms ease-out both;
+  /* Mood face on the Progress page's mood bar: hops in, then bobs gently. */
+  --animate-mood-bob: mood-bob 2.4s ease-in-out infinite;
+
+  @keyframes mood-bob {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0);
+    }
+    25% {
+      transform: translateY(-4px) rotate(-4deg);
+    }
+    75% {
+      transform: translateY(-2px) rotate(3deg);
+    }
+  }
 
   @keyframes gift-wobble {
     0%,
@@ -165,7 +180,8 @@
   .animate-warning-in,
   .animate-gift-wobble,
   .animate-gift-rise,
-  .animate-coin-pop {
+  .animate-coin-pop,
+  .animate-mood-bob {
     animation: none;
   }
   .poof,

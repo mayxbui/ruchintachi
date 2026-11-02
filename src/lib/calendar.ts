@@ -1,4 +1,4 @@
-// Month grid for the Calendar page (#19). Pure: months are "YYYY-MM" and
+// Month grid for the Progress page calendar (#19). Pure: months are "YYYY-MM" and
 // dates "YYYY-MM-DD", in the user's own calendar (see dates.ts).
 
 import { addDays, startOfWeek, type WeekStart } from "./dates";

@@ -74,17 +74,6 @@ export const friendships = sqliteTable(
   ],
 );
 
-// Preset-based Mii. `appearance` is JSON of preset ids and colours.
-export const miis = sqliteTable("miis", {
-  userId: text("user_id")
-    .primaryKey()
-    .references(() => users.id, { onDelete: "cascade" }),
-  name: text("name").notNull(),
-  appearance: text("appearance", { mode: "json" }).notNull(),
-  outfitItemId: text("outfit_item_id"), // item catalogue id, null = default clothes
-  mood: integer("mood").notNull().default(50), // 0–100; 50 = Content
-});
-
 // The user's own named task lists (e.g. Health, Study). Private to the owner.
 export const taskLists = sqliteTable(
   "task_lists",

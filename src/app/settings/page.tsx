@@ -6,13 +6,14 @@ import { PageCard } from "@/components/page-card";
 import { signOut } from "@/lib/auth/actions";
 import { requireUser } from "@/lib/auth/session";
 import { releases } from "@/lib/changelog";
+import { townEnabled } from "@/lib/features";
 import {
   DeleteAccountForm,
   PreferencesForm,
   RecoveryCodeForm,
 } from "./settings-forms";
 
-const faq = [
+const faq: { q: string; a: string; town?: boolean }[] = [
   {
     q: "What do I need to sign up?",
     a: "Just a username and password. We never ask for your email or real name.",
@@ -23,7 +24,7 @@ const faq = [
   },
   {
     q: "How do I get a gift?",
-    a: "A day where you finish every repeating habit is a complete day, and gets a rubber-duck stamp on your calendar. When a week ends, your Mii rolls one gift for each complete day and gives you the rarest. Open My Chronicle to unwrap it. A week with no complete days gives no gift, and one-off tasks don't count.",
+    a: "A day where you finish every repeating habit is a complete day. When a week ends, you roll one gift for each complete day and keep the rarest; it sits on the week's last day on your Progress calendar. Open My Chronicle to unwrap it. A week with no complete days gives no gift, and one-off tasks don't count.",
   },
   {
     q: "What is my streak?",
@@ -42,8 +43,13 @@ const faq = [
     a: "If you had a streak before yesterday's miss, My Chronicle offers a repair for 100 coins until today ends. A repaired day gets a patch on your calendar and counts like a day off: it keeps your streak but earns no coins and doesn't count towards the weekly gift. One repair per week, and two missed days in a row can't be repaired.",
   },
   {
+    q: "What do the faces on my calendar mean?",
+    a: "Each finished day on the Progress calendar shows your mood at the end of that day. A complete day lifts your mood, each habit you miss lowers it, and a perfect week gives it an extra lift. Days with no repeating habits leave it as it was.",
+  },
+  {
     q: "What can my friends see?",
-    a: "Only your Mii: its look, its clothes and its item collection. Your habits, chronicle and calendar stay private.",
+    a: "Your item collection and, while “share progress” is on, today's % done and your streak. Your habits, chronicle, calendar and mood stay private.",
+    town: true,
   },
   {
     q: "How do I change the background?",
@@ -51,7 +57,7 @@ const faq = [
   },
   {
     q: "How do I keep my tasks on my desktop?",
-    a: "On a computer with Chrome or Edge, press the pop-out button (the window icon) on My Chronicle. A small window with today's tasks, your Mii's mood, your streak and your coins stays on top of your other windows until you close it or this tab. You can tick tasks, rename them, change their icons and add one-off tasks there. Other browsers and phones don't support it yet.",
+    a: "On a computer with Chrome or Edge, press the pop-out button (the window icon) on My Chronicle. A small window with today's tasks, your mood, your streak and your coins stays on top of your other windows until you close it or this tab. You can tick tasks, rename them, change their icons and add one-off tasks there. Other browsers and phones don't support it yet.",
   },
 ];
 
@@ -73,9 +79,7 @@ export default async function SettingsPage() {
 
       <PageCard title="Background" border="sunny">
         <p className="mb-3 text-caption">Pick a background for every page. It switches straight away.</p>
-        <div className="max-w-md">
-          <BackgroundPicker background={user.background} />
-        </div>
+        <BackgroundPicker background={user.background} />
       </PageCard>
 
       <PageCard title="Account" border="sunny">
@@ -114,7 +118,7 @@ export default async function SettingsPage() {
       <PageCard id="faq" title="FAQ" border="sunny">
         {/* Native <details>: each question toggles its answer, no JS needed. */}
         <div className="space-y-3">
-          {faq.map(({ q, a }) => (
+          {faq.filter((item) => !item.town || townEnabled()).map(({ q, a }) => (
             <details key={q} className="group rounded-2xl bg-white px-4 py-3 shadow-pop">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 font-bold [&::-webkit-details-marker]:hidden">
                 {q}

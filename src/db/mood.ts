@@ -49,9 +49,9 @@ export function saveMoodEntries(db: Db, userId: string, entries: { date: string;
 }
 
 /**
- * The Mii's mood right now, 0–100 (#25). Finished days are scored once and
+ * Your mood right now, 0–100 (#25). Finished days are scored once and
  * kept in `mood_log` (past days can't change, so the log is the history the
- * mood chart reads); days since the last saved one are scored and saved
+ * Progress calendar reads); days since the last saved one are scored and saved
  * here. Today then adds its lift if every habit is already done.
  */
 export function currentMood(
