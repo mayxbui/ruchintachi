@@ -1,4 +1,4 @@
-// Mii mood (#25). Pure: the server loads each day's habits and completions,
+// Mood (#25). Pure: the server loads each day's habits and completions,
 // and these functions turn them into a 0–100 score and one of five moods.
 //
 // Only repeating habits count, as for the weekly gift and the streak. A

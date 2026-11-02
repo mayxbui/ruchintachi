@@ -110,7 +110,7 @@ export function DeleteAccountForm({ username }: { username: string }) {
   return (
     <form action={formAction} className="space-y-5">
       <p className="text-caption">
-        This deletes your account, your Mii, habits, chronicle, calendar, items
+        This deletes your account, habits, chronicle, calendar, mood, items
         and friends for good. It can&apos;t be undone.
       </p>
       <FormMessage error={state.error} />

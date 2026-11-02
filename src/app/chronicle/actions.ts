@@ -130,7 +130,7 @@ export async function buyRepairAction(): Promise<{ error?: string }> {
   const result = buyRepair(db, user, todayIn(user.timeZone));
   if ("error" in result) return { error: result.error };
   revalidatePath("/chronicle", "layout");
-  revalidatePath("/calendar");
+  revalidatePath("/progress");
   return {};
 }
 

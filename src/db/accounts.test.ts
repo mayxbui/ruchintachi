@@ -26,9 +26,6 @@ function fillEverything(
   db.insert(schema.sessions)
     .values({ id: `s-${userId}`, userId, expiresAt: new Date(Date.now() + 1e6) })
     .run();
-  db.insert(schema.miis)
-    .values({ userId, name: "Mii", appearance: {} })
-    .run();
   const listId = `list-${userId}`;
   db.insert(schema.taskLists).values({ id: listId, userId, name: "Health", position: 0 }).run();
   db.insert(schema.habits)

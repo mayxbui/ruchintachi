@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import {
   IconBuildingCommunity,
   IconCalendarHeart,
-  IconMoodSmile,
   IconNotebook,
   IconSettings,
 } from "@tabler/icons-react";
@@ -13,13 +12,13 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 
 // Each tab has its own blob colour (a theme colour name). `bg` is the same
 // colour as a class, painted on the link before the blob is measured.
-const tabs = [
+const allTabs = [
   { href: "/chronicle", label: "My Chronicle", icon: IconNotebook, colour: "tangerine", bg: "bg-tangerine" },
-  { href: "/calendar", label: "Calendar", icon: IconCalendarHeart, colour: "sky", bg: "bg-sky" },
+  { href: "/progress", label: "Progress", icon: IconCalendarHeart, colour: "sky", bg: "bg-sky" },
   { href: "/town", label: "Town", icon: IconBuildingCommunity, colour: "leaf", bg: "bg-leaf" },
-  { href: "/mii", label: "Mii", icon: IconMoodSmile, colour: "blossom", bg: "bg-blossom" },
   { href: "/settings", label: "Settings", icon: IconSettings, colour: "cherry", bg: "bg-cherry" },
 ] as const;
+const tabsWithoutTown = allTabs.filter((tab) => tab.href !== "/town");
 
 // Liquid-gel indicator: a big blob slides to the new tab, squashing and
 // stretching, and wobbles like jelly when it lands. A short chain of small
@@ -138,11 +137,20 @@ function animateDrop(
  * at the bottom of the screen, icons only, without the goo filter (iOS
  * Safari paints its edges as coloured slivers outside the blob).
  */
-export function NavBar() {
+export function NavBar({ town }: { town: boolean }) {
+  // Town is left out while it's switched off (src/lib/features.ts).
+  const tabs = town ? allTabs : tabsWithoutTown;
   const pathname = usePathname();
   const routeIndex = tabs.findIndex((tab) => pathname.startsWith(tab.href));
   // Move the blob on click, before the next page has loaded.
   const [clicked, setClicked] = useState<{ index: number; from: string } | null>(null);
+  // Forget that click once the page changes, so a later visit back to `from`
+  // by another link (e.g. the footer's FAQ) follows the route, not the old click.
+  const [shownPath, setShownPath] = useState(pathname);
+  if (shownPath !== pathname) {
+    setShownPath(pathname);
+    setClicked(null);
+  }
   const activeIndex = clicked && clicked.from === pathname ? clicked.index : routeIndex;
 
   const listRef = useRef<HTMLUListElement>(null);
@@ -165,7 +173,7 @@ export function NavBar() {
         el.style.backgroundColor = themeColour(tabs[index].colour);
       }
     }
-  }, []);
+  }, [tabs]);
 
   useLayoutEffect(() => {
     const blob = blobRef.current;
@@ -194,7 +202,7 @@ export function NavBar() {
       place(blob, to);
     }
     setReady(true);
-  }, [activeIndex, snap]);
+  }, [activeIndex, snap, tabs]);
 
   // Re-measure when fonts finish loading or the bar changes size.
   useEffect(() => {

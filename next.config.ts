@@ -5,9 +5,14 @@ const nextConfig: NextConfig = {
   output: "standalone",
   // Native module; keep it out of the server bundle.
   serverExternalPackages: ["better-sqlite3"],
-  // Backgrounds moved from public/bg-<id>.png to public/backgrounds/<id>.png.
   async redirects() {
-    return [{ source: "/bg-:id.png", destination: "/backgrounds/:id.png", permanent: true }];
+    return [
+      // Backgrounds moved from public/bg-<id>.png to public/backgrounds/<id>.png.
+      { source: "/bg-:id.png", destination: "/backgrounds/:id.png", permanent: true },
+      // Calendar and Mii became one Progress page; ?month= carries over.
+      { source: "/calendar", destination: "/progress", permanent: false },
+      { source: "/mii/:path*", destination: "/progress", permanent: false },
+    ];
   },
   // The pop-out widget frames /widget (#66); nobody else may.
   async headers() {

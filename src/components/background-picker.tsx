@@ -20,7 +20,7 @@ function scrollIntoView(el: HTMLLIElement | null) {
   if (top < 0 || top + el.offsetHeight > list.clientHeight) list.scrollTop += top - 6;
 }
 
-/** Scrolling 3×3 grid of square previews; a tap switches the background with no Save button. */
+/** Scrolling grid of square previews, as wide as its card; a tap switches the background with no Save button. */
 export function BackgroundPicker({ background }: { background: BackgroundId }) {
   const [selected, setSelected] = useState(background);
   const [poof, setPoof] = useState<{ id: BackgroundId; key: number } | null>(null);
@@ -46,13 +46,14 @@ export function BackgroundPicker({ background }: { background: BackgroundId }) {
 
   return (
     <div>
-      {/* 3×3 window that scrolls. Tiles are a third of the width, so three
-          rows are exactly as tall as the list is wide (100cqw); the padding
-          leaves room for the picked tile's ring and the hover lift. */}
+      {/* A window three rows tall that scrolls, with more columns on wider
+          cards: tiles are 1/4, 1/5, 1/6 or 1/8 of the width, so three rows
+          are 75cqw, 60cqw, 50cqw or 37.5cqw tall. The padding leaves room for the picked
+          tile's ring and the hover lift. */}
       <div className="@container">
         <ul
           aria-label="Backgrounds"
-          className="grid max-h-[100cqw] grid-cols-3 gap-2.5 overflow-y-auto overscroll-contain p-1.5"
+          className="grid max-h-[75cqw] grid-cols-4 gap-2 overflow-y-auto overscroll-contain p-1.5 @md:max-h-[60cqw] @md:grid-cols-5 @2xl:max-h-[50cqw] @2xl:grid-cols-6 @4xl:max-h-[37.5cqw] @4xl:grid-cols-8"
         >
           {backgrounds.map((bg) => {
             const current = bg.id === selected;

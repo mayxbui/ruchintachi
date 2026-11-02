@@ -15,6 +15,7 @@ import { streakFor } from "@/db/streak";
 import { getCurrentUser } from "@/lib/auth/session";
 import { DEFAULT_BACKGROUND } from "@/lib/backgrounds";
 import { todayIn } from "@/lib/dates";
+import { townEnabled } from "@/lib/features";
 import "./globals.css";
 
 // Self-hosted by next/font, so no request to Google from visitors.
@@ -61,7 +62,7 @@ export default async function RootLayout({
                 className="h-14 w-auto max-w-none sm:h-18 md:h-28"
               />
             </Link>
-            {user && <NavBar />}
+            {user && <NavBar town={townEnabled()} />}
             {stats && (
               // Streak and coins as one group: just right of the navbar on desktop;
               // top-right corner, beside the logo, on phones.
@@ -128,8 +129,8 @@ function WaveFooter({ signedIn }: { signedIn: boolean }) {
           Crafted by <span className="text-base font-black text-sunny sm:text-lg">mayxbui</span>.
           {signedIn && (
             <>
-              {" · "}
-              <Link href="/settings#faq" className="font-bold underline hover:text-sunny">
+              {" "}
+              <Link href="/settings#faq" className="font-bold hover:text-sunny">
                 FAQ
               </Link>
             </>

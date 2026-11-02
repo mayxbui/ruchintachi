@@ -20,7 +20,7 @@ export const metadata: Metadata = { title: "Today · RuchinDachi" };
 
 /**
  * A small, chrome-free page for the pop-out desktop widget (#65, #66): a top
- * bar with the Mii's mood, streak and coins, "+ Habit" (habits are made on
+ * bar with your mood, streak and coins, "+ Habit" (habits are made on
  * the main site) and quick-add for one-off tasks, then today's tasks and
  * habits, whose names and icons can be changed in place. The root
  * layout hides the header and footer here.
@@ -46,7 +46,7 @@ export default async function WidgetPage() {
         <div className="flex items-center gap-2">
           <span
             role="img"
-            aria-label={`Your Mii is feeling ${label}`}
+            aria-label={`You're feeling ${label}`}
             data-hint={`${label} · ${formatDate(today)}`}
             className={`flex size-10 shrink-0 items-center justify-center rounded-full border-3 border-white text-ink shadow-pop ${className}`}
           >
