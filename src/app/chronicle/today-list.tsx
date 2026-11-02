@@ -4,13 +4,12 @@ import { IconCheck, IconGripVertical, IconHourglassHigh, IconPencil } from "@tab
 import Link from "next/link";
 import { useEffect, useLayoutEffect, useOptimistic, useRef, useState, useTransition } from "react";
 import { FormMessage } from "@/components/form";
-import { iconEmoji } from "@/lib/habit-icons";
 import { formatClock, parseMinutes, remainingMs, TIMER_MAX_MINUTES, TIMER_PRESETS } from "@/lib/timer";
 import { doneLast as moveDoneLast } from "@/lib/sort-habits";
 import { dayProgress, type DayItem } from "@/lib/today";
 import { reorderHabitsAction, toggleCompletionAction } from "./actions";
 import { DueTag } from "./due-tag";
-import { CoinIcon } from "./stat-pills";
+import { CoinIcon } from "@/components/stat-pills";
 import { TaskIcon } from "./task-icon";
 import { TaskText } from "./task-text";
 import { useTimer } from "./timer";
@@ -52,8 +51,8 @@ function useSlideOnReorder(order: string, draggingId: string | null) {
  * back on error. With `doneLast`, ticked tasks move below the rest, after a
  * short pause so the tick can be seen (each new tick restarts it). With
  * `reorderable` (the Custom sort) each row has a drag handle; its arrow
- * keys move the row too. `compact` (the /widget page, #65) keeps just the
- * ticking and notes: no reordering, renaming, icon picker, timer or edit link.
+ * keys move the row too. `compact` (the /widget page, #65) keeps ticking,
+ * renaming, icons and notes: no reordering, timer or edit link.
  */
 export function TodayList({
   items,
@@ -192,14 +191,7 @@ export function TodayList({
                   note={item.note}
                   done={item.done}
                   scope="today"
-                  renamable={!compact}
-                  lead={
-                    compact ? (
-                      <span aria-hidden>{iconEmoji(item.icon)}</span>
-                    ) : (
-                      <TaskIcon habitId={item.habitId} icon={item.icon} name={item.name} />
-                    )
-                  }
+                  lead={<TaskIcon habitId={item.habitId} icon={item.icon} name={item.name} />}
                 >
                   {item.dueDate && !item.done && (
                     <span className="block">

@@ -1,7 +1,7 @@
 import { IconLogout } from "@tabler/icons-react";
 import { signOut } from "@/lib/auth/actions";
 
-/** Square button beside the background button: signs out at once. */
+/** Square button beside the streak and coins: signs out at once. */
 export function SignOutButton() {
   return (
     <form action={signOut}>

@@ -47,10 +47,9 @@ export function PopOutButton() {
       onClick={popOut}
       aria-label="Pop out today's tasks"
       data-hint="Keep today's tasks on top of other windows"
-      className="hidden shrink-0 items-center gap-1.5 rounded-full bg-white p-2.5 font-bold text-slate-500 shadow-pop transition hover:text-ink sm:p-3 md:flex md:px-5 md:py-2.5"
+      className="hidden size-9 min-w-0 shrink-0 items-center self-center justify-center rounded-full bg-white p-0 text-slate-500 shadow-pop transition hover:text-ink md:flex"
     >
-      <IconPictureInPictureOn aria-hidden className="size-5" stroke={2.25} />
-      <span className="hidden lg:inline">Pop out</span>
+      <IconPictureInPictureOn aria-hidden className="size-4" stroke={2.25} />
     </button>
   );
 }

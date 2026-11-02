@@ -56,7 +56,7 @@ A habit tracker inspired by **Tomodachi Life: Living the Dream**. Create a Mii, 
 - Clothing is paused for now.
 
 ### 5. Streak, coins & streak repair
-- **Streak**: complete days in a row, up to today or yesterday. Days with no habits are skipped.
+- **Streak** (the rubber duck): complete days in a row, up to today or yesterday. Days with no habits are skipped. Your streak and coins sit right of the menu on every page and in the pop-out window.
 - **Coins**: 2 per repeating habit done (up to 10 a day), +20 on a complete day, +2 per streak day (up to 20). Max 50 a day; unticking never takes coins back. Coins are private.
 - **Streak repair**: missed yesterday? Spend 100 coins before today ends to keep your streak (once a week).
 
@@ -98,7 +98,7 @@ Your Mii's mood shows as a bar of five colours, with a round face that slides al
 | **Town** | Your friend code, add friends, friends leaderboard with cheers, visit friends' Miis, group trackers |
 | **Mii** | Mii creator, wardrobe, inventory, mood line |
 | **Settings** | Time zone, week start (Monday/Sunday), account, recovery code, delete account, **FAQ** |
-| **Background** button (right of the navbar) | Pick one of 22 page backgrounds; it switches straight away |
+| **Streak & coins** (right of the navbar) | Your streak (rubber duck) and coin balance |
 
 On phones the navbar is a bottom tab bar; on desktop it sits at the top.
 

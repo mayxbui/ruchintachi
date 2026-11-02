@@ -120,6 +120,7 @@ export async function toggleCompletionAction(
   // Unticking never takes coins back, so only a tick can earn any.
   const coins = done ? earnTodayCoins(db, user.id, today) : 0;
   revalidatePath("/chronicle", "layout");
+  revalidatePath("/widget"); // its streak and coins, when ticked there
   return coins > 0 ? { coins } : {};
 }
 

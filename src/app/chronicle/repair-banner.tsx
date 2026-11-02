@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { FormMessage } from "@/components/form";
 import { REPAIR_COST } from "@/lib/coins";
 import { buyRepairAction } from "./actions";
-import { CoinIcon } from "./stat-pills";
+import { CoinIcon } from "@/components/stat-pills";
 
 /**
  * Streak repair offer (#82): yesterday was missed, and coins can buy it back

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { IconArrowRight } from "@tabler/icons-react";
 import { NoReleases, ReleaseCard } from "@/components/changelog";
+import { BackgroundPicker } from "@/components/background-picker";
 import { PageCard } from "@/components/page-card";
 import { signOut } from "@/lib/auth/actions";
 import { requireUser } from "@/lib/auth/session";
@@ -26,7 +27,11 @@ const faq = [
   },
   {
     q: "What is my streak?",
-    a: "The number of complete days in a row, up to today or yesterday. Days with no repeating habits are skipped: they don't break it or add to it.",
+    a: "The number next to the rubber duck: how many complete days in a row you've had, up to today or yesterday. Days with no repeating habits are skipped: they don't break it or add to it.",
+  },
+  {
+    q: "Where are my streak and coins?",
+    a: "Right of the menu at the top of every page (top-right on phones), and in the pop-out window. Only you can see your coins.",
   },
   {
     q: "How do I earn coins?",
@@ -41,8 +46,12 @@ const faq = [
     a: "Only your Mii: its look, its clothes and its item collection. Your habits, chronicle and calendar stay private.",
   },
   {
+    q: "How do I change the background?",
+    a: "In Settings, under Background. Tap a picture and every page switches to it straight away.",
+  },
+  {
     q: "How do I keep my tasks on my desktop?",
-    a: "On a computer with Chrome or Edge, press Pop out on My Chronicle. A small window with today's tasks and your Mii's mood stays on top of your other windows until you close it or this tab. Other browsers and phones don't support it yet.",
+    a: "On a computer with Chrome or Edge, press the pop-out button (the window icon) on My Chronicle. A small window with today's tasks, your Mii's mood, your streak and your coins stays on top of your other windows until you close it or this tab. You can tick tasks, rename them, change their icons and add one-off tasks there. Other browsers and phones don't support it yet.",
   },
 ];
 
@@ -60,6 +69,13 @@ export default async function SettingsPage() {
           weekStart={user.weekStart}
           timeZones={timeZones}
         />
+      </PageCard>
+
+      <PageCard title="Background" border="sunny">
+        <p className="mb-3 text-caption">Pick a background for every page. It switches straight away.</p>
+        <div className="max-w-md">
+          <BackgroundPicker background={user.background} />
+        </div>
       </PageCard>
 
       <PageCard title="Account" border="sunny">
@@ -95,7 +111,7 @@ export default async function SettingsPage() {
         </Link>
       </PageCard>
 
-      <PageCard title="FAQ" border="sunny">
+      <PageCard id="faq" title="FAQ" border="sunny">
         {/* Native <details>: each question toggles its answer, no JS needed. */}
         <div className="space-y-3">
           {faq.map(({ q, a }) => (

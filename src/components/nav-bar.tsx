@@ -253,7 +253,7 @@ export function NavBar() {
                 href={tab.href}
                 onClick={() => setClicked({ index: i, from: pathname })}
                 aria-current={i === routeIndex ? "page" : undefined}
-                className={`relative flex items-center gap-1.5 rounded-full px-3 py-2 text-[16px] font-bold whitespace-nowrap transition-[color,background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(.3,1.8,.5,1)] sm:px-4 lg:px-6 lg:text-base ${
+                className={`relative flex items-center gap-1.5 rounded-full px-3 py-2 text-[16px] font-bold whitespace-nowrap transition-[color,background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(.3,1.8,.5,1)] sm:px-4 xl:px-6 lg:text-base ${
                   active
                     ? `text-white ${ready ? "" : `${tab.bg} shadow-md`}`
                     : // Springy wiggle on hover (none with reduced motion).
@@ -261,8 +261,8 @@ export function NavBar() {
                 }`}
               >
                 <tab.icon aria-hidden className="size-6 shrink-0 md:size-5" stroke={2.25} />
-                {/* Icons only on phones; the label is still read out. */}
-                <span className="sr-only md:not-sr-only">{tab.label}</span>
+                {/* Icons only below lg (room for the streak and coins); the label is still read out. */}
+                <span className="sr-only lg:not-sr-only">{tab.label}</span>
               </Link>
             </li>
           );
