@@ -56,8 +56,8 @@ export default async function RootLayout({
               <Image
                 src="/ruchintachi-logo.webp"
                 alt="RuchinTachi — Habit Planner & Tracker"
-                width={798}
-                height={615}
+                width={815}
+                height={630}
                 priority
                 className="h-14 w-auto max-w-none sm:h-18 md:h-28"
               />
