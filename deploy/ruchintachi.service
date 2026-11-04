@@ -1,7 +1,7 @@
-# Ruchintachi Next.js app (issue #22). Starts on boot, restarts on crash.
+# RuchinTachi Next.js app (issue #22). Starts on boot, restarts on crash.
 # Runs the standalone build that deploy.sh unpacked; `current` points at it.
 [Unit]
-Description=Ruchintachi habit tracker
+Description=RuchinTachi habit tracker
 After=network-online.target
 Wants=network-online.target
 

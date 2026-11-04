@@ -6,7 +6,7 @@ import { requireUser } from "@/lib/auth/session";
 import { releases } from "@/lib/changelog";
 
 export const metadata: Metadata = {
-  title: "Changelog — RuchinDachi",
+  title: "Changelog — RuchinTachi",
 };
 
 export default async function ChangelogPage() {

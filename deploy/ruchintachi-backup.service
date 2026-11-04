@@ -1,6 +1,6 @@
 # Nightly SQLite backup (issue #23). Triggered by ruchintachi-backup.timer.
 [Unit]
-Description=Back up the Ruchintachi SQLite database
+Description=Back up the RuchinTachi SQLite database
 
 [Service]
 Type=oneshot

@@ -1,4 +1,4 @@
-# Ruchintachi reverse proxy (issue #21).
+# RuchinTachi reverse proxy (issue #21).
 # SITE_ADDRESS is the domain or Azure DNS name, set in /etc/default/caddy.
 # Caddy gets and renews the Let's Encrypt certificate automatically and
 # redirects HTTP to HTTPS.

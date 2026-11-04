@@ -1,5 +1,5 @@
 [Unit]
-Description=Nightly Ruchintachi database backup
+Description=Nightly RuchinTachi database backup
 
 [Timer]
 OnCalendar=*-*-* 03:30:00 UTC

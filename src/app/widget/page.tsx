@@ -16,7 +16,7 @@ import { TimerProvider } from "../chronicle/timer";
 import { TodayList } from "../chronicle/today-list";
 import { WidgetRefresh } from "./widget-refresh";
 
-export const metadata: Metadata = { title: "Today · RuchinDachi" };
+export const metadata: Metadata = { title: "Today · RuchinTachi" };
 
 /**
  * A small, chrome-free page for the pop-out desktop widget (#65, #66): a top
@@ -31,7 +31,7 @@ export default async function WidgetPage() {
     return (
       <p className="rounded-2xl bg-cream/90 py-10 text-center shadow-pop">
         <a href="/sign-in" target="_blank" rel="noopener" className="font-bold text-caption underline">
-          Sign in on RuchinDachi
+          Sign in on RuchinTachi
         </a>
       </p>
     );
@@ -58,7 +58,7 @@ export default async function WidgetPage() {
             href="/chronicle/new"
             target="_blank"
             rel="noopener"
-            data-hint="Make a habit on RuchinDachi"
+            data-hint="Make a habit on RuchinTachi"
             className="ml-auto flex shrink-0 items-center gap-0.5 rounded-full bg-tangerine px-3 py-2 text-sm font-bold text-white shadow-pop"
           >
             <IconPlus aria-hidden className="size-4" stroke={3} />
