@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Palette from ruchindachi-logo.webp, the beach, and the five moods. */
+/* Palette from ruchintachi-logo.webp, the beach, and the five moods. */
 @theme {
   --font-sans: var(--font-rounded), ui-rounded, system-ui, sans-serif;
   --font-weight-bold: 800; /* labels, buttons, nav: a step above body text */

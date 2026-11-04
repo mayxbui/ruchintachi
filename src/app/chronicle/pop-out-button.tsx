@@ -28,7 +28,7 @@ export function PopOutButton() {
     }
     const win = await pip.requestWindow(SIZE);
     const doc = win.document;
-    doc.title = "RuchinDachi";
+    doc.title = "RuchinTachi";
     const style = doc.createElement("style");
     style.textContent =
       "html,body{margin:0;height:100%;overflow:hidden;background:#fcefc7}" +

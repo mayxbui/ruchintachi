@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Create the Azure VM for Ruchintachi (issue #20).
+# Create the Azure VM for RuchinTachi (issue #20).
 # Run from your own machine with the Azure CLI logged in (`az login`).
 #
 # Creates: resource group, Ubuntu 24.04 LTS VM (Standard_B1s, free-tier eligible),

@@ -1,4 +1,4 @@
-# Deploying Ruchintachi
+# Deploying RuchinTachi
 
 Azure VM runs everything: Caddy terminates HTTPS and proxies to the Next.js app on `127.0.0.1:3000`, systemd keeps the app running, and a systemd timer backs up the SQLite file every night. Everything here is free-tier or free software.
 

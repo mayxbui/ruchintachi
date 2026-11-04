@@ -1,6 +1,6 @@
-# RuchinDachi — Habit Planner & Tracker
+# RuchinTachi — Habit Planner & Tracker
 
-![RuchinDachi logo](public/ruchindachi-logo.webp)
+![RuchinTachi logo](public/ruchintachi-logo.webp)
 
 A habit tracker inspired by **Tomodachi Life: Living the Dream**. Add habits, tick them off, and watch your calendar fill up with mood faces and gifts as you keep them.
 
@@ -132,4 +132,4 @@ Everything is free and open source, and runs on one Azure VM.
 
 ## Disclaimer
 
-RuchinDachi is an unofficial, non-commercial, personal fan project. It is not affiliated with or endorsed by Nintendo. Tomodachi Life and its sprites and assets are trademarks and copyright of Nintendo. Sprite rips courtesy of the contributors at The Spriters Resource. Item icons from tlmodding/ltd-images. Item data from the community data sheet by echocolat, phil_macrocheira and superspazzy.
+RuchinTachi is an unofficial, non-commercial, personal fan project. It is not affiliated with or endorsed by Nintendo. Tomodachi Life and its sprites and assets are trademarks and copyright of Nintendo. Sprite rips courtesy of the contributors at The Spriters Resource. Item icons from tlmodding/ltd-images. Item data from the community data sheet by echocolat, phil_macrocheira and superspazzy.
