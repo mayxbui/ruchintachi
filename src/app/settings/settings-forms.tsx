@@ -1,11 +1,14 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import Link from "next/link";
+import { useActionState, useEffect, useState } from "react";
 import { FormMessage, SubmitButton, TextField } from "@/components/form";
 import { RecoveryCodeNotice } from "@/components/recovery-code";
+import { clearSavedTimers } from "@/components/timer";
 import {
   deleteAccountAction,
   regenerateRecoveryCode,
+  resetAccountAction,
   updatePreferences,
 } from "./actions";
 
@@ -100,6 +103,49 @@ export function RecoveryCodeForm() {
         required
       />
       <SubmitButton pendingLabel="Making one…">New recovery code</SubmitButton>
+    </form>
+  );
+}
+
+export function ResetAccountForm({ username }: { username: string }) {
+  const [state, formAction] = useActionState(resetAccountAction, {});
+  // A running timer would point at a task that no longer exists.
+  useEffect(() => {
+    if (state.saved) clearSavedTimers();
+  }, [state]);
+
+  return (
+    <form action={formAction} className="space-y-5">
+      <p className="text-caption">
+        Start over: this deletes all your habits and tasks, their history,
+        your items, coins, streak and mood. Your username, password, friends
+        and settings stay. It can&apos;t be undone.
+      </p>
+      <FormMessage
+        error={state.error}
+        success={state.saved ? "Your account is fresh. Time to add some habits!" : undefined}
+      />
+      {state.saved && (
+        <Link href="/chronicle" className="inline-block font-black text-tangerine hover:underline">
+          Go to My Chronicle →
+        </Link>
+      )}
+      <TextField
+        label={`Type ${username} to confirm`}
+        name="confirmUsername"
+        autoComplete="off"
+        required
+      />
+      <TextField
+        label="Your password"
+        name="password"
+        type="password"
+        autoComplete="current-password"
+        required
+      />
+      <SubmitButton tone="cherry" pendingLabel="Resetting…">
+        Reset my account
+      </SubmitButton>
     </form>
   );
 }
