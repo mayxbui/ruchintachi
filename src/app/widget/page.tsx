@@ -12,7 +12,6 @@ import { todayIn } from "@/lib/dates";
 import { formatDate } from "@/lib/describe-rule";
 import { moodLevel } from "@/lib/mood";
 import { QuickAdd } from "../chronicle/quick-add";
-import { TimerProvider } from "../chronicle/timer";
 import { TodayList } from "../chronicle/today-list";
 import { WidgetRefresh } from "./widget-refresh";
 
@@ -22,7 +21,8 @@ export const metadata: Metadata = { title: "Today · RuchinTachi" };
  * A small, chrome-free page for the pop-out desktop widget (#65, #66): a top
  * bar with your mood, streak and coins, "+ Habit" (habits are made on
  * the main site) and quick-add for one-off tasks, then today's tasks and
- * habits, whose names and icons can be changed in place. The root
+ * habits, whose names and icons can be changed in place, each with its
+ * timer (shared with the main tab). The root
  * layout hides the header and footer here.
  */
 export default async function WidgetPage() {
@@ -40,7 +40,8 @@ export default async function WidgetPage() {
   const today = todayIn(user.timeZone);
   const { label, className, Face } = moods[moodLevel(currentMood(db, user))];
   return (
-    <section className="space-y-3">
+    // pb-24: room so the floating timer never covers the last task.
+    <section className="space-y-3 pb-24">
       <WidgetRefresh />
       <header className="sticky top-0 z-10 space-y-2 rounded-2xl bg-cream/95 p-2 shadow-pop">
         <div className="flex items-center gap-2">
@@ -69,7 +70,6 @@ export default async function WidgetPage() {
           <QuickAdd today={today} weekStart={user.weekStart} />
         </div>
       </header>
-      <TimerProvider>
         <TodayList
           items={todayItems(db, user.id, today, user.taskSort)}
           today={today}
@@ -77,7 +77,6 @@ export default async function WidgetPage() {
           reorderable={false}
           compact
         />
-      </TimerProvider>
     </section>
   );
 }

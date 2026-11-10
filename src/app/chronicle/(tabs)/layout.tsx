@@ -7,12 +7,10 @@ import { todayIn } from "@/lib/dates";
 import { formatDate } from "@/lib/describe-rule";
 import { getItem } from "@/lib/items";
 import { ChronicleTabs } from "../chronicle-tabs";
-import { TimerBar, TimerProvider } from "../timer";
 import { WeeklyGifts } from "../weekly-gifts";
 
 /**
- * My Chronicle with its Today / Tasks sub-tabs. The timer survives switching
- * tabs. Opening it awards any finished week's gift and plays its reveal (#27).
+ * My Chronicle with its Today / Tasks sub-tabs. Opening it awards any finished week's gift and plays its reveal (#27).
  */
 export default async function ChronicleLayout({ children }: { children: ReactNode }) {
   const user = await requireUser();
@@ -26,14 +24,11 @@ export default async function ChronicleLayout({ children }: { children: ReactNod
 
   return (
     <PageCard title="My Chronicle">
-      <TimerProvider>
         {/* The tabs read ?list= for "Create a task". */}
         <Suspense>
           <ChronicleTabs />
         </Suspense>
-        <TimerBar />
         {children}
-      </TimerProvider>
       <WeeklyGifts gifts={gifts} />
     </PageCard>
   );

@@ -9,6 +9,7 @@ import { NavBar } from "@/components/nav-bar";
 import { PageBackground } from "@/components/page-background";
 import { SiteChrome } from "@/components/site-chrome";
 import { StatPills } from "@/components/stat-pills";
+import { FloatingTimer, TimerProvider } from "@/components/timer";
 import { db } from "@/db";
 import { coinBalance } from "@/db/coins";
 import { streakFor } from "@/db/streak";
@@ -42,6 +43,9 @@ export default async function RootLayout({
   const user = await getCurrentUser();
   // Streak and coins (#35, #28), shown right of the navbar while signed in.
   const stats = user && { streak: streakFor(db, user.id, todayIn(user.timeZone)), coins: coinBalance(db, user.id) };
+  const main = (
+    <main className="mx-auto w-full max-w-5xl flex-1 px-3 pt-4 pb-10 sm:px-4 sm:pt-6 sm:pb-12">{children}</main>
+  );
   return (
     <html lang="en" className={nunito.variable}>
       <body
@@ -74,9 +78,15 @@ export default async function RootLayout({
           </header>
         </SiteChrome>
 
-        <main className="mx-auto w-full max-w-5xl flex-1 px-3 pt-4 pb-10 sm:px-4 sm:pt-6 sm:pb-12">
-          {children}
-        </main>
+        {user ? (
+          // One task timer for the whole site and the pop-out, shown bottom-right while set.
+          <TimerProvider userId={user.id}>
+            {main}
+            <FloatingTimer />
+          </TimerProvider>
+        ) : (
+          main
+        )}
 
         <SiteChrome>
           <WaveFooter signedIn={!!user} />
