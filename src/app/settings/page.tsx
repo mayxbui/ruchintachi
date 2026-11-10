@@ -9,6 +9,7 @@ import { releases } from "@/lib/changelog";
 import { townEnabled } from "@/lib/features";
 import {
   DeleteAccountForm,
+  ResetAccountForm,
   PreferencesForm,
   RecoveryCodeForm,
 } from "./settings-forms";
@@ -98,6 +99,10 @@ export default async function SettingsPage() {
 
       <PageCard title="Recovery code" border="sunny">
         <RecoveryCodeForm />
+      </PageCard>
+
+      <PageCard title="Reset account" border="sunny">
+        <ResetAccountForm username={user.username} />
       </PageCard>
 
       <PageCard title="Delete account" border="sunny">

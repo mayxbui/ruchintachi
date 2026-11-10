@@ -1,7 +1,7 @@
 import { eq, getTableColumns, getTableName, is } from "drizzle-orm";
 import { SQLiteTable } from "drizzle-orm/sqlite-core";
 import { describe, expect, it } from "vitest";
-import { createAccount, deleteAccount } from "./accounts";
+import { createAccount, deleteAccount, resetAccount } from "./accounts";
 import * as schema from "./schema";
 import { createTestDb } from "./test-db";
 
@@ -104,5 +104,32 @@ describe("deleteAccount", () => {
       completions: 1,
       friendships: 1, // kai -> zoe
     });
+  });
+});
+
+describe("resetAccount", () => {
+  it("clears the user's history and items but keeps the account, friends and settings", () => {
+    const db = createTestDb();
+    const may = addUser(db, "may");
+    const kai = addUser(db, "kai");
+    fillEverything(db, may, kai);
+    fillEverything(db, kai, may);
+    db.update(schema.users).set({ timeZone: "Asia/Tokyo", background: "og" }).where(eq(schema.users.id, may)).run();
+    const before = db.select().from(schema.users).where(eq(schema.users.id, may)).get();
+
+    resetAccount(db, may);
+
+    // Only the account row, its session and the two friend links are left.
+    expect(rowsMentioning(db, may)).toEqual({ users: 1, sessions: 1, friendships: 2 });
+    expect(db.select().from(schema.users).where(eq(schema.users.id, may)).get()).toEqual(before);
+    // kai keeps everything.
+    expect(Object.keys(rowsMentioning(db, kai)).sort()).toEqual(userTables.map(getTableName).sort());
+  });
+
+  it("does nothing harmful for a user with no data", () => {
+    const db = createTestDb();
+    const may = addUser(db, "may");
+    resetAccount(db, may);
+    expect(rowsMentioning(db, may)).toEqual({ users: 1 });
   });
 });

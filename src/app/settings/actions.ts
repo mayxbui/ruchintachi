@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
-import { deleteAccount } from "@/db/accounts";
+import { deleteAccount, resetAccount } from "@/db/accounts";
 import { users } from "@/db/schema";
 import { isValidTimeZone } from "@/lib/auth/credentials";
 import { allowAttempt, clearAttempts, TOO_MANY_ATTEMPTS } from "@/lib/auth/limits";
@@ -65,6 +65,28 @@ export async function regenerateRecoveryCode(
     .where(eq(users.id, user.id))
     .run();
   return { recoveryCode };
+}
+
+/**
+ * Starts the account over (see resetAccount): needs the username typed out
+ * and the password, like deleting. Keeps the account, friends and settings.
+ */
+export async function resetAccountAction(
+  _prev: SettingsState,
+  formData: FormData,
+): Promise<SettingsState> {
+  const user = await requireUser();
+  const typed = String(formData.get("confirmUsername") ?? "").trim().toLowerCase();
+  if (typed !== user.username) {
+    return { error: "Type your username exactly to confirm." };
+  }
+  const error = await checkPassword(user, String(formData.get("password") ?? ""));
+  if (error) return { error };
+
+  resetAccount(db, user.id);
+  // Streak, coins and mood change on every page.
+  revalidatePath("/", "layout");
+  return { saved: true };
 }
 
 export async function deleteAccountAction(
