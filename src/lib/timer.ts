@@ -70,3 +70,30 @@ export function formatClock(ms: number): string {
   const pad = (n: number) => String(n).padStart(2, "0");
   return h > 0 ? `${h}:${pad(m)}:${pad(s)}` : `${pad(m)}:${pad(s)}`;
 }
+
+/**
+ * Reads a TimerState saved in the browser (shared by the main tab and the
+ * pop-out). Anything malformed, from an old version or edited by hand, is IDLE.
+ */
+export function parseTimerState(raw: string | null): TimerState {
+  if (!raw) return IDLE;
+  let v: unknown;
+  try {
+    v = JSON.parse(raw);
+  } catch {
+    return IDLE;
+  }
+  if (typeof v !== "object" || v === null) return IDLE;
+  const o = v as Record<string, unknown>;
+  const num = (x: unknown) => typeof x === "number" && Number.isFinite(x) && x >= 0;
+  if (typeof o.habitId !== "string" || typeof o.name !== "string" || !num(o.durationMs)) return IDLE;
+  const { habitId, name } = o;
+  const durationMs = o.durationMs as number;
+  if (o.status === "running" && num(o.endsAt)) {
+    return { status: "running", habitId, name, durationMs, endsAt: o.endsAt as number };
+  }
+  if ((o.status === "paused" || o.status === "done") && num(o.remainingMs)) {
+    return { status: o.status, habitId, name, durationMs, remainingMs: o.remainingMs as number };
+  }
+  return IDLE;
+}

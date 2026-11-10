@@ -1,10 +1,13 @@
+"use client";
+
 import { IconLogout } from "@tabler/icons-react";
 import { signOut } from "@/lib/auth/actions";
+import { clearSavedTimers } from "./timer";
 
-/** Square button beside the streak and coins: signs out at once. */
+/** Square button beside the streak and coins: signs out at once, forgetting the task timer. */
 export function SignOutButton() {
   return (
-    <form action={signOut}>
+    <form action={signOut} onSubmit={clearSavedTimers}>
       <button
         type="submit"
         aria-label="Log out"

@@ -3,6 +3,7 @@ import {
   formatClock,
   IDLE,
   parseMinutes,
+  parseTimerState,
   pauseTimer,
   remainingMs,
   resumeTimer,
@@ -59,5 +60,24 @@ describe("formatClock", () => {
     expect(formatClock(500)).toBe("00:01");
     expect(formatClock(0)).toBe("00:00");
     expect(formatClock(3_725_000)).toBe("1:02:05");
+  });
+});
+
+describe("parseTimerState", () => {
+  it("round-trips every saved state", () => {
+    const running = startTimer("h1", "Stretch", 10, t0);
+    const paused = pauseTimer(running, t0 + 60_000);
+    const done = tickTimer(running, t0 + 600_000);
+    for (const s of [running, paused, done]) expect(parseTimerState(JSON.stringify(s))).toEqual(s);
+    expect(parseTimerState(JSON.stringify(IDLE))).toEqual(IDLE);
+  });
+
+  it("treats missing or malformed data as idle", () => {
+    expect(parseTimerState(null)).toEqual(IDLE);
+    expect(parseTimerState("not json")).toEqual(IDLE);
+    expect(parseTimerState("42")).toEqual(IDLE);
+    expect(parseTimerState(JSON.stringify({ status: "running", habitId: "h1", name: "x", durationMs: 1 }))).toEqual(IDLE);
+    expect(parseTimerState(JSON.stringify({ status: "paused", habitId: 1, name: "x", durationMs: 1, remainingMs: 1 }))).toEqual(IDLE);
+    expect(parseTimerState(JSON.stringify({ status: "done", habitId: "h1", name: "x", durationMs: -5, remainingMs: 0 }))).toEqual(IDLE);
   });
 });

@@ -12,7 +12,7 @@ import { DueTag } from "./due-tag";
 import { CoinIcon } from "@/components/stat-pills";
 import { TaskIcon } from "./task-icon";
 import { TaskText } from "./task-text";
-import { useTimer } from "./timer";
+import { useTimer } from "@/components/timer";
 import { useDragReorder } from "./use-drag-reorder";
 
 const SPARKS = 8; // sparks around a ticked task's check
@@ -200,13 +200,14 @@ export function TodayList({
                   )}
                 </TaskText>
               </div>
+              {/* The timer is shared with the pop-out (#66), so it can be started there too. */}
+              <TimerButton
+                item={item}
+                open={timerFor === item.habitId}
+                onToggle={() => setTimerFor((id) => (id === item.habitId ? null : item.habitId))}
+              />
               {!compact && (
                 <>
-                  <TimerButton
-                    item={item}
-                    open={timerFor === item.habitId}
-                    onToggle={() => setTimerFor((id) => (id === item.habitId ? null : item.habitId))}
-                  />
                   <Link
                     href={`/chronicle/${item.habitId}/edit?date=${today}`}
                     aria-label={`Edit ${item.name}`}
