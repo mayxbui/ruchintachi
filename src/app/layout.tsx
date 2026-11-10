@@ -5,6 +5,7 @@ import { Nunito } from "next/font/google";
 import { SignOutButton } from "@/components/sign-out-button";
 import { FieldWarning } from "@/components/field-warning";
 import { HoverHint } from "@/components/hover-hint";
+import { LiveSync } from "@/components/live-sync";
 import { NavBar } from "@/components/nav-bar";
 import { PageBackground } from "@/components/page-background";
 import { SiteChrome } from "@/components/site-chrome";
@@ -43,6 +44,10 @@ export default async function RootLayout({
   const user = await getCurrentUser();
   // Streak and coins (#35, #28), shown right of the navbar while signed in.
   const stats = user && { streak: streakFor(db, user.id, todayIn(user.timeZone)), coins: coinBalance(db, user.id) };
+  // Server render time: new after each server action that changes data (see LiveSync).
+  // A server component renders once per request, so reading the clock here is intended.
+  // eslint-disable-next-line react-hooks/purity
+  const renderedAt = Date.now();
   const main = (
     <main className="mx-auto w-full max-w-5xl flex-1 px-3 pt-4 pb-10 sm:px-4 sm:pt-6 sm:pb-12">{children}</main>
   );
@@ -83,6 +88,8 @@ export default async function RootLayout({
           <TimerProvider userId={user.id}>
             {main}
             <FloatingTimer />
+            {/* Tells the user's other windows (the pop-out, other tabs) when data changes. */}
+            <LiveSync stamp={renderedAt} />
           </TimerProvider>
         ) : (
           main
