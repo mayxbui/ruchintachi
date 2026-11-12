@@ -49,7 +49,7 @@ const faq: { q: string; a: string; town?: boolean }[] = [
   },
   {
     q: "What can my friends see?",
-    a: "Your item collection and, while “share progress” is on, today's % done and your streak. Your habits, chronicle, calendar and mood stay private.",
+    a: "Your treasure collection and, while “share progress” is on, today's % done and your streak. Your habits, chronicle, calendar and mood stay private.",
     town: true,
   },
   {
@@ -120,7 +120,7 @@ export default async function SettingsPage() {
         </Link>
       </PageCard>
 
-      <PageCard id="faq" title="FAQ" border="sunny">
+      <PageCard id="faq" title="Q&A" border="sunny">
         {/* Native <details>: each question toggles its answer, no JS needed. */}
         <div className="space-y-3">
           {faq.filter((item) => !item.town || townEnabled()).map(({ q, a }) => (

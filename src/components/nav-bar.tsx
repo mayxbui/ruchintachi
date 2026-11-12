@@ -145,7 +145,7 @@ export function NavBar({ town }: { town: boolean }) {
   // Move the blob on click, before the next page has loaded.
   const [clicked, setClicked] = useState<{ index: number; from: string } | null>(null);
   // Forget that click once the page changes, so a later visit back to `from`
-  // by another link (e.g. the footer's FAQ) follows the route, not the old click.
+  // by another link (e.g. Q&A) follows the route, not the old click.
   const [shownPath, setShownPath] = useState(pathname);
   if (shownPath !== pathname) {
     setShownPath(pathname);

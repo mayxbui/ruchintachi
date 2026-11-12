@@ -256,7 +256,7 @@ export function FloatingTimer() {
     return (
       <div
         role="alert"
-        className={`fixed z-50 flex items-center gap-3 rounded-2xl bg-sunny px-4 py-3 shadow-pop motion-safe:animate-bounce motion-safe:[animation-iteration-count:2] ${place}`}
+        className={`floating-timer fixed z-50 flex items-center gap-3 rounded-2xl bg-sunny px-4 py-3 shadow-pop motion-safe:animate-bounce motion-safe:[animation-iteration-count:2] ${place}`}
       >
         <IconHourglassHigh aria-hidden className="size-6 shrink-0" stroke={2.25} />
         <p className="min-w-0 flex-1 font-bold break-words">
@@ -274,7 +274,7 @@ export function FloatingTimer() {
     <div
       role="timer"
       aria-label={`Timer for ${state.name}`}
-      className={`fixed z-50 flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-pop ${place}`}
+      className={`floating-timer fixed z-50 flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-pop ${place}`}
     >
       <IconHourglassHigh aria-hidden className="size-6 shrink-0 text-tangerine" stroke={2.25} />
       <span className="min-w-0 flex-1">

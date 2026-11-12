@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Nunito } from "next/font/google";
 import { SignOutButton } from "@/components/sign-out-button";
 import { FieldWarning } from "@/components/field-warning";
+import { GettingStarted } from "@/components/getting-started";
 import { HoverHint } from "@/components/hover-hint";
 import { LiveSync } from "@/components/live-sync";
 import { NavBar } from "@/components/nav-bar";
@@ -20,7 +21,7 @@ import { todayIn } from "@/lib/dates";
 import { townEnabled } from "@/lib/features";
 import "./globals.css";
 
-// Self-hosted by next/font, so no request to Google from visitors.
+// Self-hosted by next/font
 // No `weight` list = the variable font (200–1000), so any weight works.
 const nunito = Nunito({
   subsets: ["latin"],
@@ -28,7 +29,7 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "RuchinTachi — Habit Planner & Tracker",
+  title: "RuchinTachi - Habit Planner & Tracker",
   description: "A Tomodachi Life–inspired habit tracker. Keep your habits, fill your calendar with gifts.",
 };
 
@@ -49,7 +50,9 @@ export default async function RootLayout({
   // eslint-disable-next-line react-hooks/purity
   const renderedAt = Date.now();
   const main = (
-    <main className="mx-auto w-full max-w-5xl flex-1 px-3 pt-4 pb-10 sm:px-4 sm:pt-6 sm:pb-12">{children}</main>
+    <main className="mx-auto w-full max-w-5xl flex-1 px-3 pt-4 pb-10 sm:px-4 sm:pt-6 sm:pb-12">
+      {children}
+    </main>
   );
   return (
     <html lang="en" className={nunito.variable}>
@@ -96,6 +99,15 @@ export default async function RootLayout({
         )}
 
         <SiteChrome>
+          {user && <GettingStarted key={user.id} userId={user.id} />}
+          {user && (
+            <Link
+              href="/settings#faq"
+              className="qa-shortcut fixed left-3 bottom-[calc(env(safe-area-inset-bottom)+5.25rem)] z-40 rounded-full bg-cream px-4 py-2 text-sm font-black text-ink shadow-pop hover:bg-sunny md:bottom-6 md:left-6"
+            >
+              Q&amp;A
+            </Link>
+          )}
           <WaveFooter signedIn={!!user} />
         </SiteChrome>
         <FieldWarning />
@@ -114,6 +126,9 @@ const WAVE =
  * like the Tomodachi Life: Living the Dream wallpapers. Stretched to the
  * page width, so phones see fewer, wider bumps.
  */
+const creditClass = "font-bold underline underline-offset-2 hover:text-sunny";
+const itemData = "https://docs.google.com/spreadsheets/d/1iPb1freZ57gP7tBDMbvIUi3cDvIE979COqlDsRTYu3Y";
+
 function WaveFooter({ signedIn }: { signedIn: boolean }) {
   return (
     <footer className="mt-auto">
@@ -142,18 +157,17 @@ function WaveFooter({ signedIn }: { signedIn: boolean }) {
             : "pb-[calc(env(safe-area-inset-bottom)+1.5rem)]"
         }`}
       >
-        <p className="mx-auto max-w-5xl text-center text-sm text-white sm:text-lg">
-          Crafted by <span className="text-base font-black text-sunny sm:text-lg">mayxbui</span>.
-          {signedIn && (
-            <>
-              {" "}
-              <Link href="/settings#faq" className="font-bold hover:text-sunny">
-                FAQ
-              </Link>
-            </>
-          )}
-          <br></br>
-          <span className="text-xs sm:text-sm">Tomodachi Life and its assets are registered trademarks of © Nintendo Co., Ltd. Sprite rips courtesy of The Spriters Resource contributors. Item icons from tlmodding/ltd-images. Item data from the community sheet by echocolat, phil_macrocheira and superspazzy.</span>
+        <p className="mx-auto max-w-3xl text-center text-sm text-white sm:text-lg">
+          Crafted by <a href="https://github.com/mayxbui" className={`${creditClass} text-sunny`}>mayxbui</a>.
+          <br />
+          <span className="text-xs sm:text-sm">
+            <a href="https://www.nintendo.com/us/store/products/tomodachi-life-living-the-dream-switch/" className={creditClass}>Tomodachi Life</a>
+            {" "}and its assets belong to <a href="https://www.nintendo.com/" className={creditClass}>Nintendo Co., Ltd.</a>
+            {" "}Assets courtesy of <a href="https://www.spriters-resource.com/nintendo_switch/tomodachilifelivingthedream/" className={creditClass}>The Spriters Resource</a> contributors.
+            {" "}Item icons from <a href="https://github.com/tlmodding/ltd-images" className={creditClass}>tlmodding/ltd-images</a>.
+            {" "}Item data from the community sheet by <a href={itemData} className={creditClass}>echocolat</a>,{" "}
+            <a href={itemData} className={creditClass}>phil_macrocheira</a> and <a href={itemData} className={creditClass}>superspazzy</a>.
+          </span>
         </p>
       </div>
     </footer>

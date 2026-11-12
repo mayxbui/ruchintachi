@@ -79,14 +79,14 @@ function ReleaseBody({ release }: { release: Release }) {
     <div className="mt-4 space-y-4">
       {release.major && (
         <span className="inline-block -rotate-2 rounded-full border-2 border-ink bg-sunny px-4 py-1 text-sm font-black shadow-[0.2rem_0.2rem_0_0_var(--color-ink)]">
-          ✨ Major release
+          Major release
         </span>
       )}
       {release.summary && <p className="font-bold">{release.summary}</p>}
       {release.changes && <ChangeList changes={release.changes} />}
       {release.sections?.map((section) => (
         <div key={section.heading}>
-          <h3 className="mb-2 text-sm font-black tracking-wide uppercase">{section.heading}</h3>
+          <h3 className="mb-2 text-md font-black tracking-wide uppercase">{section.heading}</h3>
           <ChangeList changes={section.changes} />
         </div>
       ))}

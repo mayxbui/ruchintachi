@@ -1,135 +1,35 @@
-# RuchinTachi — Habit Planner & Tracker
+# RuchinTachi
 
-![RuchinTachi logo](public/ruchintachi-logo.webp)
+RuchinTachi is a habit planner and tracker inspired by *Tomodachi Life: Living the Dream*.
 
-A habit tracker inspired by **Tomodachi Life: Living the Dream**. Add habits, tick them off, and watch your calendar fill up with mood faces and gifts as you keep them.
-
-## Progress
-
-<!-- progress:start -->
-**Overall: 83%** (39 of 47 issues closed)
-
-`█████████████████░░░`
-
-| Milestone | Progress | Done |
-|---|---|---|
-| [M1 · Project setup](https://github.com/mayxbui/ruchintachi/milestone/1) | `████████████████████` 100% | 4/4 ✅ |
-| [M2 · Accounts & Mii](https://github.com/mayxbui/ruchintachi/milestone/2) | `████████████████░░░░` 80% | 4/5 |
-| [M3 · Habits & check-off](https://github.com/mayxbui/ruchintachi/milestone/3) | `████████████████████` 100% | 11/11 ✅ |
-| [M4 · Calendar & daily gift (MVP)](https://github.com/mayxbui/ruchintachi/milestone/4) | `████████████████████` 100% | 6/6 ✅ |
-| [M5 · Deploy to Azure](https://github.com/mayxbui/ruchintachi/milestone/5) | `████████████████████` 100% | 4/4 ✅ |
-| [M6 · Charts & Mii mood](https://github.com/mayxbui/ruchintachi/milestone/6) | `████████████████████` 100% | 5/5 ✅ |
-| [M7 · Weekly gift, coins & streak repair](https://github.com/mayxbui/ruchintachi/milestone/7) | `████████████████████` 100% | 4/4 ✅ |
-| [M8 · Friends & Town](https://github.com/mayxbui/ruchintachi/milestone/8) | `░░░░░░░░░░░░░░░░░░░░` 0% | 0/6 |
-| [M9 · Polish & extras](https://github.com/mayxbui/ruchintachi/milestone/9) | `██████████░░░░░░░░░░` 50% | 1/2 |
-
-<sub>Updated automatically from GitHub issues.</sub>
-<!-- progress:end -->
+Plan your day, build up streaks and collect weekly gifts as you complete habits.
 
 ## Features
 
-### 1. Accounts
-- Sign up with a **username + password only**. No email, no real name, no personal information.
-- At sign-up you get a one-time **recovery code** (the only way back in if you forget the password, since there's no email).
-- What's stored per account: username, password hash, friend code and friend list, habits/plan, completions, items, mood, cheers sent and received, group memberships, settings. Nothing else.
-- You can delete your account and all its data.
+- **My Chronicle** groups today's tasks and repeating habits in one place. Organize tasks into lists and use the timer.
+- **Progress** shows mood history, weekly gifts, and your treasure collection. Complete a day of repeating habits to qualify for that week's gift. Open My Chronicle after the week ends to reveal it.
+- **Settings** lets you choose a time zone, week start, and page background, and manage your account and recovery code.
+- **Getting started** stays in the upper-right as you move between pages. **Q&A** opens the help section in Settings. Release notes live under **Settings → What's new**.
 
-### 2. Habits
-- Each habit is a **yes/no checkbox** for the day.
-- Repeat options: **none**, **daily**, **weekly** (pick weekdays), **monthly** (day of month), **annually**.
-- End conditions: **never**, **on a date**, or **after N occurrences**.
-- Editing or deleting a repeating habit asks: **"only this day"** or **"this day and all future days"**. Past days are never changed.
-- You can only check off **today**. No backfilling past days, no vacation mode.
-- **Pop-out widget** — on a computer with Chrome or Edge, **Pop out** on My Chronicle opens a small window that stays on top of your other windows: your mood and today's checklist. You can tick tasks, add one-off tasks and write notes there; new habits are made on the main site.
+Accounts use a username and password. Today's checkboxes follow your chosen time zone. Town is experimental and can be enabled locally with `FEATURE_TOWN=true`.
 
-### 3. Progress tracking
-- **Progress page** — your mood bar on top, then a month calendar where each finished day shows your mood face, repaired days get a patch and each week's gift sits on its last day. Your item collection is underneath.
 
-### 4. Weekly gift
-- A **complete day** = every repeating habit scheduled that day is done. One-off tasks don't count either way, and a day with no habits is neither complete nor a miss.
-- At the end of each week you roll **one gift per complete day** (food, goods or treasure) and you keep the **rarest** roll. A week with no complete days gives no gift. The gift is unwrapped the next time you open My Chronicle.
-- **Rarity is based on the item's in-game price**: the more expensive the item, the less likely it drops.
-- **Duplicates are allowed** and counted (the inventory shows ×2, ×3, …).
-- Clothing is paused for now.
+## Contributing
 
-### 5. Streak, coins & streak repair
-- **Streak** (the rubber duck): complete days in a row, up to today or yesterday. Days with no habits are skipped. Your streak and coins sit right of the menu on every page and in the pop-out window.
-- **Coins**: 2 per repeating habit done (up to 10 a day), +20 on a complete day, +2 per streak day (up to 20). Max 50 a day; unticking never takes coins back. Coins are private.
-- **Streak repair**: missed yesterday? Spend 100 coins before today ends to keep your streak (once a week).
+Open an issue to describe the behavior you want to change or report a bug with reproduction steps. In a pull request, link the issue when applicable, describe what you verified, and include phone and desktop screenshots for visual changes. Keep credentials, recovery codes, and SQLite files out of commits and screenshots.
 
-### 6. Mood
-Your mood shows as a bar of five coloured segments, with a round face that sits on it and changes expression. Five levels (names are tentative):
+```sh
+pnpm test
+pnpm lint
+pnpm build
+```
 
-| Colour | Mood |
-|---|---|
-| 🩷 Pink | **Lovestruck** |
-| 🧡 Orange | **Overjoyed** |
-| 💛 Yellow | **Content** |
-| 💙 Blue | **Gloomy** |
-| ❤️ Red | **Fuming** |
+See [AGENTS.md](AGENTS.md) for the repo map, database workflow, and privacy and scheduling rules.
 
-- Mood goes up when you complete days, and down when you miss scheduled tasks. Days with no tasks don't change it.
-- Each finished day's mood shows as a face on the Progress calendar.
+## Asset credits
 
-### 7. Friends (Town, tentative)
-Still being built and hidden on the live site (`FEATURE_TOWN`); the plan may change.
-- Every player has a unique **friend code** to share.
-- Enter a friend's code to send a request; once they accept, you appear in each other's **Town**.
-- From Town you can see a friend's item collection — and they can see yours.
-- **Friends leaderboard** — Town lists your friends by **today's progress** (e.g. "70% done"), plus each friend's current streak (days in a row with every task done). Only numbers are shared, never habit names.
-- **Cheer a friend** — tap an emoji button (👏 🎉 🔥 💪 ⭐) on a friend's row to congratulate them; they see who cheered them today. No free-text messages.
-- Sharing your progress is **on by default**; turn off "Share my progress with friends" in Settings to drop off the leaderboard. Your items stay visible either way.
-- **Everything else stays private**: habit names, your chronicle, calendar, which days you missed and your mood history.
-- Remove a friend at any time.
+RuchinTachi is an independent, non-commercial fan project. Tomodachi Life and its game assets belong to [Nintendo](https://www.nintendo.com/us/store/products/tomodachi-life-living-the-dream-switch/).
 
-### 8. Group trackers (tentative)
-- Make a **group habit** with friends, e.g. "Drink 8 glasses of water". Everyone gets it on their own chronicle and ticks it themselves.
-- The group page shows who has done it today and a **group streak** (days in a row when every member finished it).
-- Only the shared group habit is visible to the group; your other habits stay private. Leave a group at any time.
-
-## Pages
-
-| Navbar | What's there |
-|---|---|
-| **My Chronicle** | Today's tasks to tick off, your habit list, create/edit habits |
-| **Progress** | Mood bar, month calendar of mood faces and gifts, your items |
-| **Town** (tentative, hidden for now) | Your friend code, add friends, friends leaderboard with cheers, group trackers |
-| **Settings** | Time zone, week start (Monday/Sunday), account, recovery code, delete account, **FAQ** |
-| **Streak & coins** (right of the navbar) | Your streak (rubber duck) and coin balance |
-
-On phones the navbar is a bottom tab bar; on desktop it sits at the top.
-
-## Tech stack
-
-Everything is free and open source, and runs on one Azure VM.
-
-| Part | Choice | Why |
-|---|---|---|
-| App | **Next.js** (React, TypeScript) | Frontend and backend in one project; huge community, easy to find help |
-| Styling | **Tailwind CSS** | Fast to build the rounded, colourful Tomodachi look |
-| Database | **SQLite** + **Drizzle ORM** | A single file on the VM: no database server to run or pay for; easy to back up |
-| Auth | Username + password, hashed with **Argon2**, session cookie | No email or third-party login needed, so no personal data |
-| Dates & repeats | **date-fns** / **date-fns-tz** + **rrule** | Time zones and repeat rules with known edge-case behaviour |
-| Charts | **Recharts** | Bar and mood-line charts |
-| Tests | **Vitest** | Unit tests for repeat rules, gift rolls and streak logic |
-| Package manager | **pnpm** | Faster installs, less disk use on the VM |
-| Hosting | **Azure VM** + **Caddy** (reverse proxy, automatic free HTTPS) + **systemd** to keep the app running | |
-| Domain | Bought from **Namecheap**, A record pointing at the VM | |
-
-## Still to decide
-
-- [ ] Exact mood formula (how much a completed/missed day moves it).
-- [ ] Final mood names.
-- [ ] Domain name.
-- [ ] Who can sign up: only you, invite codes, or anyone with the link.
-- [ ] Group trackers: group size limit, who can invite, and whether a group habit can repeat on any rule or daily only.
-
-## References
-
-- Item icons: [tlmodding/ltd-images](https://github.com/tlmodding/ltd-images), the same icons the data sheet shows. `pnpm sprites:build` saves each catalogue item's icon as a 128px WebP in `public/items/<icon>.webp`.
-- Other sprites: [The Spriters Resource — Tomodachi Life: Living the Dream](https://www.spriters-resource.com/nintendo_switch/tomodachilifelivingthedream/)
-- Item names and prices: [Data Spreadsheet for Tomodachi Life: Living the Dream](https://docs.google.com/spreadsheets/d/1iPb1freZ57gP7tBDMbvIUi3cDvIE979COqlDsRTYu3Y) by echocolat, with phil_macrocheira and superspazzy. `pnpm catalogue:import` rebuilds `src/data/items.json` from it, including each item's icon name.
-
-## Disclaimer
-
-RuchinTachi is an unofficial, non-commercial, personal fan project. It is not affiliated with or endorsed by Nintendo. Tomodachi Life and its sprites and assets are trademarks and copyright of Nintendo. Sprite rips courtesy of the contributors at The Spriters Resource. Item icons from tlmodding/ltd-images. Item data from the community data sheet by echocolat, phil_macrocheira and superspazzy.
+- Sprite rips come from [The Spriters Resource contributors](https://www.spriters-resource.com/nintendo_switch/tomodachilifelivingthedream/).
+- Treasure icons come from [tlmodding/ltd-images](https://github.com/tlmodding/ltd-images). Run `pnpm sprites:build` to regenerate the treasure WebPs.
+- Treasure names and prices come from [the community spreadsheet by echocolat, phil_macrocheira, and superspazzy](https://docs.google.com/spreadsheets/d/1iPb1freZ57gP7tBDMbvIUi3cDvIE979COqlDsRTYu3Y). Run `pnpm catalogue:import` to refresh `src/data/items.json`.
