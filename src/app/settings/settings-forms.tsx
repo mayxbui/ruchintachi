@@ -27,7 +27,7 @@ export function PreferencesForm({
 
   return (
     <form action={formAction} className="space-y-5">
-      <div>
+      <div id="time-zone-settings">
         <label htmlFor="timeZone" className="mb-1 block font-bold">
           Time zone
         </label>
@@ -118,7 +118,7 @@ export function ResetAccountForm({ username }: { username: string }) {
     <form action={formAction} className="space-y-5">
       <p className="text-caption">
         Start over: this deletes all your habits and tasks, their history,
-        your items, coins, streak and mood. Your username, password, friends
+        your treasures, coins, streak and mood. Your username, password, friends
         and settings stay. It can&apos;t be undone.
       </p>
       <FormMessage
@@ -156,7 +156,7 @@ export function DeleteAccountForm({ username }: { username: string }) {
   return (
     <form action={formAction} className="space-y-5">
       <p className="text-caption">
-        This deletes your account, habits, chronicle, calendar, mood, items
+        This deletes your account, habits, chronicle, calendar, mood, treasures
         and friends for good. It can&apos;t be undone.
       </p>
       <FormMessage error={state.error} />

@@ -85,7 +85,7 @@ export function GiftReveal({ gift, note, onClose }: { gift: GiftItem; note?: str
           {open && (
             <>
               <span className="block text-xl font-black">{gift.name}</span>
-              <span className="text-base text-caption">Added to your items</span>
+              <span className="text-base text-caption">Added to your treasures</span>
             </>
           )}
         </p>

@@ -172,10 +172,10 @@ export default async function ProgressPage({
       <section aria-labelledby="items-heading" className="mt-8">
         <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
           <h2 id="items-heading" className="text-2xl">
-            My items
+            My treasures
           </h2>
           <p className="text-caption">
-            {total === 0 ? "No items yet." : `${total} item${total === 1 ? "" : "s"}, ${kinds} different`}
+            {total === 0 ? "No treasures yet." : `${total} treasure${total === 1 ? "" : "s"}, ${kinds} different`}
           </p>
         </div>
         <InventoryGrid groups={groups} />

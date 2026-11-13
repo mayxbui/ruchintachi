@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "version": "1.0.0",
+    "date": "2026-11-12",
+    "title": "First release",
+    "tag": "feature",
+    "major": true,
+    "summary": "Plan your day, keep habit streaks, and collect Treasures as you go.",
+    "sections": [
+      {
+        "heading": "My Chronicle",
+        "changes": [
+          "Add one-off tasks and repeating habits, organize them into lists, and check off today’s tasks.",
+          "Use the task timer and pop it out in browsers that support it.",
+          "Follow the Getting Started checklist or open Q&A for help."
+        ]
+      },
+      {
+        "heading": "Progress and rewards",
+        "changes": [
+          "See your mood history and weekly gifts on the Progress calendar, browse collected gifts under My Treasures.",
+          "Earn coins from habits and spend them to repair an eligible missed day."
+        ]
+      },
+      {
+        "heading": "Settings",
+        "changes": [
+          "Set your time zone, choose when the week starts, and customize your background.",
+          "Manage your username-and-password account and save your recovery code."
+        ]
+      }
+    ]
+  }
+]

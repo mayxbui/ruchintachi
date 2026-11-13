@@ -248,3 +248,16 @@ body {
     box-shadow: var(--shadow-pop);
   }
 }
+
+@media (width < 40rem) {
+  body:has(.floating-timer) .qa-shortcut {
+    bottom: calc(env(safe-area-inset-bottom) + 11.5rem);
+  }
+}
+
+@media (64rem <= width < 96rem) {
+  body:has([data-guide-expanded="true"]) > main {
+    width: calc(100% - 16rem);
+    margin-left: max(0px, calc((100% - 80rem) / 2));
+  }
+}

@@ -52,6 +52,7 @@ export function BackgroundPicker({ background }: { background: BackgroundId }) {
           tile's ring and the hover lift. */}
       <div className="@container">
         <ul
+          id="background-settings"
           aria-label="Backgrounds"
           className="grid max-h-[75cqw] grid-cols-4 gap-2 overflow-y-auto overscroll-contain p-1.5 @md:max-h-[60cqw] @md:grid-cols-5 @2xl:max-h-[50cqw] @2xl:grid-cols-6 @4xl:max-h-[37.5cqw] @4xl:grid-cols-8"
         >

@@ -45,6 +45,7 @@ export function ChronicleTabs() {
       <div className="ml-auto flex shrink-0 gap-2">
         <PopOutButton />
         <Link
+          id="create-habit"
           href={newHref}
           aria-label="Create a habit"
           className="flex shrink-0 items-center gap-1.5 rounded-full bg-tangerine p-2.5 font-bold text-white shadow-pop transition hover:brightness-105 sm:p-3 md:px-5 md:py-2.5"

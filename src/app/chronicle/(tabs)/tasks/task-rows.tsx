@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  IconCheck,
   IconChevronDown,
   IconChevronUp,
   IconFolderSymlink,
@@ -13,6 +12,7 @@ import {
 import Link from "next/link";
 import { useCallback, useRef, useState, useTransition, type ReactNode } from "react";
 import { FormMessage } from "@/components/form";
+import { RoundCheck } from "@/components/round-check";
 import { useDismiss } from "@/components/use-dismiss";
 import { iconEmoji } from "@/lib/habit-icons";
 import { bulkDeleteAction, bulkMoveAction, reorderHabitsAction } from "../../actions";
@@ -30,18 +30,6 @@ export interface TaskRow {
   dueDate: string | null; // a one-off task's deadline, until it's done
   listTag: string | null; // the task's list, unless we're looking at that list
   editHref: string;
-}
-
-/** The same round check as Today's tasks, for picking rows. */
-function RoundCheck({ checked }: { checked: boolean }) {
-  return (
-    <span
-      aria-hidden
-      className="flex size-6 shrink-0 items-center justify-center rounded-full border-3 border-leaf bg-white text-white transition peer-checked:bg-leaf peer-focus-visible:ring-4 peer-focus-visible:ring-sky"
-    >
-      {checked && <IconCheck className="size-4" stroke={3.5} />}
-    </span>
-  );
 }
 
 /**
