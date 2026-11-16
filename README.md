@@ -13,6 +13,28 @@ Plan your day, build up streaks and collect weekly gifts as you complete habits.
 Accounts use a username and password. Today's checkboxes follow your chosen time zone. Town is experimental and can be enabled locally with `FEATURE_TOWN=true`.
 
 
+## Progress
+
+<!-- progress:start -->
+**Overall: 89%** (39 of 44 issues closed)
+
+`██████████████████░░`
+
+| Milestone | Progress | Done |
+|---|---|---|
+| [M1 · Project setup](https://github.com/mayxbui/ruchintachi/milestone/1) | `████████████████████` 100% | 4/4 ✅ |
+| [M2 · Accounts & Mii](https://github.com/mayxbui/ruchintachi/milestone/2) | `████████████████████` 100% | 4/4 ✅ |
+| [M3 · Habits & check-off](https://github.com/mayxbui/ruchintachi/milestone/3) | `████████████████████` 100% | 11/11 ✅ |
+| [M4 · Calendar & daily gift (MVP)](https://github.com/mayxbui/ruchintachi/milestone/4) | `████████████████████` 100% | 6/6 ✅ |
+| [M5 · Deploy to Azure](https://github.com/mayxbui/ruchintachi/milestone/5) | `████████████████████` 100% | 4/4 ✅ |
+| [M6 · Charts & Mii mood](https://github.com/mayxbui/ruchintachi/milestone/6) | `████████████████████` 100% | 5/5 ✅ |
+| [M7 · Weekly gift, coins & streak repair](https://github.com/mayxbui/ruchintachi/milestone/7) | `████████████████████` 100% | 4/4 ✅ |
+| [M8 · Friends & Town](https://github.com/mayxbui/ruchintachi/milestone/8) | `░░░░░░░░░░░░░░░░░░░░` 0% | 0/4 |
+| [M9 · Polish & extras](https://github.com/mayxbui/ruchintachi/milestone/9) | `██████████░░░░░░░░░░` 50% | 1/2 |
+
+<sub>Updated automatically from GitHub issues.</sub>
+<!-- progress:end -->
+
 ## Contributing
 
 Open an issue to describe the behavior you want to change or report a bug with reproduction steps. In a pull request, link the issue when applicable, describe what you verified, and include phone and desktop screenshots for visual changes. Keep credentials, recovery codes, and SQLite files out of commits and screenshots.
